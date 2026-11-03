@@ -3,7 +3,14 @@ import ArrowRight from '@lucide/astro/icons/arrow-right';
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import FoxMotif from '@/components/ui/FoxMotif.astro';
-import { hero, site } from '@/data/site';
+import { game, hero, site } from '@/data/site';
+
+const status = [
+  { label: 'Game', value: game.name },
+  { label: 'Platform', value: game.platform },
+  { label: 'Family', value: site.shortName },
+  { label: 'Recruitment', value: game.recruiting ? 'Open' : 'Closed', live: game.recruiting },
+];
 ---
 
 <section id="home" aria-labelledby="hero-heading" class="relative isolate flex min-h-svh flex-col overflow-hidden">
@@ -27,9 +34,9 @@ import { hero, site } from '@/data/site';
     <div class="flex items-center justify-between gap-6">
       <p class="eyebrow intro flex items-center gap-3" style="--intro-delay:100">
         <span class="inline-block size-1.5 bg-accent" aria-hidden="true"></span>
-        {site.shortName} — {hero.eyebrow}
+        {hero.eyebrow}
       </p>
-      <p class="eyebrow intro hidden sm:block" style="--intro-delay:150">{site.monogram} / {new Date().getFullYear()}</p>
+      <p class="eyebrow intro hidden sm:block" style="--intro-delay:150">{game.platform} / {game.name}</p>
     </div>
 
     <div class="my-auto py-14">
@@ -70,9 +77,23 @@ import { hero, site } from '@/data/site';
       </div>
     </div>
 
+    <dl class="intro mt-10 grid grid-cols-2 border-l border-t border-line sm:grid-cols-4" style="--intro-delay:800">
+      {
+        status.map((item) => (
+          <div class="border-b border-r border-line px-4 py-3 sm:px-5">
+            <dt class="eyebrow !text-[0.65rem]">{item.label}</dt>
+            <dd class="mt-1 flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.1em]">
+              {item.live && <span class="size-1.5 rounded-full bg-accent shadow-[0_0_0_3px_rgb(139_92_246/0.25)]" aria-hidden="true" />}
+              {item.value}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
     <a
       href="#about"
-      class="intro-fade group mt-10 hidden items-center gap-4 self-start text-muted transition-colors hover:text-fg sm:flex"
+      class="intro-fade group mt-8 hidden items-center gap-4 self-start text-muted transition-colors hover:text-fg sm:flex"
       style="--intro-delay:1000"
     >
       <span class="relative block h-12 w-px overflow-hidden bg-line" aria-hidden="true">

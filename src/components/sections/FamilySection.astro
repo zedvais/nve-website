@@ -1,20 +1,28 @@
 ---
 import Crown from '@lucide/astro/icons/crown';
+import Briefcase from '@lucide/astro/icons/briefcase';
 import ShieldCheck from '@lucide/astro/icons/shield-check';
 import Users from '@lucide/astro/icons/users';
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import MemberCard from '@/components/ui/MemberCard.astro';
 import { family } from '@/data/site';
-import { members, membersByTier, tiers, type MemberTier } from '@/data/members';
+import { members, membersByTier, tierOrder, tiers, type MemberTier } from '@/data/members';
 
 const hasPlaceholders = members.some((m) => m.placeholder);
 
-const groups: { tier: MemberTier; icon: typeof Crown; variant: 'feature' | 'default' | 'compact'; grid: string }[] = [
-  { tier: 'leadership', icon: Crown, variant: 'feature', grid: 'lg:grid-cols-2' },
-  { tier: 'staff', icon: ShieldCheck, variant: 'default', grid: 'sm:grid-cols-2 lg:grid-cols-3' },
-  { tier: 'member', icon: Users, variant: 'compact', grid: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' },
-];
+const icons: Record<MemberTier, typeof Crown> = {
+  leadership: Crown,
+  council: Briefcase,
+  capos: ShieldCheck,
+  ranks: Users,
+};
+const grids = {
+  feature: 'lg:grid-cols-2',
+  default: 'sm:grid-cols-2 lg:grid-cols-3',
+  compact: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+};
+const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, grid: grids[tiers[tier].variant] }));
 ---
 
 <section id="family" aria-labelledby="family-heading" class="relative py-24 sm:py-32 lg:py-40">
@@ -30,7 +38,7 @@ const groups: { tier: MemberTier; icon: typeof Crown; variant: 'feature' | 'defa
       )
     }
 
-    <div class="mt-16 space-y-20 lg:mt-24">
+    <div class="mt-16 space-y-16 lg:space-y-20 lg:mt-24">
       {
         groups.map(({ tier, icon: Icon, variant, grid }) => {
           const list = membersByTier(tier);

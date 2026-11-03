@@ -3,7 +3,8 @@ import ArrowUp from '@lucide/astro/icons/arrow-up';
 import Container from '@/components/ui/Container.astro';
 import Logo from '@/components/ui/Logo.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
-import { navigation, site } from '@/data/site';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import { game, navigation, site } from '@/data/site';
 import { activeSocials, discord, hasDiscord } from '@/data/socials';
 
 const year = new Date().getFullYear();
@@ -25,6 +26,20 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
           <span class="font-display text-base font-bold uppercase tracking-[0.28em]">{site.name}</span>
         </a>
         <p class="mt-6 max-w-sm leading-relaxed text-muted">{site.tagline}</p>
+        <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted">A family in {game.name} on {game.platform}.</p>
+        {
+          game.url && (
+            <a
+              href={game.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold uppercase tracking-[0.16em] text-fg/80 transition-colors hover:text-accent-soft"
+            >
+              Play {game.name} on {game.platform}
+              <ArrowUpRight size={14} stroke-width={2} aria-hidden="true" />
+            </a>
+          )
+        }
       </div>
 
       <nav aria-label="Footer" class="lg:col-span-3">
@@ -96,8 +111,11 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
       </span>
     </p>
 
-    <div class="mt-14 flex flex-col-reverse gap-6 border-t border-line py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-      <p>&copy; {year} {site.name}. All rights reserved.</p>
+    <div class="mt-14 flex flex-col-reverse gap-6 border-t border-line py-8 text-sm text-muted sm:flex-row sm:items-end sm:justify-between">
+      <div class="space-y-1">
+        <p>&copy; {year} {site.name}. All rights reserved.</p>
+        <p class="text-xs text-muted/80">{game.disclaimer}</p>
+      </div>
       <a href="#home" class="inline-flex items-center gap-2 transition-colors hover:text-fg">
         Back to top
         <ArrowUp size={16} stroke-width={1.5} aria-hidden="true" />

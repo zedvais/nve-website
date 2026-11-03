@@ -1,7 +1,7 @@
 /**
- * The family roster.
+ * The family roster, grouped by Idle Mafia rank.
  * All entries below are PLACEHOLDERS. Replace them with real members
- * (and set `placeholder: false` or remove the field) when ready.
+ * (and remove `placeholder: true`) when ready.
  *
  * Avatars: put images in src/assets/avatars/ and import them here,
  * e.g. `import fox from '@/assets/avatars/fox.png'` then `avatar: fox`.
@@ -9,10 +9,12 @@
  */
 import type { ImageMetadata } from 'astro';
 
-export type MemberTier = 'leadership' | 'staff' | 'member';
+export type MemberTier = 'leadership' | 'council' | 'capos' | 'ranks';
 
 export interface Member {
+  /** Display name or Roblox username. */
   name: string;
+  /** In-game rank: Boss, Underboss, Advisor, Capo, Soldier or Associate. */
   role: string;
   tier: MemberTier;
   bio?: string;
@@ -20,47 +22,47 @@ export interface Member {
   placeholder?: boolean;
 }
 
-export const tiers: Record<MemberTier, { label: string; description: string }> = {
+export const tiers: Record<MemberTier, { label: string; description: string; variant: 'feature' | 'default' | 'compact' }> = {
   leadership: {
-    label: 'Family Leadership',
-    description: 'Sets the direction and keeps the family true to its values.',
+    label: 'Boss & Underbosses',
+    description: 'Lead the family, set the direction and give the orders in war.',
+    variant: 'feature',
   },
-  staff: {
-    label: 'Staff & Officers',
-    description: 'Organise activities, welcome new members and keep things running.',
+  council: {
+    label: 'Advisors',
+    description: 'Help run the Vault, write the family notice and keep the operation on track.',
+    variant: 'default',
   },
-  member: {
-    label: 'Members',
+  capos: {
+    label: 'Capos',
+    description: 'Lead by example and keep the crews organised and active.',
+    variant: 'default',
+  },
+  ranks: {
+    label: 'Soldiers & Associates',
     description: 'The heart of Noctus Volpe.',
+    variant: 'compact',
   },
 };
 
 export const members: Member[] = [
-  {
-    name: 'Leader Name',
-    role: 'Family Leader',
-    tier: 'leadership',
-    bio: 'Short introduction for the family leader goes here.',
-    placeholder: true,
-  },
-  {
-    name: 'Co-Leader Name',
-    role: 'Co-Leader',
-    tier: 'leadership',
-    bio: 'Short introduction for the co-leader goes here.',
-    placeholder: true,
-  },
-  { name: 'Officer Name', role: 'Officer', tier: 'staff', bio: 'Area of responsibility goes here.', placeholder: true },
-  { name: 'Officer Name', role: 'Officer', tier: 'staff', bio: 'Area of responsibility goes here.', placeholder: true },
-  { name: 'Officer Name', role: 'Recruitment Officer', tier: 'staff', bio: 'Area of responsibility goes here.', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
-  { name: 'Member Name', role: 'Member', tier: 'member', placeholder: true },
+  { name: 'Boss Name', role: 'Boss', tier: 'leadership', bio: 'Short introduction for the Boss goes here.', placeholder: true },
+  { name: 'Underboss Name', role: 'Underboss', tier: 'leadership', bio: 'Short introduction goes here.', placeholder: true },
+  { name: 'Advisor Name', role: 'Advisor', tier: 'council', bio: 'Area of responsibility goes here.', placeholder: true },
+  { name: 'Advisor Name', role: 'Advisor', tier: 'council', bio: 'Area of responsibility goes here.', placeholder: true },
+  { name: 'Advisor Name', role: 'Advisor', tier: 'council', bio: 'Area of responsibility goes here.', placeholder: true },
+  { name: 'Capo Name', role: 'Capo', tier: 'capos', placeholder: true },
+  { name: 'Capo Name', role: 'Capo', tier: 'capos', placeholder: true },
+  { name: 'Capo Name', role: 'Capo', tier: 'capos', placeholder: true },
+  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
+  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
+  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
+  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
+  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
+  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
+  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
+  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
 ];
 
+export const tierOrder: MemberTier[] = ['leadership', 'council', 'capos', 'ranks'];
 export const membersByTier = (tier: MemberTier) => members.filter((m) => m.tier === tier);

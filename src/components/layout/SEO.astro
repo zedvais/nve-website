@@ -1,5 +1,5 @@
 ---
-import { site } from '@/data/site';
+import { game, site } from '@/data/site';
 
 interface Props {
   title?: string;
@@ -22,6 +22,7 @@ const jsonLd = {
   url: Astro.site?.toString(),
   description: site.description,
   slogan: site.tagline,
+  knowsAbout: [game.name, game.platform],
 };
 ---
 

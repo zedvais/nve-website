@@ -19,7 +19,7 @@ export const site = {
   tagline: 'United by Passion. Driven by Ambition.',
   footerLine: 'Noctus Volpe — United as One.',
   description:
-    'Noctus Volpe (NVE) is a gaming family built on teamwork, dedication and the pursuit of something greater. More than a name. More than a family.',
+    'Noctus Volpe (NVE) is a family in Idle Mafia on Roblox, built on teamwork, dedication and the pursuit of something greater. More than a name. More than a family.',
   locale: 'en',
   /** Social preview image in /public. Replace with a branded 1200×630 image when available. */
   ogImage: '/og-image.png',
@@ -33,6 +33,20 @@ export const site = {
   },
 } as const;
 
+/**
+ * The game the family plays. Shown in the hero, footer and SEO copy.
+ * `url` is the public Roblox game page; clear it to hide the "Play" link.
+ */
+export const game = {
+  name: 'Idle Mafia',
+  platform: 'Roblox',
+  url: 'https://www.roblox.com/games/73897506680154',
+  /** Shown in the hero status strip. Set to false to show "Closed". */
+  recruiting: true,
+  disclaimer:
+    'Noctus Volpe is a player-run family. Not affiliated with or endorsed by Roblox Corporation or the developers of Idle Mafia.',
+};
+
 export const navigation: NavLink[] = [
   { label: 'Home', href: '/#home', section: 'home' },
   { label: 'About', href: '/#about', section: 'about' },
@@ -42,7 +56,7 @@ export const navigation: NavLink[] = [
 ];
 
 export const hero = {
-  eyebrow: 'Gaming family',
+  eyebrow: 'An Idle Mafia family on Roblox',
   heading: ['Noctus', 'Volpe'],
   tagline: 'United by Passion. Driven by Ambition.',
   description:
@@ -56,15 +70,15 @@ export const about = {
   label: 'About',
   heading: 'More than a community.',
   lead:
-    'Noctus Volpe is a gaming family for players who would rather build something together than chase it alone.',
+    'Noctus Volpe is a family in Idle Mafia. We run the city the way a real family should: together.',
   body: [
-    'We bring together people who value cooperation, steady progression and real connections. Whether you log in every evening or a few times a week, there is a place for you here, and people who notice when you show up.',
-    'Every boost we unlock and every bit of ground we take is shared. We plan together, help newer members find their footing, and celebrate the wins as a family. The goal is not a quick climb. It is a community that is still growing, and still worth being part of, years from now.',
+    'On paper, Idle Mafia is about properties, heists and Cash. In practice, the game gets better with people you trust. NVE brings together players who value cooperation, steady progression and real connections, whether you log in every evening or a few times a week.',
+    'What one of us earns, all of us feel. Donations to the Family Vault unlock perks for everyone, wars are fought side by side, and every district we hold is held as a family. We help newer members get their operation running, and we plan for the long game rather than a quick climb.',
   ],
   pillars: [
-    { title: 'A welcoming home', text: 'New or veteran, you get a warm welcome and people ready to help.' },
-    { title: 'Shared progress', text: 'Achievements are earned together and enjoyed by everyone.' },
-    { title: 'Teamwork first', text: 'We back each other up, in game and out of it.' },
+    { title: 'A welcoming family', text: 'New to the streets or a seasoned boss, you get a warm welcome and people ready to help.' },
+    { title: 'Shared progress', text: 'Vault donations power perks that every member benefits from.' },
+    { title: 'Side by side in war', text: 'When the family goes to war, we coordinate and fight together.' },
     { title: 'Active participation', text: 'The family moves forward because its members show up.' },
     { title: 'Built to last', text: 'We grow with intention, for the long run.' },
   ],
@@ -76,7 +90,7 @@ export const values = {
   index: '02',
   label: 'Values',
   heading: 'What defines us.',
-  intro: 'Four principles shape how we play, how we treat each other, and where we are headed.',
+  intro: 'Every family has a code. These four principles shape how we play, how we treat each other, and where we are headed.',
   items: [
     {
       number: '01',
@@ -110,7 +124,7 @@ export const family = {
   label: 'Family',
   heading: 'The people behind the name.',
   intro:
-    'Noctus Volpe is led by its members. Leadership sets the direction, officers keep things running, and every member helps write the story.',
+    'Every seat at the table matters. The Boss sets the direction, Underbosses and Advisors run the operation, Capos lead the crews, and every Soldier and Associate helps write the story.',
 };
 
 export const journey = {
@@ -118,7 +132,7 @@ export const journey = {
   label: 'Journey',
   heading: 'Our journey.',
   intro:
-    'The milestones that mark how far the family has come. This record grows as we do.',
+    'Family levels, perks unlocked, districts taken and wars won. The record of how far NVE has come, kept as it happens.',
 };
 
 export const recruitment = {
@@ -128,12 +142,17 @@ export const recruitment = {
   statement:
     'We are looking for players who show up, pull together and want to grow with a family that has their back.',
   expectations: [
-    { title: 'Active participation', text: 'Be present, take part in family activities and keep in touch.' },
-    { title: 'Teamwork and cooperation', text: 'Coordinate with others and play for the group, not just yourself.' },
-    { title: 'Support family bonuses', text: 'Contribute stamina and resources so everyone benefits from shared bonuses.' },
-    { title: 'Territory expansion', text: 'Help the family claim and hold new ground.' },
-    { title: 'Earned ranks', text: 'Ranks follow progression and activity. Effort is recognised.' },
-    { title: 'Respect, low drama', text: 'Communicate respectfully and keep the environment positive.' },
+    { title: 'Active participation', text: 'Be present, take part in family activity and stay in touch on Discord.' },
+    { title: 'Teamwork and cooperation', text: 'Coordinate with the family and play for the group, not just yourself.' },
+    { title: 'Fuel the Family Vault', text: 'Donate Stamina, Cash and Gold Bars so everyone benefits from family perks.' },
+    { title: 'Hold the territory', text: 'Answer the call in family wars and help claim and hold districts.' },
+    { title: 'Earn your rank', text: 'Ranks follow progression and activity, from Associate up to Capo and beyond.' },
+    { title: 'Respect, low drama', text: 'Communicate respectfully and keep the family a positive place.' },
+  ],
+  steps: [
+    { title: 'Reach out', text: 'Join our Discord and introduce yourself to leadership.' },
+    { title: 'Get the nod', text: 'A member of leadership will get in touch about your place in the family.' },
+    { title: 'Join in game', text: 'Join Noctus Volpe in Idle Mafia and start contributing.' },
   ],
   primaryCta: { label: 'Join Noctus Volpe' },
   secondaryCta: { label: 'Connect on Discord' },
