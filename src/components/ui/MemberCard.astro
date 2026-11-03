@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import type { Member } from '@/data/members';
+
+interface Props {
+  member: Member;
+  /** "feature" for leadership, "default" for staff, "compact" for the roster. */
+  variant?: 'feature' | 'default' | 'compact';
+}
+
+const { member, variant = 'default' } = Astro.props;
+
+const initials = member.name
+  .split(/\s+/)
+  .filter((w) => w && w !== 'Name')
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+
+const avatarSize = { feature: 'size-24 sm:size-28 text-2xl', default: 'size-16 text-lg', compact: 'size-12 text-sm' }[variant];
+const avatarPx = { feature: 112, default: 64, compact: 48 }[variant];
+---
+
+<article
+  class:list={[
+    'group relative flex h-full border border-line bg-bg transition-colors duration-500 hover:border-accent-muted hover:bg-elevated',
+    variant === 'feature' && 'flex-col gap-8 p-7 sm:flex-row sm:items-center sm:p-9',
+    variant === 'default' && 'flex-col gap-6 p-6 sm:p-7',
+    variant === 'compact' && 'items-center gap-4 p-4',
+  ]}
+>
+  <span
+    class="absolute left-0 top-0 h-full w-px origin-top scale-y-0 bg-accent transition-transform duration-700 group-hover:scale-y-100"
+    aria-hidden="true"
+  ></span>
+
+  <div
+    class:list={[
+      'relative grid shrink-0 place-items-center overflow-hidden border border-line bg-surface font-display font-bold tracking-[-0.04em] text-muted',
+      avatarSize,
+    ]}
+  >
+    {
+      member.avatar ? (
+        <Image
+          src={member.avatar}
+          alt=""
+          width={avatarPx * 2}
+          height={avatarPx * 2}
+          loading="lazy"
+          class="size-full object-cover"
+        />
+      ) : (
+        <>
+          <div class="grid-lines absolute inset-0 [background-size:12px_12px]" aria-hidden="true" />
+          <span class="relative" aria-hidden="true">{initials || '··'}</span>
+        </>
+      )
+    }
+  </div>
+
+  <div class="min-w-0">
+    <p class:list={['eyebrow', variant !== 'compact' ? 'mb-2 text-accent-soft' : 'mb-1 !text-[0.65rem]']}>{member.role}</p>
+    <h4
+      class:list={[
+        'truncate font-display font-semibold',
+        variant === 'feature' && 'text-2xl sm:text-3xl',
+        variant === 'default' && 'text-xl',
+        variant === 'compact' && 'text-base',
+      ]}
+    >
+      {member.name}
+    </h4>
+    {member.bio && variant !== 'compact' && <p class="mt-3 text-sm leading-relaxed text-muted">{member.bio}</p>}
+  </div>
+
+  {
+    member.placeholder && variant !== 'compact' && (
+      <span
+        class="absolute right-3 top-3 border border-line px-2 py-0.5 font-display text-[0.6rem] uppercase tracking-[0.18em] text-muted"
+      >
+        Placeholder
+      </span>
+    )
+  }
+</article>

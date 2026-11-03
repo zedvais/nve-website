@@ -1,0 +1,49 @@
+---
+import '@/styles/global.css';
+import SEO from '@/components/layout/SEO.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { site } from '@/data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.locale} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09090B" />
+    <meta name="color-scheme" content="dark" />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO {...props} />
+  </head>
+  <body class="min-h-dvh overflow-x-clip bg-bg text-fg">
+    <a
+      href="#main"
+      class="fixed left-4 top-4 z-[100] -translate-y-24 bg-fg px-4 py-3 font-display text-xs font-semibold uppercase tracking-[0.14em] text-bg transition-transform focus:translate-y-0"
+    >
+      Skip to content
+    </a>
+    <Header />
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '@/scripts/site';
+    </script>
+  </body>
+</html>

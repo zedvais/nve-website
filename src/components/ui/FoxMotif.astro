@@ -1,0 +1,32 @@
+---
+/**
+ * Abstract, angular fox-head line motif used as a decorative background
+ * element. It is intentionally not a logo.
+ */
+interface Props {
+  class?: string;
+  animate?: boolean;
+  delay?: number;
+}
+
+const { class: className, animate = false, delay = 0 } = Astro.props;
+const lineClass = animate ? 'draw-path' : '';
+---
+
+<svg
+  viewBox="0 0 400 400"
+  fill="none"
+  class:list={['pointer-events-none', className]}
+  aria-hidden="true"
+  focusable="false"
+  style={`--intro-delay:${delay}`}
+>
+  <g stroke="currentColor" stroke-width="1" stroke-linejoin="miter" vector-effect="non-scaling-stroke">
+    <path class={lineClass} pathLength="1" d="M60 30 L160 150 L240 150 L340 30 L320 200 L200 370 L80 200 Z" />
+    <path class={lineClass} pathLength="1" d="M160 150 L200 240 L240 150" />
+    <path class={lineClass} pathLength="1" d="M80 200 L200 240 L320 200" />
+    <path class={lineClass} pathLength="1" d="M200 240 L200 370" />
+    <path class={lineClass} pathLength="1" d="M60 30 L120 190 M340 30 L280 190" opacity="0.5" />
+  </g>
+  <path d="M320 200 L340 30 L280 190 Z" fill="var(--color-accent)" opacity="0.18" />
+</svg>

@@ -1,0 +1,61 @@
+---
+import Crown from '@lucide/astro/icons/crown';
+import ShieldCheck from '@lucide/astro/icons/shield-check';
+import Users from '@lucide/astro/icons/users';
+import Container from '@/components/ui/Container.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import MemberCard from '@/components/ui/MemberCard.astro';
+import { family } from '@/data/site';
+import { members, membersByTier, tiers, type MemberTier } from '@/data/members';
+
+const hasPlaceholders = members.some((m) => m.placeholder);
+
+const groups: { tier: MemberTier; icon: typeof Crown; variant: 'feature' | 'default' | 'compact'; grid: string }[] = [
+  { tier: 'leadership', icon: Crown, variant: 'feature', grid: 'lg:grid-cols-2' },
+  { tier: 'staff', icon: ShieldCheck, variant: 'default', grid: 'sm:grid-cols-2 lg:grid-cols-3' },
+  { tier: 'member', icon: Users, variant: 'compact', grid: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' },
+];
+---
+
+<section id="family" aria-labelledby="family-heading" class="relative py-24 sm:py-32 lg:py-40">
+  <Container size="wide">
+    <SectionHeading id="family-heading" index={family.index} label={family.label} heading={family.heading} intro={family.intro} />
+
+    {
+      hasPlaceholders && (
+        <p class="mt-10 inline-flex items-center gap-3 border border-line px-4 py-2 text-sm text-muted" data-reveal>
+          <span class="size-1.5 rounded-full border border-muted" aria-hidden="true" />
+          Roster coming soon. Names shown are placeholders.
+        </p>
+      )
+    }
+
+    <div class="mt-16 space-y-20 lg:mt-24">
+      {
+        groups.map(({ tier, icon: Icon, variant, grid }) => {
+          const list = membersByTier(tier);
+          if (!list.length) return null;
+          return (
+            <div class="grid gap-8 lg:grid-cols-12" data-reveal>
+              <header class="lg:col-span-3">
+                <div class="flex items-center gap-3 border-t border-line pt-5 lg:sticky lg:top-28">
+                  <Icon size={18} stroke-width={1.5} class="text-accent-soft" aria-hidden="true" />
+                  <h3 class="font-display text-sm font-semibold uppercase tracking-[0.18em]">{tiers[tier].label}</h3>
+                  <span class="ml-auto font-display text-xs tabular-nums text-muted lg:hidden">{list.length}</span>
+                </div>
+                <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">{tiers[tier].description}</p>
+              </header>
+              <ul class:list={['grid gap-3 lg:col-span-9', grid]}>
+                {list.map((member) => (
+                  <li>
+                    <MemberCard member={member} variant={variant} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })
+      }
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,49 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  heading: string;
+  intro?: string;
+  id?: string;
+  align?: 'left' | 'split';
+}
+
+const { index, label, heading, intro, id, align = 'split' } = Astro.props;
+---
+
+<header
+  class:list={[
+    'grid gap-8',
+    align === 'split' && intro && 'lg:grid-cols-12 lg:items-end',
+  ]}
+>
+  <div class:list={[align === 'split' && intro && 'lg:col-span-7']}>
+    <p class="eyebrow mb-6 flex items-center gap-3" data-reveal>
+      <span class="text-accent-soft">{index}</span>
+      <span class="h-px w-8 bg-line" aria-hidden="true"></span>
+      <span>{label}</span>
+    </p>
+    <h2
+      id={id}
+      class="display text-[clamp(2.5rem,7vw,5.5rem)]"
+      data-reveal
+      style="--reveal-delay: 80"
+    >
+      {heading}
+    </h2>
+  </div>
+  {
+    intro && (
+      <p
+        class:list={[
+          'max-w-md text-base leading-relaxed text-muted sm:text-lg',
+          align === 'split' && 'lg:col-span-5 lg:justify-self-end',
+        ]}
+        data-reveal
+        style="--reveal-delay: 160"
+      >
+        {intro}
+      </p>
+    )
+  }
+</header>

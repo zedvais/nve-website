@@ -1,0 +1,75 @@
+---
+import X from '@lucide/astro/icons/x';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import Logo from '@/components/ui/Logo.astro';
+import Button from '@/components/ui/Button.astro';
+import SocialIcon from '@/components/ui/SocialIcon.astro';
+import { navigation, site } from '@/data/site';
+
+interface Props {
+  discordHref: string;
+  discordExternal: boolean;
+}
+
+const { discordHref, discordExternal } = Astro.props;
+---
+
+<div
+  id="mobile-nav"
+  data-mobile-nav
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site menu"
+  class="fixed inset-0 z-[60] flex flex-col bg-bg/95 backdrop-blur-xl lg:hidden"
+>
+  <div class="flex h-18 items-center justify-between px-5 sm:px-8">
+    <span class="flex items-center gap-3">
+      <Logo size={36} decorative />
+      <span class="font-display text-sm font-bold uppercase tracking-[0.28em]">{site.name}</span>
+    </span>
+    <button
+      type="button"
+      data-menu-close
+      class="inline-grid size-11 place-items-center border border-line text-fg transition-colors hover:border-accent/70"
+    >
+      <X size={20} stroke-width={1.5} aria-hidden="true" />
+      <span class="sr-only">Close menu</span>
+    </button>
+  </div>
+
+  <nav aria-label="Mobile" class="flex flex-1 flex-col justify-center px-5 sm:px-8">
+    <ol class="border-t border-line">
+      {
+        navigation.map((link, i) => (
+          <li class="border-b border-line">
+            <a
+              href={link.href}
+              data-nav-link
+              data-section={link.section}
+              class="group flex items-baseline gap-5 py-5 text-muted transition-colors hover:text-fg aria-[current=true]:text-fg"
+            >
+              <span class="font-display text-xs tracking-[0.2em] text-accent-soft">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="display text-4xl sm:text-5xl">{link.label}</span>
+              <ArrowUpRight
+                size={20}
+                stroke-width={1.5}
+                class="ml-auto self-center opacity-0 transition-opacity group-hover:opacity-100"
+                aria-hidden="true"
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="px-5 pb-10 sm:px-8">
+    <Button href={discordHref} external={discordExternal} size="lg" class="w-full" data-menu-link>
+      <SocialIcon icon="discord" size={18} />
+      Join Our Discord
+    </Button>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+---
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import Container from '@/components/ui/Container.astro';
+import Button from '@/components/ui/Button.astro';
+import FoxMotif from '@/components/ui/FoxMotif.astro';
+import { hero, site } from '@/data/site';
+---
+
+<section id="home" aria-labelledby="hero-heading" class="relative isolate flex min-h-svh flex-col overflow-hidden">
+  <!-- Atmosphere -->
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <div class="grid-lines absolute inset-0 [mask-image:radial-gradient(ellipse_80%_70%_at_60%_40%,black,transparent)]"></div>
+    <div class="intro-fade absolute -right-[20%] -top-[30%] h-[110vh] w-[110vh] rounded-full bg-[radial-gradient(closest-side,rgb(139_92_246/0.22),rgb(74_62_140/0.12)_45%,transparent)] blur-2xl"></div>
+    <div class="intro-fade absolute -bottom-[40%] -left-[25%] h-[80vh] w-[80vh] rounded-full bg-[radial-gradient(closest-side,rgb(74_62_140/0.18),transparent)] blur-2xl" style="--intro-delay:300"></div>
+    <div class="grain absolute inset-0"></div>
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg"></div>
+  </div>
+
+  <!-- Fox-inspired geometric motif -->
+  <FoxMotif
+    animate
+    delay={400}
+    class="absolute right-[-18%] top-1/2 -z-10 w-[min(118vw,62rem)] -translate-y-1/2 text-fg/[0.09] sm:right-[-8%] lg:right-[2%] lg:w-[min(56vw,50rem)]"
+  />
+
+  <Container size="wide" class="flex flex-1 flex-col pb-10 pt-28 sm:pt-32 lg:pt-36">
+    <div class="flex items-center justify-between gap-6">
+      <p class="eyebrow intro flex items-center gap-3" style="--intro-delay:100">
+        <span class="inline-block size-1.5 bg-accent" aria-hidden="true"></span>
+        {site.shortName} — {hero.eyebrow}
+      </p>
+      <p class="eyebrow intro hidden sm:block" style="--intro-delay:150">{site.monogram} / {new Date().getFullYear()}</p>
+    </div>
+
+    <div class="my-auto py-14">
+      <h1 id="hero-heading" class="display text-[clamp(3.6rem,20vw,14.5rem)] leading-[0.82]">
+        <span class="sr-only">{site.name}</span>
+        {
+          hero.heading.map((word, i) => (
+            <span class="block overflow-hidden pb-[0.04em]" aria-hidden="true">
+              <span
+                class:list={['intro block', i === 1 && 'pl-[0.6em] text-transparent [-webkit-text-stroke:1.5px_var(--color-fg)] sm:pl-[1.1em]']}
+                style={`--intro-delay:${200 + i * 140}`}
+              >
+                {word}
+              </span>
+            </span>
+          ))
+        }
+      </h1>
+    </div>
+
+    <div class="grid gap-10 border-t border-line pt-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-6">
+        <p class="intro font-display text-xl font-medium sm:text-2xl" style="--intro-delay:520">
+          {hero.tagline}
+        </p>
+        <p class="intro mt-4 max-w-xl leading-relaxed text-muted sm:text-lg" style="--intro-delay:600">
+          {hero.description}
+        </p>
+      </div>
+      <div class="intro flex flex-col gap-3 sm:flex-row lg:col-span-6 lg:justify-end" style="--intro-delay:700">
+        <Button href={hero.primaryCta.href} size="lg">
+          {hero.primaryCta.label}
+          <ArrowRight size={16} stroke-width={2} class="transition-transform duration-300 group-hover/btn:translate-x-1" aria-hidden="true" />
+        </Button>
+        <Button href={hero.secondaryCta.href} variant="secondary" size="lg">
+          {hero.secondaryCta.label}
+        </Button>
+      </div>
+    </div>
+
+    <a
+      href="#about"
+      class="intro-fade group mt-10 hidden items-center gap-4 self-start text-muted transition-colors hover:text-fg sm:flex"
+      style="--intro-delay:1000"
+    >
+      <span class="relative block h-12 w-px overflow-hidden bg-line" aria-hidden="true">
+        <span class="scroll-cue absolute inset-0 bg-accent"></span>
+      </span>
+      <span class="eyebrow group-hover:text-fg">Scroll</span>
+      <span class="sr-only">to the About section</span>
+    </a>
+  </Container>
+</section>
