@@ -69,6 +69,7 @@ export const members: Member[] = [
   player('iamesoeur', 'Soldier', 'ranks'),
   player('nafismuaz7', 'Soldier', 'ranks'),
   player('Wood2Karam', 'Soldier', 'ranks'),
+  player('llIIIIlllIlIlIlIll', 'Soldier', 'ranks'),
   // Associates
   player('cookiegirlswirl5555', 'Associate', 'ranks'),
   player('XxCrazyGamer2xxx', 'Associate', 'ranks'),
