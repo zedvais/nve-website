@@ -23,7 +23,7 @@ export interface Member {
   bio?: string;
   /** Extra title shown beside the rank, e.g. 'Founder'. */
   title?: string;
-  /** In-game respect, shown on the card and used for sorting. */
+  /** In-game respect. Not shown on the site, only used to order members within a rank. */
   respect?: number;
   avatar?: ImageMetadata;
   placeholder?: boolean;
