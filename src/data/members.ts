@@ -58,7 +58,7 @@ export const members: Member[] = [
   // Within each group, members are shown by rank, then in the order listed here.
   player('Saetsuna', 'Boss', 'leadership', { title: 'Founder' }),
   player('Zedvais', 'Underboss', 'leadership'),
-  player('Zellacutiepie', 'Underboss', 'leadership'),
+  player('Zellacutipie', 'Underboss', 'leadership'),
   player('Teralament', 'Advisor', 'council'),
   player('LittleSharkSquirt', 'Capo', 'council'),
   player('L4_n13', 'Capo', 'council'),
@@ -100,7 +100,7 @@ export const members: Member[] = [
   player('wuffy1756', 'Associate', 'ranks'),
   player('Bruhnigol', 'Associate', 'ranks'),
   player('hunterX2_20', 'Associate', 'ranks'),
-  player('KING03', 'Associate', 'ranks'),
+  player('KLNG03', 'Associate', 'ranks'),
   player('Naw_Poe', 'Associate', 'ranks'),
 ];
 
