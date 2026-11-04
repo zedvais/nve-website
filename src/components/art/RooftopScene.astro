@@ -5,16 +5,13 @@
  * build time from a fixed seed (no client JS). CSS animates the fog, city
  * lights, traffic, aircraft and the fox; all of it is still for reduced motion.
  */
+import { seededRandom } from '@/lib/random';
 interface Props {
   class?: string;
 }
 const { class: className } = Astro.props;
 
-let s = 1337;
-const rand = () => {
-  s = (s * 16807) % 2147483647;
-  return (s - 1) / 2147483646;
-};
+const rand = seededRandom(1337);
 const r = (n: number) => Math.round(n * 10) / 10;
 
 const W = 1600;

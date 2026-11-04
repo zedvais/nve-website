@@ -3,6 +3,7 @@
  * Procedurally generated night city skyline (deterministic seed, built at
  * compile time, so it costs no client JS). Original artwork.
  */
+import { seededRandom } from '@/lib/random';
 interface Props {
   class?: string;
   seed?: number;
@@ -14,11 +15,7 @@ interface Props {
 
 const { class: className, seed = 7, count = 38, height = 320, windows = true } = Astro.props;
 
-let s = seed;
-const rand = () => {
-  s = (s * 16807) % 2147483647;
-  return (s - 1) / 2147483646;
-};
+const rand = seededRandom(seed);
 
 const W = 1600;
 let x = -20;

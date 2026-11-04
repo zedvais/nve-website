@@ -4,6 +4,7 @@
  * at night, with sweeping searchlights, stars and embers. Original artwork,
  * CSS-animated, paused while off screen and static for reduced motion.
  */
+import { seededRandom } from '@/lib/random';
 import Container from '@/components/ui/Container.astro';
 import FoxConstellation from '@/components/art/FoxConstellation.astro';
 import OrbitRings from '@/components/art/OrbitRings.astro';
@@ -11,11 +12,7 @@ import Embers from '@/components/art/Embers.astro';
 import NightSkyline from '@/components/art/NightSkyline.astro';
 import { interlude } from '@/data/site';
 
-let s = 29;
-const rand = () => {
-  s = (s * 16807) % 2147483647;
-  return (s - 1) / 2147483646;
-};
+const rand = seededRandom(29);
 const stars = Array.from({ length: 70 }, () => ({
   x: (rand() * 1600).toFixed(0),
   y: (rand() * 520).toFixed(0),

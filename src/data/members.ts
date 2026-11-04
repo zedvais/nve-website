@@ -105,11 +105,16 @@ export const members: Member[] = [
 ];
 
 export const tierOrder: MemberTier[] = ['leadership', 'council', 'ranks'];
-const rankOrder = ['Boss', 'Underboss', 'Advisor', 'Capo', 'Soldier', 'Associate'];
-const rankIndex = (role: string) => (rankOrder.indexOf(role) + 1 || rankOrder.length + 1);
+/** In-game ranks from highest to lowest. Unknown roles sort last. */
+export const rankOrder = ['Boss', 'Underboss', 'Advisor', 'Capo', 'Soldier', 'Associate'] as const;
+export const rankIndex = (role: string): number => {
+  const i = (rankOrder as readonly string[]).indexOf(role);
+  return i === -1 ? rankOrder.length : i;
+};
+
+/** Sorts by rank, keeping the original list order within a rank (Array.sort is stable). */
+export const sortByRank = <T extends Pick<Member, 'role'>>(list: T[]): T[] =>
+  [...list].sort((a, b) => rankIndex(a.role) - rankIndex(b.role));
 
 /** Members of one group, sorted by rank (list order is kept within a rank). */
-export const membersByTier = (tier: MemberTier) =>
-  members
-    .filter((m) => m.tier === tier)
-    .sort((a, b) => rankIndex(a.role) - rankIndex(b.role));
+export const membersByTier = (tier: MemberTier) => sortByRank(members.filter((m) => m.tier === tier));

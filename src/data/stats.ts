@@ -4,6 +4,7 @@
  * Everything derived from them (open seats, XP progress, "about five weeks")
  * is calculated, so only the raw values need editing.
  */
+import { formatDate, formatNumber, percentOf, seatsLeft } from '@/lib/format';
 
 export type PerkTier = 'economy' | 'core' | 'elite';
 
@@ -58,12 +59,9 @@ export const perks: Perk[] = [
 
 // ---- Derived values -------------------------------------------------------
 
-const fmtDate = (iso: string, opts: Intl.DateTimeFormatOptions) =>
-  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { timeZone: 'UTC', ...opts });
-
-export const openSeats = Math.max(0, stats.members.max - stats.members.current);
-export const xpPercent = Math.min(100, Math.round((stats.xp.current / stats.xp.next) * 1000) / 10);
-export const asOfLabel = fmtDate(stats.asOf, { month: 'long', day: 'numeric', year: 'numeric' });
-export const foundedLabel = fmtDate(stats.founded, { month: 'long', day: 'numeric', year: 'numeric' });
-export const foundedShort = fmtDate(stats.founded, { month: 'short', year: 'numeric' });
-export const formatNumber = (n: number) => n.toLocaleString('en-US');
+export const openSeats = seatsLeft(stats.members.current, stats.members.max);
+export const xpPercent = percentOf(stats.xp.current, stats.xp.next);
+export const asOfLabel = formatDate(stats.asOf, { month: 'long', day: 'numeric', year: 'numeric' });
+export const foundedLabel = formatDate(stats.founded, { month: 'long', day: 'numeric', year: 'numeric' });
+export const foundedShort = formatDate(stats.founded, { month: 'short', year: 'numeric' });
+export { formatNumber };
