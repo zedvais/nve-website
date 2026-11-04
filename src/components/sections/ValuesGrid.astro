@@ -1,0 +1,57 @@
+---
+import HeartHandshake from '@lucide/astro/icons/heart-handshake';
+import HandHelping from '@lucide/astro/icons/hand-helping';
+import ShieldCheck from '@lucide/astro/icons/shield-check';
+import TrendingUp from '@lucide/astro/icons/trending-up';
+import ValueArt from '@/components/art/ValueArt.astro';
+import Container from '@/components/ui/Container.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { values, type ValueIcon } from '@/data/site';
+
+const icons: Record<ValueIcon, typeof HeartHandshake> = {
+  loyalty: HeartHandshake,
+  integrity: ShieldCheck,
+  supportive: HandHelping,
+  ambition: TrendingUp,
+};
+---
+
+<section id="values" aria-labelledby="values-heading" class="relative border-t border-line bg-surface/40 py-24 sm:py-32 lg:py-40">
+  <Container size="wide">
+    <SectionHeading id="values-heading" index={values.index} label={values.label} heading={values.heading} intro={values.intro} />
+
+    <ul class="mt-16 grid border-l border-t border-line sm:grid-cols-2 lg:mt-24 lg:grid-cols-4">
+      {
+        values.items.map((value, i) => {
+          const Icon = icons[value.icon];
+          return (
+            <li
+              class="group relative flex flex-col sm:min-h-[22rem] border-b border-r border-line bg-bg p-7 transition-colors duration-500 hover:bg-elevated sm:p-8"
+              data-reveal
+              style={`--reveal-delay:${i * 90}`}
+            >
+              <span
+                class="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-accent transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-x-100"
+                aria-hidden="true"
+              />
+              <div class="flex items-start justify-between">
+                <span class="display text-6xl text-fg/15 transition-colors duration-500 group-hover:text-accent-soft/70 sm:text-7xl">
+                  {value.number}
+                </span>
+                <Icon size={22} stroke-width={1.25} class="mt-2 text-muted transition-colors duration-500 group-hover:text-fg" aria-hidden="true" />
+              </div>
+              <ValueArt
+                name={value.icon}
+                class="mx-auto my-8 w-24 text-fg/25 transition-colors duration-500 group-hover:text-accent-soft/70 sm:my-10 sm:w-28"
+              />
+              <div class="mt-auto">
+                <h3 class="display text-3xl tracking-[-0.02em]">{value.title}</h3>
+                <p class="mt-4 leading-relaxed text-muted">{value.text}</p>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </Container>
+</section>

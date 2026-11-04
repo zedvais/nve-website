@@ -1,0 +1,95 @@
+---
+/**
+ * Quiet divider under the hero: a hairline that draws in, a soft glint that
+ * glides along it, and the four values set in small tracked type.
+ */
+import Container from '@/components/ui/Container.astro';
+
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+
+<div class="relative py-12 sm:py-16" aria-hidden="true" data-scene>
+  <Container size="wide">
+    <div class="relative">
+      <div class="valueline-rule absolute inset-x-0 top-1/2 hidden h-px bg-line sm:block"></div>
+      <div class="valueline-glint absolute top-1/2 hidden h-px w-56 -translate-y-1/2 bg-gradient-to-r from-transparent via-accent-soft/80 to-transparent sm:block"></div>
+      <ul class="relative grid grid-cols-2 gap-y-5 sm:grid-cols-4">
+        {
+          items.map((item, i) => (
+            <li class="flex justify-center">
+              <span class="valueline-item flex items-center gap-3 bg-bg px-4 sm:px-6" style={`--scene-delay:${300 + i * 140}ms`}>
+                <span class="valueline-node size-1.5 rotate-45 border border-accent-soft" style={`--node-delay:${i * 1.2}s`} />
+                <span class="font-display text-[0.65rem] tabular-nums tracking-[0.2em] text-accent-soft/80">{String(i + 1).padStart(2, '0')}</span>
+                <span class="font-display text-xs font-medium uppercase tracking-[0.32em] text-fg/80">{item}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Container>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .valueline-rule {
+      transform: scaleX(0);
+      transition: transform 1.8s var(--ease-out-expo);
+    }
+    :global(.js) .valueline-item {
+      opacity: 0;
+      transform: translateY(6px);
+      transition:
+        opacity 1s var(--ease-out-expo),
+        transform 1s var(--ease-out-expo);
+      transition-delay: var(--scene-delay, 0ms);
+    }
+    :global(.js) .has-played .valueline-rule {
+      transform: none;
+    }
+    :global(.js) .has-played .valueline-item {
+      opacity: 1;
+      transform: none;
+    }
+    .valueline-glint {
+      animation: glint 9s cubic-bezier(0.45, 0, 0.55, 1) 1.5s infinite;
+      opacity: 0;
+    }
+    .valueline-node {
+      animation: node 4.8s ease-in-out infinite;
+      animation-delay: var(--node-delay, 0s);
+    }
+  }
+  @keyframes glint {
+    0% {
+      left: -15%;
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    85%,
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+  @keyframes node {
+    0%,
+    70%,
+    100% {
+      background-color: transparent;
+      box-shadow: none;
+    }
+    80% {
+      background-color: var(--color-accent-soft);
+      box-shadow: 0 0 10px 1px rgb(185 164 251 / 0.6);
+    }
+  }
+</style>

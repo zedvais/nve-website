@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import type { Member } from '@/data/members';
+import type { RobloxProfile } from '@/lib/roblox';
+import Logo from '@/components/ui/Logo.astro';
+
+interface Props {
+  member: Member;
+  /** Roblox data fetched at build time, when available. */
+  profile?: RobloxProfile;
+  /** "feature" for leadership, "default" for staff, "compact" for the roster. */
+  variant?: 'feature' | 'default' | 'compact';
+}
+
+const { member, profile, variant = 'default' } = Astro.props;
+
+const avatarSize = { feature: 'size-24 sm:size-28', default: 'size-16', compact: 'size-12' }[variant];
+const avatarPx = { feature: 112, default: 64, compact: 48 }[variant];
+const showDisplayName = profile && profile.displayName && profile.displayName !== member.name;
+const Tag = profile ? 'a' : 'article';
+const linkProps = profile ? { href: profile.profileUrl, target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<Tag
+  {...linkProps}
+  class:list={[
+    'group relative flex h-full border border-line bg-bg transition-colors duration-500 hover:border-accent-muted hover:bg-elevated',
+    variant === 'feature' && 'flex-col gap-8 p-7 sm:flex-row sm:items-center sm:p-9',
+    variant === 'default' && 'flex-col gap-6 p-6 sm:p-7',
+    variant === 'compact' && 'items-center gap-4 p-4',
+  ]}
+>
+  <span
+    class="absolute left-0 top-0 h-full w-px origin-top scale-y-0 bg-accent transition-transform duration-700 group-hover:scale-y-100"
+    aria-hidden="true"
+  ></span>
+
+  <div class:list={['relative grid shrink-0 place-items-center overflow-hidden border border-line bg-surface', avatarSize]}>
+    <div class="grid-lines absolute inset-0 [background-size:12px_12px]" aria-hidden="true"></div>
+    {
+      member.avatar ? (
+        <Image src={member.avatar} alt="" width={avatarPx * 2} height={avatarPx * 2} loading="lazy" class="relative size-full object-cover" />
+      ) : profile?.headshotUrl ? (
+        <>
+          <div class="absolute inset-0 bg-[radial-gradient(closest-side,rgb(139_92_246/0.35),transparent)] opacity-70 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
+          <img
+            src={profile.headshotUrl}
+            alt=""
+            width={avatarPx}
+            height={avatarPx}
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            class="relative size-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </>
+      ) : (
+        <Logo variant="mark" size={40} loading="lazy" decorative class="relative !h-auto !w-[56%] opacity-30 transition-opacity duration-500 group-hover:opacity-70" />
+      )
+    }
+  </div>
+
+  <div class="min-w-0">
+    <p class:list={['eyebrow', variant !== 'compact' ? 'mb-2 text-accent-soft' : 'mb-1 !text-[0.65rem]']}>{member.role}{member.title && ` · ${member.title}`}</p>
+    <h4
+      class:list={[
+        'truncate font-display font-semibold',
+        variant === 'feature' && 'text-2xl sm:text-3xl',
+        variant === 'default' && 'text-xl',
+        variant === 'compact' && 'text-base',
+      ]}
+      title={member.name}
+    >
+      {member.name}
+    </h4>
+    {showDisplayName && <p class="mt-1 truncate text-sm text-muted">{profile.displayName}</p>}
+    {member.bio && variant !== 'compact' && <p class="mt-3 text-sm leading-relaxed text-muted">{member.bio}</p>}
+  </div>
+
+  {
+    profile && (
+      <span class="absolute right-3 top-3 inline-flex items-center gap-1 font-display text-[0.6rem] uppercase tracking-[0.18em] text-muted transition-colors duration-300 group-hover:text-fg">
+        <span class:list={[variant === 'compact' && 'sr-only']}>Roblox</span>
+        <ArrowUpRight size={14} stroke-width={1.5} aria-hidden="true" />
+        <span class="sr-only">profile (opens in a new tab)</span>
+      </span>
+    )
+  }
+  {
+    !profile && member.placeholder && variant !== 'compact' && (
+      <span class="absolute right-3 top-3 border border-line px-2 py-0.5 font-display text-[0.6rem] uppercase tracking-[0.18em] text-muted">
+        Placeholder
+      </span>
+    )
+  }
+</Tag>

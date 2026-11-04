@@ -1,0 +1,74 @@
+---
+import TrendingUp from '@lucide/astro/icons/trending-up';
+import Vault from '@lucide/astro/icons/vault';
+import MapPin from '@lucide/astro/icons/map-pin';
+import Swords from '@lucide/astro/icons/swords';
+import Flag from '@lucide/astro/icons/flag';
+import Award from '@lucide/astro/icons/award';
+import type { Highlight, HighlightIcon } from '@/data/highlights';
+
+interface Props {
+  highlight: Highlight;
+  index: number;
+}
+
+const { highlight, index } = Astro.props;
+
+const icons: Record<HighlightIcon, typeof Flag> = {
+  founded: Flag,
+  progression: TrendingUp,
+  vault: Vault,
+  territory: MapPin,
+  respect: Award,
+  war: Swords,
+};
+const Icon = icons[highlight.icon];
+---
+
+<article
+  class="group relative flex h-full flex-col overflow-hidden border border-line bg-surface p-7 transition-colors duration-500 hover:border-accent-muted sm:p-8"
+>
+  <div
+    class="pointer-events-none absolute -right-24 -top-24 size-56 rounded-full bg-accent/0 blur-3xl transition-colors duration-700 group-hover:bg-accent/15"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative flex items-center justify-between gap-4">
+    <span class="font-display text-xs tracking-[0.2em] text-accent-soft">{String(index + 1).padStart(2, '0')}</span>
+    <span class="grid size-10 place-items-center border border-line text-muted transition-colors duration-500 group-hover:text-fg">
+      <Icon size={18} stroke-width={1.5} aria-hidden="true" />
+    </span>
+  </div>
+
+  <p class="eyebrow relative mt-10">{highlight.category}</p>
+  <h3 class="relative mt-3 font-display text-2xl font-semibold leading-tight">{highlight.title}</h3>
+  <p class="relative mt-3 leading-relaxed text-muted">{highlight.description}</p>
+
+  <div class="relative mt-auto pt-10">
+    {
+      highlight.metric && (
+        <p class="mb-5">
+          <span class="display block text-5xl">{highlight.metric.value}</span>
+          <span class="eyebrow mt-2 block">{highlight.metric.label}</span>
+        </p>
+      )
+    }
+    <div class="flex items-center justify-between border-t border-line pt-4 text-xs">
+      {
+        highlight.placeholder ? (
+          <span class="flex items-center gap-2 font-display uppercase tracking-[0.18em] text-muted">
+            <span class="size-1.5 rounded-full border border-muted" aria-hidden="true" />
+            To be recorded
+          </span>
+        ) : (
+          <span class="flex items-center gap-2 font-display uppercase tracking-[0.18em] text-fg">
+            <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+            Recorded
+          </span>
+        )
+      }
+      {highlight.date && <time class="font-display uppercase tracking-[0.18em] text-muted">{highlight.date}</time>}
+    </div>
+  </div>
+</article>

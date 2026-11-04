@@ -1,0 +1,76 @@
+---
+/**
+ * Full-width animated interlude: the fox constellation rising over the city
+ * at night, with sweeping searchlights, stars and embers. Original artwork,
+ * CSS-animated, paused while off screen and static for reduced motion.
+ */
+import { seededRandom } from '@/lib/random';
+import Container from '@/components/ui/Container.astro';
+import FoxConstellation from '@/components/art/FoxConstellation.astro';
+import OrbitRings from '@/components/art/OrbitRings.astro';
+import Embers from '@/components/art/Embers.astro';
+import NightSkyline from '@/components/art/NightSkyline.astro';
+import { interlude } from '@/data/site';
+
+const rand = seededRandom(29);
+const stars = Array.from({ length: 70 }, () => ({
+  x: (rand() * 1600).toFixed(0),
+  y: (rand() * 520).toFixed(0),
+  r: (0.6 + rand() * 1.4).toFixed(1),
+  o: (0.25 + rand() * 0.6).toFixed(2),
+  twinkle: rand() < 0.25,
+  delay: (rand() * 4).toFixed(2),
+}));
+---
+
+<section aria-labelledby="interlude-heading" class="relative isolate overflow-hidden border-y border-line bg-bg" data-scene>
+  <!-- sky -->
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(80%_70%_at_50%_100%,rgb(74_62_140/0.45),transparent_70%)]" aria-hidden="true"></div>
+  <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 -z-10 size-full" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0" stop-color="#b9a4fb" stop-opacity="0.32"></stop>
+        <stop offset="1" stop-color="#b9a4fb" stop-opacity="0"></stop>
+      </linearGradient>
+      <radialGradient id="moon-glow">
+        <stop offset="0.35" stop-color="#b9a4fb" stop-opacity="0.25"></stop>
+        <stop offset="1" stop-color="#b9a4fb" stop-opacity="0"></stop>
+      </radialGradient>
+      <mask id="moon-cut">
+        <rect width="1600" height="700" fill="white"></rect>
+        <circle cx="1126" cy="112" r="24" fill="black"></circle>
+      </mask>
+    </defs>
+    <g fill="#f3f1ff">
+      {
+        stars.map((st) => (
+          <circle cx={st.x} cy={st.y} r={st.r} fill-opacity={st.o} class={st.twinkle ? 'twinkle' : undefined} style={st.twinkle ? `--twinkle-delay:${st.delay}s` : undefined} />
+        ))
+      }
+    </g>
+    <!-- shooting star -->
+    <path d="M300 90l-140 60" stroke="#f3f1ff" stroke-width="1.5" stroke-linecap="round" pathLength="1" class="shooting-star"></path>
+    <!-- moon -->
+    <circle cx="1110" cy="120" r="70" fill="url(#moon-glow)"></circle>
+    <circle cx="1110" cy="120" r="26" fill="#f3f1ff" fill-opacity="0.75" mask="url(#moon-cut)"></circle>
+  </svg>
+
+  <Container size="wide" class="relative pb-56 pt-24 sm:pb-72 sm:pt-32">
+    <div class="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-[1fr_auto_1fr]">
+      <p class="eyebrow text-center lg:text-right" data-reveal>{interlude.eyebrow}</p>
+      <div class="relative mx-auto aspect-square w-[min(78vw,26rem)]">
+        <OrbitRings class="absolute inset-0 size-full" />
+        <FoxConstellation class="absolute inset-[16%] size-[68%] drop-shadow-[0_0_24px_rgb(139_92_246/0.45)]" />
+      </div>
+      <p class="eyebrow text-center lg:text-left" data-reveal style="--reveal-delay:120">{interlude.aside}</p>
+    </div>
+    <h2 id="interlude-heading" class="display mt-12 text-center text-[clamp(2.2rem,6vw,4.75rem)]" data-reveal>
+      {interlude.heading[0]} <span class="text-transparent [-webkit-text-stroke:1.5px_var(--color-fg)]">{interlude.heading[1]}</span>
+    </h2>
+    <p class="mx-auto mt-6 max-w-xl text-center leading-relaxed text-muted sm:text-lg" data-reveal style="--reveal-delay:120">{interlude.text}</p>
+  </Container>
+
+  <Embers class="absolute inset-0 -z-10" count={12} seed={41} />
+  <NightSkyline class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-52 w-full text-[#0e0d15] sm:h-64" seed={5} count={44} />
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-bg to-transparent" aria-hidden="true"></div>
+</section>

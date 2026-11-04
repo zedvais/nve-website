@@ -1,0 +1,61 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
+  /** When missing, the button renders as a non-interactive, disabled element. */
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  external?: boolean;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  external = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const base =
+  'group/btn relative inline-flex items-center justify-center gap-2.5 font-display font-semibold uppercase tracking-[0.14em] whitespace-nowrap transition-[background-color,color,border-color,box-shadow] duration-300 ease-out';
+
+const sizes = {
+  sm: 'h-10 px-5 text-[0.7rem]',
+  md: 'h-12 px-6 text-xs',
+  lg: 'h-14 px-8 text-[0.8rem]',
+};
+
+const variants = {
+  primary:
+    'bg-fg text-bg hover:bg-white hover:shadow-[0_0_0_4px_rgb(139_92_246/0.25)]',
+  secondary:
+    'border border-line bg-white/[0.02] text-fg backdrop-blur-sm hover:border-accent/70 hover:bg-accent/10',
+  ghost: 'text-fg hover:text-accent-soft',
+};
+
+const classes = [base, sizes[size], variants[variant], className];
+const disabled = !href;
+---
+
+{
+  disabled ? (
+    <span
+      class:list={[...classes, 'cursor-not-allowed opacity-50']}
+      aria-disabled="true"
+      {...(rest as HTMLAttributes<'span'>)}
+    >
+      <slot />
+    </span>
+  ) : (
+    <a
+      href={href}
+      class:list={classes}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      {...rest}
+    >
+      <slot />
+    </a>
+  )
+}

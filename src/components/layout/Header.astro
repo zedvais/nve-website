@@ -1,0 +1,65 @@
+---
+import Menu from '@lucide/astro/icons/menu';
+import Logo from '@/components/ui/Logo.astro';
+import Button from '@/components/ui/Button.astro';
+import SocialIcon from '@/components/ui/SocialIcon.astro';
+import MobileNavigation from '@/components/layout/MobileNavigation.astro';
+import { navigation, site } from '@/data/site';
+import { discord, hasDiscord } from '@/data/socials';
+
+const discordHref = hasDiscord ? discord.url : '/#join';
+---
+
+<header
+  data-header
+  class="group/header fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-500 data-[scrolled=true]:border-line/70 data-[scrolled=true]:bg-bg/80 data-[scrolled=true]:backdrop-blur-xl"
+>
+  <div class="mx-auto flex h-18 w-full max-w-[90rem] items-center justify-between gap-6 px-5 sm:px-8 lg:h-20 lg:px-12">
+    <a href="/#home" class="flex items-center gap-3">
+      <Logo size={28} decorative />
+      <span class="whitespace-nowrap font-display text-xs font-bold uppercase tracking-[0.24em] text-fg sm:text-sm sm:tracking-[0.28em]">
+        {site.name}
+      </span>
+    </a>
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          navigation.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                data-nav-link
+                data-section={link.section}
+                class="relative px-4 py-2 font-display text-[0.8rem] font-medium uppercase tracking-[0.16em] text-muted transition-colors duration-300 after:absolute after:inset-x-4 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-500 hover:text-fg aria-[current=true]:text-fg aria-[current=true]:after:scale-x-100"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:block">
+        <Button href={discordHref} external={hasDiscord} variant="secondary" size="sm">
+          <SocialIcon icon="discord" size={16} />
+          Join Our Discord
+        </Button>
+      </div>
+      <button
+        type="button"
+        data-menu-open
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="inline-grid size-11 place-items-center border border-line text-fg transition-colors hover:border-accent/70 lg:hidden"
+      >
+        <Menu size={20} stroke-width={1.5} aria-hidden="true" />
+        <span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<MobileNavigation discordHref={discordHref} discordExternal={hasDiscord} />

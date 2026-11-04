@@ -1,0 +1,40 @@
+---
+/**
+ * Abstract top-down city map: districts, streets, a river and claimed
+ * territory markers. Original artwork used behind "Our Journey".
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg viewBox="0 0 1200 600" class:list={['pointer-events-none', className]} aria-hidden="true" focusable="false" fill="none">
+  <!-- streets -->
+  <g stroke="#f3f1ff" stroke-opacity="0.07" stroke-width="1">
+    <path d="M0 120H1200M0 260H1200M0 420H1200M0 540H1200"></path>
+    <path d="M140 0V600M330 0V600M520 0V600M700 0V600M880 0V600M1060 0V600"></path>
+    <path d="M0 600L600 0M300 600L900 0M700 600L1200 100" stroke-opacity="0.05"></path>
+  </g>
+  <!-- river -->
+  <path d="M-20 330C160 300 220 380 400 350S640 250 780 300S1020 400 1220 360" stroke="#4a3e8c" stroke-opacity="0.5" stroke-width="18" stroke-linecap="round"></path>
+  <!-- districts -->
+  <g stroke="#8b5cf6" stroke-width="1.2" stroke-dasharray="4 6" stroke-opacity="0.45">
+    <path d="M140 120H520V260H330V330H140Z"></path>
+    <path d="M700 40H1060V260H880V300H700Z"></path>
+    <path d="M520 420H880V560H520Z"></path>
+  </g>
+  <!-- claimed district -->
+  <path d="M700 40H1060V260H880V300H700Z" fill="#8b5cf6" fill-opacity="0.07"></path>
+  <!-- route -->
+  <path d="M230 200L430 200L610 340L790 490L960 150" stroke="#b9a4fb" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round" class="route-flow"></path>
+  <!-- markers -->
+  <g>
+    <circle cx="230" cy="200" r="5" fill="#09090b" stroke="#b9a4fb" stroke-width="1.5"></circle>
+    <circle cx="610" cy="340" r="5" fill="#09090b" stroke="#b9a4fb" stroke-width="1.5"></circle>
+    <circle cx="790" cy="490" r="5" fill="#09090b" stroke="#b9a4fb" stroke-width="1.5"></circle>
+    <circle cx="960" cy="150" r="22" fill="#8b5cf6" fill-opacity="0.12"></circle>
+    <circle cx="960" cy="150" r="14" fill="none" stroke="#b9a4fb" stroke-width="1.5" class="ping"></circle>
+    <circle cx="960" cy="150" r="6" fill="#8b5cf6"></circle>
+  </g>
+</svg>

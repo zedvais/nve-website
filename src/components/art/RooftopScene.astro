@@ -1,0 +1,210 @@
+---
+/**
+ * Animated vector version of the NVE rooftop: the fox on the ledge beside the
+ * water tower, watching over a glowing city. Original artwork generated at
+ * build time from a fixed seed (no client JS). CSS animates the fog, city
+ * lights, traffic, aircraft and the fox; all of it is still for reduced motion.
+ */
+import { seededRandom } from '@/lib/random';
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const rand = seededRandom(1337);
+const r = (n: number) => Math.round(n * 10) / 10;
+
+const W = 1600;
+const VP = { x: 600, y: 392 }; // vanishing point of the avenues
+const GROUND = 760;
+const avenueEnds = [-520, -60, 330, 760, 1260, 1900];
+const avenueX = (end: number, y: number) => VP.x + ((end - VP.x) * (y - VP.y)) / (GROUND - VP.y);
+
+// City lights: rows get sparser and bigger toward the viewer (perspective).
+const lights = { white: '', purple: '', pink: '', blue: '' };
+const twinkles = ['', '', '', ''];
+for (let y = 398; y < 720; ) {
+  const t = (y - VP.y) / (GROUND - VP.y);
+  const size = 1 + t * 3.2;
+  const step = 3 + t * 12;
+  for (let x = -40; x < W; x += step * (0.6 + rand() * 0.8)) {
+    const nearAvenue = avenueEnds.some((e) => Math.abs(avenueX(e, y) - x) < 5 + t * 26);
+    const p = nearAvenue ? 0.42 : 0.085;
+    if (rand() > p) continue;
+    const w = r(size * (0.8 + rand() * 0.8));
+    const h = r(size * (0.7 + rand() * 0.5));
+    const rect = `M${Math.round(x)} ${Math.round(y)}h${w}v${h}h-${w}z`;
+    const c = rand();
+    if (!nearAvenue && rand() < 0.06) twinkles[Math.floor(rand() * 4)] += rect;
+    else if (nearAvenue && c < 0.6) lights.pink += rect;
+    else if (c < 0.45) lights.purple += rect;
+    else if (c < 0.85) lights.white += rect;
+    else lights.blue += rect;
+  }
+  y += 1.6 + t * 9;
+}
+
+// Distant skyline on the horizon, with a few tall glowing towers.
+let skyline = '';
+let skyWindows = '';
+for (let x = -20; x < W; ) {
+  const w = 10 + rand() * 26;
+  const tall = rand() < 0.08 && x > 120 && x < 1000;
+  const h = tall ? 70 + rand() * 60 : 8 + rand() * 30;
+  skyline += `M${r(x)} ${VP.y + 8}V${r(VP.y + 8 - h)}h${r(w)}V${VP.y + 8}z`;
+  if (tall) {
+    for (let wy = VP.y + 8 - h + 6; wy < VP.y; wy += 7) {
+      if (rand() < 0.7) skyWindows += `M${r(x + 3)} ${r(wy)}h${r(w - 6)}v1.6h-${r(w - 6)}z`;
+    }
+  }
+  x += w + rand() * 4;
+}
+
+const stars = Array.from({ length: 40 }, () => ({ x: r(rand() * W), y: r(rand() * 300), o: r(0.2 + rand() * 0.5) }));
+const avenues = avenueEnds.map((e) => `M${VP.x} ${VP.y}L${e} ${GROUND}`);
+
+// Bricks on the ledge's front face.
+let bricks = '';
+for (let row = 0, y = 584; y < 900; row++, y += 18) {
+  bricks += `M960 ${y}H1730`;
+  for (let x = 960 + (row % 2) * 22; x < 1730; x += 44) bricks += `M${x} ${y}v18`;
+}
+---
+
+<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" class:list={['pointer-events-none', className]} aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="rt-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0712"></stop>
+      <stop offset="0.3" stop-color="#1a1030"></stop>
+      <stop offset="0.44" stop-color="#3a2464"></stop>
+      <stop offset="0.6" stop-color="#140d24"></stop>
+      <stop offset="1" stop-color="#09090b"></stop>
+    </linearGradient>
+    <radialGradient id="rt-fog">
+      <stop offset="0" stop-color="#a78bfa" stop-opacity="0.42"></stop>
+      <stop offset="0.6" stop-color="#8b5cf6" stop-opacity="0.12"></stop>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="rt-cityglow" cx="0.4" cy="0.5">
+      <stop offset="0" stop-color="#d946ef" stop-opacity="0.28"></stop>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="rt-rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c4b5fd" stop-opacity="0.9"></stop>
+      <stop offset="0.4" stop-color="#8b5cf6" stop-opacity="0.25"></stop>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="rt-wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d1626"></stop>
+      <stop offset="1" stop-color="#0a080e"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="1600" height="900" fill="url(#rt-sky)"></rect>
+  <g fill="#f3f1ff">
+    {stars.map((st, i) => <circle cx={st.x} cy={st.y} r="1" fill-opacity={st.o} class={i % 3 === 0 ? 'twinkle' : undefined} style={i % 3 === 0 ? `--twinkle-delay:${(i * 0.3) % 3}s` : undefined} />)}
+  </g>
+
+  <!-- high fog bank -->
+  <g class="fog-drift" style="--fog-duration:46s;--fog-shift:90px">
+    <ellipse cx="900" cy="150" rx="620" ry="170" fill="url(#rt-fog)"></ellipse>
+    <ellipse cx="380" cy="240" rx="460" ry="120" fill="url(#rt-fog)" opacity="0.7"></ellipse>
+  </g>
+
+  <!-- aircraft -->
+  <g class="aircraft">
+    <circle cx="0" cy="0" r="1.6" fill="#f3f1ff"></circle>
+    <circle cx="6" cy="0" r="1.4" fill="#f87171" class="blink-light"></circle>
+  </g>
+  <circle cx="420" cy="300" r="1.8" fill="#f87171" class="blink-light" style="--blink-delay:0.8s"></circle>
+  <circle cx="742" cy="318" r="1.6" fill="#f87171" class="blink-light" style="--blink-delay:1.7s"></circle>
+
+  <!-- horizon skyline -->
+  <path d={skyline} fill="#1a1230"></path>
+  <path d={skyWindows} fill="#7fb0ff" fill-opacity="0.55"></path>
+  <ellipse cx="600" cy="480" rx="760" ry="170" fill="url(#rt-cityglow)"></ellipse>
+
+  <!-- city grid -->
+  <g fill-opacity="0.95">
+    <path d={lights.white} fill="#e9e3ff" fill-opacity="0.55"></path>
+    <path d={lights.purple} fill="#a78bfa" fill-opacity="0.75"></path>
+    <path d={lights.blue} fill="#7fb0ff" fill-opacity="0.6"></path>
+    <path d={lights.pink} fill="#f0abfc" fill-opacity="0.85"></path>
+    {twinkles.map((d, i) => <path d={d} fill="#f3f1ff" class="twinkle" style={`--twinkle-delay:${i * 0.8}s`} />)}
+  </g>
+
+  <!-- avenues and traffic -->
+  <g fill="none" stroke-linecap="round">
+    {avenues.map((d) => <path d={d} stroke="#e879f9" stroke-opacity="0.12" stroke-width="12" />)}
+    {avenues.map((d) => <path d={d} stroke="#f5d0fe" stroke-opacity="0.22" stroke-width="1" />)}
+    {avenues.map((d, i) => (
+      <path d={d} pathLength="1" stroke="#fdf4ff" stroke-width="2.2" class="traffic" style={`--traffic-duration:${38 + i * 7}s;${i % 2 ? 'animation-direction:reverse' : ''}`} />
+    ))}
+  </g>
+
+  <!-- low fog over the city -->
+  <g class="fog-drift" style="--fog-duration:34s;--fog-shift:-120px">
+    <ellipse cx="420" cy="430" rx="520" ry="70" fill="url(#rt-fog)" opacity="0.8"></ellipse>
+    <ellipse cx="1180" cy="470" rx="440" ry="60" fill="url(#rt-fog)" opacity="0.55"></ellipse>
+  </g>
+
+  <!-- far rooftop ledge (foreground, left) -->
+  <path d="M-10 700L1000 690V900H-10Z" fill="#0b0910"></path>
+  <path d="M-10 700L1000 690" stroke="#8b5cf6" stroke-opacity="0.35" stroke-width="1.5"></path>
+  <path d="M-10 712L1000 702V716L-10 726Z" fill="#141019"></path>
+
+  <g transform="translate(-120 0)">
+  <!-- water tower -->
+  <g transform="translate(40 0)">
+    <g stroke="#0c0911" stroke-width="7" stroke-linecap="square">
+      <path d="M1330 328L1314 560M1520 328L1538 560M1400 328L1398 560M1452 328L1456 560"></path>
+      <path d="M1322 440H1530M1316 520H1536" stroke-width="5"></path>
+      <path d="M1328 340L1398 520M1398 340L1328 520M1400 340L1454 520M1454 340L1400 520M1456 340L1524 520M1524 340L1456 520" stroke-width="3"></path>
+    </g>
+    <path d="M1310 320H1540V336H1310Z" fill="#0c0911"></path>
+    <path d="M1332 150H1518V320H1332Z" fill="#100c17"></path>
+    <path d="M1324 150L1425 92L1526 150Z" fill="#0d0a13"></path>
+    <path d="M1425 82V94" stroke="#0d0a13" stroke-width="4"></path>
+    <g stroke="#f3f1ff" stroke-opacity="0.05">
+      <path d="M1356 150V320M1380 150V320M1404 150V320M1428 150V320M1452 150V320M1476 150V320M1500 150V320"></path>
+    </g>
+    <g stroke="#29213a" stroke-width="3">
+      <path d="M1332 188H1518M1332 236H1518M1332 284H1518"></path>
+    </g>
+    <path d="M1332 150V320" stroke="url(#rt-rim)" stroke-width="2.5"></path>
+    <path d="M1324 150L1425 92" stroke="#b9a4fb" stroke-opacity="0.35" stroke-width="1.5"></path>
+    <path d="M1556 600V196Q1556 180 1540 180H1518" fill="none" stroke="#0c0911" stroke-width="6"></path>
+    <circle cx="1425" cy="80" r="2.4" fill="#f87171" class="blink-light" style="--blink-delay:0.3s"></circle>
+  </g>
+
+  <!-- main ledge -->
+  <path d="M960 560H1730V900H960Z" fill="url(#rt-wall)"></path>
+  <path d={bricks} stroke="#000" stroke-opacity="0.45" stroke-width="1.5" fill="none"></path>
+  <path d="M948 552H1730V584H948Z" fill="#1f1828"></path>
+  <path d="M948 552H1730" stroke="url(#rt-rim)" stroke-width="2"></path>
+  <path d="M948 552V584" stroke="#b9a4fb" stroke-opacity="0.5" stroke-width="1.5"></path>
+
+  </g>
+
+  <!-- the fox, sitting on the ledge and looking out over the city -->
+  <g transform="translate(1068 428) scale(0.62)">
+    <g class="fox-tail">
+      <path d="M150 190C200 182 254 182 292 194C302 198 302 206 290 209C244 218 192 216 156 206Z" fill="#0d0a12"></path>
+      <path d="M262 186C280 187 296 192 298 200C298 206 290 209 280 210C272 210 264 209 258 208C266 200 266 192 262 186Z" fill="#cfc4f5" fill-opacity="0.55"></path>
+      <path d="M150 190C200 182 254 182 292 194" fill="none" stroke="#b9a4fb" stroke-opacity="0.4" stroke-width="2"></path>
+    </g>
+    <g class="fox-breathe">
+      <path
+        d="M8 56C24 46 40 40 54 34L62 26L70 0L82 22L91 4L98 30C104 48 110 66 126 90C150 116 172 150 168 182L160 200H58L62 196L66 150C62 120 56 96 54 78C50 68 40 64 28 62Z"
+        fill="#0d0a12"
+      ></path>
+      <!-- city light catching the fox's face, ears and chest -->
+      <path d="M8 56C24 46 40 40 54 34L62 26L70 0M66 150C62 120 56 96 54 78C50 68 40 64 28 62L8 56" fill="none" stroke="#c4b5fd" stroke-opacity="0.65" stroke-width="2.2" stroke-linejoin="round"></path>
+      <path d="M78 200V158" stroke="#1d1626" stroke-width="3"></path>
+      <ellipse cx="50" cy="44" rx="3.2" ry="2.4" fill="#d8cffa" class="fox-eye"></ellipse>
+    </g>
+  </g>
+  <!-- floor shadow -->
+  <path d="M0 860H1600V900H0Z" fill="#09090b" opacity="0.6"></path>
+</svg>

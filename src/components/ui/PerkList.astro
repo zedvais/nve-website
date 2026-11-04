@@ -1,0 +1,38 @@
+---
+import { journey } from '@/data/site';
+import { perks, perkTiers, type PerkTier } from '@/data/stats';
+
+const order: PerkTier[] = ['economy', 'core', 'elite'];
+const sorted = [...perks].sort((a, b) => order.indexOf(a.tier) - order.indexOf(b.tier));
+---
+
+<div class="border border-line bg-bg/80 p-6 backdrop-blur-sm sm:p-10" data-reveal>
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <h3 class="font-display text-2xl font-semibold sm:text-3xl">{journey.perksHeading}</h3>
+    <ul class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Perk tiers">
+      {
+        order.map((tier) => (
+          <li class="flex items-center gap-2 font-display text-[0.7rem] font-semibold uppercase tracking-[0.18em]" style={`color:${perkTiers[tier].color}`}>
+            <span class="size-2 rotate-45" style={`background:${perkTiers[tier].color}`} aria-hidden="true" />
+            {perkTiers[tier].label}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <ul class="mt-6 grid gap-x-10 md:grid-cols-2">
+    {
+      sorted.map((perk) => (
+        <li class="flex items-center gap-3 border-b border-line py-3.5">
+          <span class="size-2 shrink-0 rotate-45" style={`background:${perkTiers[perk.tier].color}`} aria-hidden="true" />
+          <span class="font-medium text-fg">{perk.name}</span>
+          <span class="sr-only">({perkTiers[perk.tier].label} perk):</span>
+          <span class="ml-auto text-right font-display text-sm font-semibold tabular-nums" style={`color:${perkTiers[perk.tier].color}`}>
+            {perk.effect}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
