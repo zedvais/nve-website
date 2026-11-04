@@ -20,7 +20,7 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
   >
   </div>
 
-  <NightSkyline class="pointer-events-none absolute inset-x-0 bottom-0 h-56 w-full text-[#100f18] sm:h-72" seed={19} count={40} />
+  <NightSkyline class="pointer-events-none absolute inset-x-0 bottom-0 h-56 w-full text-[#100f18] sm:h-72" seed={19} count={40} windows={false} />
   <div class="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-bg from-35% via-bg/60 to-transparent" aria-hidden="true"></div>
 
   <Container size="wide" class="relative">
@@ -107,15 +107,15 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
 
     <DecoDivider class="mt-20" />
 
-    <p
-      class="display mt-16 select-none text-[clamp(2.25rem,8.5vw,8.5rem)] leading-[0.9] text-fg/90"
-    >
-      <span class="sr-only">{site.footerLine}</span>
-      <span aria-hidden="true">{lineStart}</span>
-      <span class="block text-transparent [-webkit-text-stroke:1px_rgb(243_241_255/0.35)]" aria-hidden="true">
-        — {lineEnd}
-      </span>
-    </p>
+    <div class="mt-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <p class="display select-none text-[clamp(2.25rem,7vw,6.5rem)] leading-[0.9] text-fg/90">
+        <span class="sr-only">{site.footerLine}</span>
+        <span aria-hidden="true">{lineStart}</span>
+      </p>
+      <p class="eyebrow flex items-center gap-4 pb-2 sm:pb-4" aria-hidden="true">
+        <span class="h-px w-10 bg-line"></span>{lineEnd}
+      </p>
+    </div>
 
     <div class="mt-14 flex flex-col-reverse gap-6 border-t border-line py-8 text-sm text-muted sm:flex-row sm:items-end sm:justify-between">
       <div class="space-y-1">

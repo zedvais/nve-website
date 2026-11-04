@@ -30,9 +30,9 @@ export const stats = {
 };
 
 export const perkTiers: Record<PerkTier, { label: string; color: string }> = {
-  economy: { label: 'Economy', color: '#86d97a' },
-  core: { label: 'Core', color: '#7fb0ff' },
-  elite: { label: 'Elite', color: '#f2c14e' },
+  economy: { label: 'Economy', color: '#a5a3b8' },
+  core: { label: 'Core', color: '#b9a4fb' },
+  elite: { label: 'Elite', color: '#d9c08a' },
 };
 
 export const perks: Perk[] = [

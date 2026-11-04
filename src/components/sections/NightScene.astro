@@ -16,12 +16,12 @@ const rand = () => {
   s = (s * 16807) % 2147483647;
   return (s - 1) / 2147483646;
 };
-const stars = Array.from({ length: 90 }, () => ({
+const stars = Array.from({ length: 70 }, () => ({
   x: (rand() * 1600).toFixed(0),
   y: (rand() * 520).toFixed(0),
   r: (0.6 + rand() * 1.4).toFixed(1),
   o: (0.25 + rand() * 0.6).toFixed(2),
-  twinkle: rand() < 0.4,
+  twinkle: rand() < 0.25,
   delay: (rand() * 4).toFixed(2),
 }));
 ---
@@ -41,7 +41,7 @@ const stars = Array.from({ length: 90 }, () => ({
       </radialGradient>
       <mask id="moon-cut">
         <rect width="1600" height="700" fill="white"></rect>
-        <circle cx="1138" cy="108" r="44" fill="black"></circle>
+        <circle cx="1126" cy="112" r="24" fill="black"></circle>
       </mask>
     </defs>
     <g fill="#f3f1ff">
@@ -54,11 +54,8 @@ const stars = Array.from({ length: 90 }, () => ({
     <!-- shooting star -->
     <path d="M300 90l-140 60" stroke="#f3f1ff" stroke-width="1.5" stroke-linecap="round" pathLength="1" class="shooting-star"></path>
     <!-- moon -->
-    <circle cx="1110" cy="120" r="110" fill="url(#moon-glow)"></circle>
-    <circle cx="1110" cy="120" r="46" fill="#f3f1ff" fill-opacity="0.9" mask="url(#moon-cut)"></circle>
-    <!-- searchlights -->
-    <path d="M500 720L420 -40H600Z" fill="url(#beam)" class="beam" style="--beam-from:-14deg;--beam-to:16deg;--beam-duration:11s"></path>
-    <path d="M1080 720L990 -40H1170Z" fill="url(#beam)" class="beam" style="--beam-from:12deg;--beam-to:-18deg;--beam-duration:14s"></path>
+    <circle cx="1110" cy="120" r="70" fill="url(#moon-glow)"></circle>
+    <circle cx="1110" cy="120" r="26" fill="#f3f1ff" fill-opacity="0.75" mask="url(#moon-cut)"></circle>
   </svg>
 
   <Container size="wide" class="relative pb-56 pt-24 sm:pb-72 sm:pt-32">
@@ -70,13 +67,13 @@ const stars = Array.from({ length: 90 }, () => ({
       </div>
       <p class="eyebrow text-center lg:text-left" data-reveal style="--reveal-delay:120">{interlude.aside}</p>
     </div>
-    <h2 id="interlude-heading" class="display mt-12 text-center text-[clamp(2.6rem,9vw,7rem)]" data-reveal>
+    <h2 id="interlude-heading" class="display mt-12 text-center text-[clamp(2.2rem,6vw,4.75rem)]" data-reveal>
       {interlude.heading[0]} <span class="text-transparent [-webkit-text-stroke:1.5px_var(--color-fg)]">{interlude.heading[1]}</span>
     </h2>
     <p class="mx-auto mt-6 max-w-xl text-center leading-relaxed text-muted sm:text-lg" data-reveal style="--reveal-delay:120">{interlude.text}</p>
   </Container>
 
-  <Embers class="absolute inset-0 -z-10" count={26} seed={41} />
+  <Embers class="absolute inset-0 -z-10" count={12} seed={41} />
   <NightSkyline class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-52 w-full text-[#0e0d15] sm:h-64" seed={5} count={44} />
   <div class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-bg to-transparent" aria-hidden="true"></div>
 </section>
