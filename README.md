@@ -162,7 +162,7 @@ npm run test:watch   # re-run on save
 | `tests/random.test.ts` | The seeded generator behind the artwork |
 
 `.github/workflows/ci.yml` runs the tests, the type check and a production build on every pull
-request and every push to `main`.
+request and every push to `master`.
 
 ### Design tokens
 
