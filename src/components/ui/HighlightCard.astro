@@ -3,7 +3,8 @@ import TrendingUp from '@lucide/astro/icons/trending-up';
 import Vault from '@lucide/astro/icons/vault';
 import MapPin from '@lucide/astro/icons/map-pin';
 import Swords from '@lucide/astro/icons/swords';
-import Gem from '@lucide/astro/icons/gem';
+import Flag from '@lucide/astro/icons/flag';
+import Award from '@lucide/astro/icons/award';
 import type { Highlight, HighlightIcon } from '@/data/highlights';
 
 interface Props {
@@ -13,12 +14,13 @@ interface Props {
 
 const { highlight, index } = Astro.props;
 
-const icons: Record<HighlightIcon, typeof Gem> = {
+const icons: Record<HighlightIcon, typeof Flag> = {
+  founded: Flag,
   progression: TrendingUp,
   vault: Vault,
   territory: MapPin,
+  respect: Award,
   war: Swords,
-  heist: Gem,
 };
 const Icon = icons[highlight.icon];
 ---
@@ -62,7 +64,7 @@ const Icon = icons[highlight.icon];
         ) : (
           <span class="flex items-center gap-2 font-display uppercase tracking-[0.18em] text-fg">
             <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-            Achieved
+            Recorded
           </span>
         )
       }

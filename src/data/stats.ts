@@ -1,0 +1,67 @@
+/**
+ * Family stats snapshot from Idle Mafia.
+ * Update these numbers from the in-game Family overview and bump `asOf`.
+ * Everything derived from them (open seats, XP progress, "about five weeks")
+ * is calculated, so only the raw values need editing.
+ */
+
+export type PerkTier = 'economy' | 'core' | 'elite';
+
+export interface Perk {
+  name: string;
+  effect: string;
+  tier: PerkTier;
+}
+
+export const stats = {
+  /** Date of this snapshot (ISO), shown as "Stats as of …". */
+  asOf: '2026-11-04',
+  founded: '2026-09-29',
+  level: 53,
+  members: { current: 44, max: 50 },
+  respect: 1970,
+  perkLevels: { current: 242, max: 400 },
+  xp: { current: 2_039_828, next: 2_689_174 },
+  territories: 15,
+  rankings: [
+    { label: 'Respect', rank: 71 },
+    { label: 'Territories', rank: 33 },
+  ],
+};
+
+export const perkTiers: Record<PerkTier, { label: string; color: string }> = {
+  economy: { label: 'Economy', color: '#86d97a' },
+  core: { label: 'Core', color: '#7fb0ff' },
+  elite: { label: 'Elite', color: '#f2c14e' },
+};
+
+export const perks: Perk[] = [
+  { name: 'Job Cut', effect: '+17% job cash', tier: 'economy' },
+  { name: 'Landlord', effect: '+18% property income', tier: 'economy' },
+  { name: 'Smugglers', effect: '+17% operation payout', tier: 'economy' },
+  { name: 'Enforcers', effect: '+18% attack power', tier: 'core' },
+  { name: 'Guardians', effect: '+17% defense power', tier: 'core' },
+  { name: 'Hustlers', effect: '+12% job experience', tier: 'core' },
+  { name: 'Medics', effect: '+13% health regen', tier: 'core' },
+  { name: 'Runners', effect: '+7% stamina regen', tier: 'core' },
+  { name: 'Bagmen', effect: '+13% cash stolen', tier: 'core' },
+  { name: 'Insurance', effect: '+12% less cash lost', tier: 'core' },
+  { name: 'Veterans', effect: '+12% fight experience', tier: 'core' },
+  { name: 'Demolition', effect: '+15% siege damage', tier: 'core' },
+  { name: 'Boss Hunters', effect: '+11% boss damage', tier: 'core' },
+  { name: 'Bodyguards', effect: '+18% defense power', tier: 'elite' },
+  { name: 'Hitters', effect: '+20% attack power', tier: 'elite' },
+  { name: 'Fences', effect: '+15% job drop chance', tier: 'elite' },
+];
+
+// ---- Derived values -------------------------------------------------------
+
+const fmtDate = (iso: string, opts: Intl.DateTimeFormatOptions) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { timeZone: 'UTC', ...opts });
+
+export const openSeats = Math.max(0, stats.members.max - stats.members.current);
+export const xpPercent = Math.min(100, Math.round((stats.xp.current / stats.xp.next) * 1000) / 10);
+export const asOfLabel = fmtDate(stats.asOf, { month: 'long', day: 'numeric', year: 'numeric' });
+export const foundedLabel = fmtDate(stats.founded, { month: 'long', day: 'numeric', year: 'numeric' });
+export const foundedShort = fmtDate(stats.founded, { month: 'short', year: 'numeric' });
+export const formatNumber = (n: number) => n.toLocaleString('en-US');

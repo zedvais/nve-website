@@ -5,12 +5,17 @@ import Button from '@/components/ui/Button.astro';
 import FoxMotif from '@/components/ui/FoxMotif.astro';
 import { Image } from 'astro:assets';
 import { game, hero, site } from '@/data/site';
+import { foundedShort, openSeats, stats } from '@/data/stats';
 
 const status = [
-  { label: 'Game', value: game.name },
-  { label: 'Platform', value: game.platform },
-  { label: 'Family', value: site.shortName },
-  { label: 'Recruitment', value: game.recruiting ? 'Open' : 'Closed', live: game.recruiting },
+  { label: 'Game', value: `${game.name} · ${game.platform}` },
+  { label: 'Family level', value: `Lv. ${stats.level}` },
+  { label: 'Founded', value: foundedShort },
+  {
+    label: 'Recruitment',
+    value: game.recruiting && openSeats > 0 ? `Open · ${openSeats} seats` : 'Closed',
+    live: game.recruiting && openSeats > 0,
+  },
 ];
 ---
 

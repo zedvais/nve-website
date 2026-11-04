@@ -4,7 +4,7 @@
  * record. Entries marked `placeholder: true` render as "To be recorded".
  */
 
-export type HighlightIcon = 'progression' | 'vault' | 'territory' | 'war' | 'heist';
+export type HighlightIcon = 'founded' | 'progression' | 'vault' | 'territory' | 'respect' | 'war';
 
 export interface Highlight {
   category: string;
@@ -20,38 +20,49 @@ export interface Highlight {
 
 export const highlights: Highlight[] = [
   {
+    category: 'Community milestones',
+    title: 'The family is founded',
+    description: 'Noctus Volpe opens its doors in Idle Mafia.',
+    icon: 'founded',
+    date: 'Sep 29, 2026',
+  },
+  {
     category: 'Family progression',
-    title: 'Climbing the levels',
-    description: 'Family level milestones will be recorded here as NVE grows.',
+    title: 'Level 53 reached',
+    description: 'From founding to family level 53 in about five weeks.',
     icon: 'progression',
-    placeholder: true,
+    date: 'Nov 2026',
+    metric: { value: 'Lv. 53', label: 'Family level' },
   },
   {
     category: 'Family Vault & perks',
-    title: 'Perks unlocked',
-    description: 'Cash, Gold and Stamina perks the family has unlocked together will be listed here.',
+    title: '242 perk levels',
+    description: 'Sixteen family perks active across economy, core and elite, funded by member donations.',
     icon: 'vault',
-    placeholder: true,
+    date: 'Nov 2026',
+    metric: { value: '242 / 400', label: 'Perk levels' },
   },
   {
     category: 'Territory expansion',
-    title: 'Districts held',
-    description: 'Territories taken and held by the family will be documented here.',
+    title: '15 territories held',
+    description: 'Ranked #33 in territories.',
     icon: 'territory',
-    placeholder: true,
+    date: 'Nov 2026',
+    metric: { value: '#33', label: 'In territories' },
+  },
+  {
+    category: 'Notable achievements',
+    title: 'Top 100 in respect',
+    description: 'Ranked #71 in respect with 1,970 respect earned.',
+    icon: 'respect',
+    date: 'Nov 2026',
+    metric: { value: '#71', label: 'In respect' },
   },
   {
     category: 'Family wars',
     title: 'Wars fought',
     description: 'Wars declared, fought and won as a family will be recorded here.',
     icon: 'war',
-    placeholder: true,
-  },
-  {
-    category: 'Notable achievements',
-    title: 'Jobs worth remembering',
-    description: 'Big heists, boss takedowns and standout moments will be celebrated here.',
-    icon: 'heist',
     placeholder: true,
   },
 ];

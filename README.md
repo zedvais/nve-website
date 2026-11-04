@@ -23,6 +23,7 @@ never need to touch markup to update the site.
 | --- | --- |
 | `src/data/site.ts` | Name, tagline, SEO description, navigation, hero, About, Values, Family and Journey intros, recruitment copy, optional application form URL, logo path |
 | `src/data/members.ts` | Family roster by rank, with Roblox usernames for avatars and profile links |
+| `src/data/stats.ts` | Family stats snapshot (level, members, respect, perk levels, XP, rankings, territories) and the family perks list |
 | `src/data/highlights.ts` | "Our Journey" milestones and achievements |
 | `src/data/socials.ts` | Discord invite and other social links |
 
@@ -49,6 +50,12 @@ deploy. If a username isn't found or Roblox is unreachable, the build still succ
 
 To use a custom picture instead, put it in `src/assets/avatars/`, import it in `members.ts` and set
 `avatar` on that member. Add an optional `bio` for a short line under the name.
+
+### Family stats
+
+Update `src/data/stats.ts` from the in-game Family overview and change `asOf` to the date of the
+snapshot. The stats panel, XP bar, perks list, the hero's level and recruitment status, and the
+open-seats count are all calculated from it.
 
 ### Highlights
 

@@ -144,6 +144,8 @@ export const journey = {
   heading: 'Our journey.',
   intro:
     'Family levels, perks unlocked, districts taken and wars won. The record of how far NVE has come, kept as it happens.',
+  statsHeading: 'The family by the numbers',
+  perksHeading: 'Family perks',
 };
 
 export const recruitment = {

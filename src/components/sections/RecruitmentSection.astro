@@ -7,6 +7,7 @@ import FoxMotif from '@/components/ui/FoxMotif.astro';
 import FoxCards from '@/components/art/FoxCards.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
 import { recruitment } from '@/data/site';
+import { openSeats, stats } from '@/data/stats';
 import { discord, hasDiscord } from '@/data/socials';
 
 const applyHref = recruitment.applicationUrl || (hasDiscord ? discord.url : undefined);
@@ -40,6 +41,14 @@ const anyLink = Boolean(applyHref || discordHref);
           <p class="mt-8 max-w-xl font-display text-xl font-medium leading-snug text-fg/90 sm:text-2xl">
             {recruitment.statement}
           </p>
+          {
+            openSeats > 0 && (
+              <p class="mt-6 inline-flex items-center gap-3 border border-accent-muted bg-accent/10 px-4 py-2 font-display text-xs font-semibold uppercase tracking-[0.16em] text-accent-soft">
+                <span class="size-1.5 rounded-full bg-accent shadow-[0_0_0_3px_rgb(139_92_246/0.25)]" aria-hidden="true" />
+                {openSeats} of {stats.members.max} seats open
+              </p>
+            )
+          }
 
           <div class="mt-10 flex flex-col gap-3 sm:flex-row">
             <Button href={applyHref} external={Boolean(applyHref)} size="lg">

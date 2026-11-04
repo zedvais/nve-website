@@ -3,6 +3,8 @@ import CityMap from '@/components/art/CityMap.astro';
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import HighlightCard from '@/components/ui/HighlightCard.astro';
+import StatsPanel from '@/components/ui/StatsPanel.astro';
+import PerkList from '@/components/ui/PerkList.astro';
 import { journey } from '@/data/site';
 import { highlights } from '@/data/highlights';
 ---
@@ -12,11 +14,19 @@ import { highlights } from '@/data/highlights';
   <Container size="wide">
     <SectionHeading id="journey-heading" index={journey.index} label={journey.label} heading={journey.heading} intro={journey.intro} />
 
-    <ol class="mt-16 grid gap-3 sm:grid-cols-2 lg:mt-24 lg:grid-cols-6">
+    <div class="mt-16 space-y-3 lg:mt-24">
+      <StatsPanel />
+      <PerkList />
+    </div>
+
+    <h3 class="eyebrow mb-6 mt-20 flex items-center gap-3">
+      <span class="h-px w-8 bg-line" aria-hidden="true"></span>Milestones
+    </h3>
+    <ol class="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
       {
         highlights.map((highlight, i) => (
           <li
-            class:list={['lg:col-span-2', i >= 3 && 'lg:col-span-3']}
+            class:list={['lg:col-span-2', highlights.length % 3 === 2 && i >= highlights.length - 2 && 'lg:col-span-3']}
             data-reveal
             style={`--reveal-delay:${(i % 3) * 90}`}
           >

@@ -9,9 +9,11 @@ import MemberCard from '@/components/ui/MemberCard.astro';
 import UserPlus from '@lucide/astro/icons/user-plus';
 import { getRobloxProfiles } from '@/lib/roblox';
 import { family } from '@/data/site';
+import { openSeats, stats } from '@/data/stats';
 import { members, membersByTier, tierOrder, tiers, type MemberTier } from '@/data/members';
 
 const hasPlaceholders = members.some((m) => m.placeholder);
+const unlisted = Math.max(0, stats.members.current - members.length);
 const profiles = await getRobloxProfiles(members.flatMap((m) => (m.roblox ? [m.roblox] : [])));
 const profileFor = (roblox?: string) => (roblox ? profiles.get(roblox.toLowerCase()) : undefined);
 
@@ -74,8 +76,13 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                         <UserPlus size={20} stroke-width={1.5} aria-hidden="true" />
                       </span>
                       <span>
-                        <span class="block font-display text-lg font-semibold">Your name here</span>
-                        <span class="mt-1 block text-sm text-muted">Every Boss started as an Associate. Join the family and earn your seat.</span>
+                        <span class="block font-display text-lg font-semibold">
+                          {unlisted > 0 ? `+${unlisted} Soldiers & Associates` : 'Your name here'}
+                        </span>
+                        <span class="mt-1 block text-sm text-muted">
+                          {unlisted > 0 && 'Full roster coming soon. '}
+                          {openSeats > 0 ? `${openSeats} seats open: join the family and earn yours.` : 'Every Boss started as an Associate.'}
+                        </span>
                       </span>
                     </a>
                   </li>
