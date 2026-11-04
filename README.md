@@ -22,7 +22,7 @@ never need to touch markup to update the site.
 | File | What it controls |
 | --- | --- |
 | `src/data/site.ts` | Name, tagline, SEO description, navigation, hero, About, Values, Family and Journey intros, recruitment copy, optional application form URL, logo path |
-| `src/data/members.ts` | Leadership, staff/officers and member roster (name, role, tier, bio, avatar) |
+| `src/data/members.ts` | Family roster by rank, with Roblox usernames for avatars and profile links |
 | `src/data/highlights.ts` | "Our Journey" milestones and achievements |
 | `src/data/socials.ts` | Discord invite and other social links |
 
@@ -32,13 +32,23 @@ Set `discord.url` in `src/data/socials.ts`, e.g. `'https://discord.gg/your-invit
 Until it is set, Discord buttons are shown as "coming soon" (or link to the Join section);
 no invite link is invented.
 
-### Members
+### Members and Roblox avatars
 
-Every entry in `members.ts` is a **placeholder**. Replace the names, roles and bios, and remove
-`placeholder: true`. The "Roster coming soon" note disappears once no placeholders remain.
-To add an avatar, put the image in `src/assets/avatars/`, import it in `members.ts`
-(`import fox from '@/assets/avatars/fox.png'`) and set `avatar: fox`. Astro optimises and
-lazy-loads it automatically. Without an avatar, the card shows initials.
+The roster lives in `src/data/members.ts`, grouped by Idle Mafia rank. Add a member with the
+`player()` helper:
+
+```ts
+player('RobloxUsername', 'Soldier', 'ranks'),
+```
+
+When the site builds (and while `npm run dev` runs), `src/lib/roblox.ts` looks up each username
+through Roblox's public API. Each card then shows the player's avatar headshot and links to their
+Roblox profile. There is no backend: the lookup happens at build time, so avatars refresh on every
+deploy. If a username isn't found or Roblox is unreachable, the build still succeeds: it logs a
+`[roblox]` warning and that card shows the NV mark.
+
+To use a custom picture instead, put it in `src/assets/avatars/`, import it in `members.ts` and set
+`avatar` on that member. Add an optional `bio` for a short line under the name.
 
 ### Highlights
 

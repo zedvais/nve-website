@@ -6,10 +6,14 @@ import Users from '@lucide/astro/icons/users';
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import MemberCard from '@/components/ui/MemberCard.astro';
+import UserPlus from '@lucide/astro/icons/user-plus';
+import { getRobloxProfiles } from '@/lib/roblox';
 import { family } from '@/data/site';
 import { members, membersByTier, tierOrder, tiers, type MemberTier } from '@/data/members';
 
 const hasPlaceholders = members.some((m) => m.placeholder);
+const profiles = await getRobloxProfiles(members.flatMap((m) => (m.roblox ? [m.roblox] : [])));
+const profileFor = (roblox?: string) => (roblox ? profiles.get(roblox.toLowerCase()) : undefined);
 
 const icons: Record<MemberTier, typeof Crown> = {
   leadership: Crown,
@@ -18,8 +22,9 @@ const icons: Record<MemberTier, typeof Crown> = {
   ranks: Users,
 };
 const grids = {
-  feature: 'lg:grid-cols-2',
-  default: 'sm:grid-cols-2 lg:grid-cols-3',
+  // The first leadership card (the Boss) spans the full row.
+  feature: 'lg:grid-cols-2 lg:[&>li:first-child]:col-span-2',
+  default: 'sm:grid-cols-2 xl:grid-cols-4',
   compact: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
 };
 const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, grid: grids[tiers[tier].variant] }));
@@ -42,23 +47,39 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
       {
         groups.map(({ tier, icon: Icon, variant, grid }) => {
           const list = membersByTier(tier);
-          if (!list.length) return null;
+          if (!list.length && tier !== 'ranks') return null;
           return (
             <div class="grid gap-8 lg:grid-cols-12" data-reveal>
               <header class="lg:col-span-3">
                 <div class="flex items-center gap-3 border-t border-line pt-5 lg:sticky lg:top-28">
                   <Icon size={18} stroke-width={1.5} class="text-accent-soft" aria-hidden="true" />
                   <h3 class="font-display text-sm font-semibold uppercase tracking-[0.18em]">{tiers[tier].label}</h3>
-                  <span class="ml-auto font-display text-xs tabular-nums text-muted lg:hidden">{list.length}</span>
+                  {list.length > 0 && <span class="ml-auto font-display text-xs tabular-nums text-muted lg:hidden">{list.length}</span>}
                 </div>
                 <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">{tiers[tier].description}</p>
               </header>
               <ul class:list={['grid gap-3 lg:col-span-9', grid]}>
                 {list.map((member) => (
                   <li>
-                    <MemberCard member={member} variant={variant} />
+                    <MemberCard member={member} profile={profileFor(member.roblox)} variant={variant} />
                   </li>
                 ))}
+                {list.length === 0 && (
+                  <li class="col-span-full">
+                    <a
+                      href="/#join"
+                      class="group flex items-center gap-5 border border-dashed border-line p-5 transition-colors duration-500 hover:border-accent-muted hover:bg-elevated sm:p-6"
+                    >
+                      <span class="grid size-12 shrink-0 place-items-center border border-line text-accent-soft">
+                        <UserPlus size={20} stroke-width={1.5} aria-hidden="true" />
+                      </span>
+                      <span>
+                        <span class="block font-display text-lg font-semibold">Your name here</span>
+                        <span class="mt-1 block text-sm text-muted">Every Boss started as an Associate. Join the family and earn your seat.</span>
+                      </span>
+                    </a>
+                  </li>
+                )}
               </ul>
             </div>
           );

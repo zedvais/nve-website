@@ -1,19 +1,22 @@
 /**
  * The family roster, grouped by Idle Mafia rank.
- * All entries below are PLACEHOLDERS. Replace them with real members
- * (and remove `placeholder: true`) when ready.
  *
- * Avatars: put images in src/assets/avatars/ and import them here,
- * e.g. `import fox from '@/assets/avatars/fox.png'` then `avatar: fox`.
- * Without an avatar, the card shows the member's initials.
+ * `roblox` is the member's Roblox username. At build time the site fetches
+ * their avatar headshot and profile link from Roblox (see src/lib/roblox.ts).
+ * If the lookup fails, the card shows the NV mark instead.
+ *
+ * Optional: `bio` for a short line, `avatar` to override the Roblox headshot
+ * with a local image (import it from src/assets/avatars/).
  */
 import type { ImageMetadata } from 'astro';
 
 export type MemberTier = 'leadership' | 'council' | 'capos' | 'ranks';
 
 export interface Member {
-  /** Display name or Roblox username. */
+  /** Name shown on the card. Defaults to the Roblox username. */
   name: string;
+  /** Roblox username, used to fetch the avatar and profile link. */
+  roblox?: string;
   /** In-game rank: Boss, Underboss, Advisor, Capo, Soldier or Associate. */
   role: string;
   tier: MemberTier;
@@ -45,23 +48,26 @@ export const tiers: Record<MemberTier, { label: string; description: string; var
   },
 };
 
+/** Shorthand: a member whose display name is their Roblox username. */
+const player = (roblox: string, role: string, tier: MemberTier, extra: Partial<Member> = {}): Member => ({
+  name: roblox,
+  roblox,
+  role,
+  tier,
+  ...extra,
+});
+
 export const members: Member[] = [
-  { name: 'Boss Name', role: 'Boss', tier: 'leadership', bio: 'Short introduction for the Boss goes here.', placeholder: true },
-  { name: 'Underboss Name', role: 'Underboss', tier: 'leadership', bio: 'Short introduction goes here.', placeholder: true },
-  { name: 'Advisor Name', role: 'Advisor', tier: 'council', bio: 'Area of responsibility goes here.', placeholder: true },
-  { name: 'Advisor Name', role: 'Advisor', tier: 'council', bio: 'Area of responsibility goes here.', placeholder: true },
-  { name: 'Advisor Name', role: 'Advisor', tier: 'council', bio: 'Area of responsibility goes here.', placeholder: true },
-  { name: 'Capo Name', role: 'Capo', tier: 'capos', placeholder: true },
-  { name: 'Capo Name', role: 'Capo', tier: 'capos', placeholder: true },
-  { name: 'Capo Name', role: 'Capo', tier: 'capos', placeholder: true },
-  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
-  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
-  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
-  { name: 'Soldier Name', role: 'Soldier', tier: 'ranks', placeholder: true },
-  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
-  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
-  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
-  { name: 'Associate Name', role: 'Associate', tier: 'ranks', placeholder: true },
+  player('Saetsuna', 'Boss', 'leadership'),
+  player('Zedvais', 'Underboss', 'leadership'),
+  player('Zellacutiepie', 'Underboss', 'leadership'),
+  player('Teralament', 'Advisor', 'council'),
+  player('Sophmadman', 'Capo', 'capos'),
+  player('Sitdogeeee', 'Capo', 'capos'),
+  player('L4_n13', 'Capo', 'capos'),
+  player('LittleSharkSquirt', 'Capo', 'capos'),
+  // Soldiers and Associates: add them here, e.g.
+  // player('Username', 'Soldier', 'ranks'),
 ];
 
 export const tierOrder: MemberTier[] = ['leadership', 'council', 'capos', 'ranks'];
