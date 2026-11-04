@@ -130,6 +130,14 @@ export const values = {
   ],
 };
 
+/** Animated night-city interlude between Values and Family. */
+export const interlude = {
+  eyebrow: 'Noctus Volpe · After dark',
+  aside: 'Idle Mafia · Est. 2026',
+  heading: ['United', 'as one.'],
+  text: 'When the city goes quiet, the fox keeps watch. Every member, every district, every war, one family.',
+};
+
 export const family = {
   index: '03',
   label: 'Family',

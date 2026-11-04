@@ -1,0 +1,71 @@
+---
+/**
+ * Geometric low-poly fox head that draws itself in, with glowing eyes and
+ * twinkling constellation nodes on its vertices. Original artwork inspired by
+ * the NV fox, not a copy of the official logo.
+ *
+ * Starts animating when its parent [data-scene] scrolls into view.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const outline = 'M200 130L155 140L100 50L80 170L60 230L120 290L200 360L280 290L340 230L320 170L300 50L245 140Z';
+const facets = [
+  'M100 50L132 152',
+  'M300 50L268 152',
+  'M155 140L200 196L245 140',
+  'M200 196L170 262L200 330L230 262Z',
+  'M80 170L138 206',
+  'M320 170L262 206',
+  'M60 230L150 238L120 290',
+  'M340 230L250 238L280 290',
+  'M150 238L170 262',
+  'M250 238L230 262',
+  'M120 290L200 330L280 290',
+];
+const nodes: [number, number][] = [
+  [100, 50], [300, 50], [200, 130], [80, 170], [320, 170], [60, 230], [340, 230],
+  [120, 290], [280, 290], [200, 360], [200, 196], [170, 262], [230, 262],
+];
+---
+
+<svg viewBox="0 0 400 400" class:list={['pointer-events-none overflow-visible', className]} aria-hidden="true" focusable="false" fill="none">
+  <defs>
+    <radialGradient id="fox-eye-glow">
+      <stop offset="0" stop-color="#b9a4fb" stop-opacity="0.9"></stop>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="fox-face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.16"></stop>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+
+  <path d={outline} fill="url(#fox-face)" class="scene-fade" style="--scene-delay:1400ms"></path>
+  <g stroke="#b9a4fb" stroke-width="1" stroke-opacity="0.45" stroke-linejoin="round">
+    {facets.map((d, i) => <path d={d} pathLength="1" class="scene-draw" style={`--scene-delay:${700 + i * 90}ms`} />)}
+  </g>
+  <path d={outline} pathLength="1" stroke="#f3f1ff" stroke-width="2" stroke-linejoin="round" class="scene-draw" style="--scene-delay:100ms;--draw-duration:2.6s"></path>
+
+  <!-- eyes -->
+  <g class="scene-fade" style="--scene-delay:2000ms">
+    <circle cx="155" cy="222" r="34" fill="url(#fox-eye-glow)" class="glow-pulse"></circle>
+    <circle cx="245" cy="222" r="34" fill="url(#fox-eye-glow)" class="glow-pulse"></circle>
+    <g class="blink">
+      <path d="M132 211L178 222L150 231Z" fill="#f3f1ff"></path>
+      <path d="M268 211L222 222L250 231Z" fill="#f3f1ff"></path>
+    </g>
+  </g>
+  <path d="M188 330H212L200 346Z" fill="#f3f1ff" class="scene-fade" style="--scene-delay:1800ms"></path>
+
+  <!-- constellation nodes -->
+  <g fill="#f3f1ff">
+    {
+      nodes.map(([cx, cy], i) => (
+        <circle cx={cx} cy={cy} r={i < 2 ? 3.5 : 2.4} class="twinkle" style={`--twinkle-delay:${(i * 0.37) % 3}s`} />
+      ))
+    }
+  </g>
+</svg>

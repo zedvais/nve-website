@@ -7,6 +7,8 @@ import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import MemberCard from '@/components/ui/MemberCard.astro';
 import UserPlus from '@lucide/astro/icons/user-plus';
+import ChevronDown from '@lucide/astro/icons/chevron-down';
+import Search from '@lucide/astro/icons/search';
 import { getRobloxProfiles } from '@/lib/roblox';
 import { family } from '@/data/site';
 import { openSeats, stats } from '@/data/stats';
@@ -29,6 +31,8 @@ const grids = {
   default: 'sm:grid-cols-2 xl:grid-cols-4',
   compact: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
 };
+/** Cards shown per group before the "Show all" button. */
+const LIMIT = 8;
 const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, grid: grids[tiers[tier].variant] }));
 ---
 
@@ -45,53 +49,119 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
       )
     }
 
-    <div class="mt-16 space-y-16 lg:space-y-20 lg:mt-24">
-      {
-        groups.map(({ tier, icon: Icon, variant, grid }) => {
-          const list = membersByTier(tier);
-          if (!list.length && tier !== 'ranks') return null;
-          return (
-            <div class="grid gap-8 lg:grid-cols-12" data-reveal>
-              <header class="lg:col-span-3">
-                <div class="flex items-center gap-3 border-t border-line pt-5 lg:sticky lg:top-28">
-                  <Icon size={18} stroke-width={1.5} class="text-accent-soft" aria-hidden="true" />
-                  <h3 class="font-display text-sm font-semibold uppercase tracking-[0.18em]">{tiers[tier].label}</h3>
-                  {list.length > 0 && <span class="ml-auto font-display text-xs tabular-nums text-muted lg:hidden">{list.length}</span>}
+    <div data-roster>
+      <!-- Toolbar: only shown once the roster script runs (progressive enhancement) -->
+      <div class="mt-12 flex flex-col gap-4 border-y border-line py-4 lg:mt-16 lg:flex-row lg:items-center" data-roster-tools hidden>
+        <label class="relative flex flex-1 items-center lg:max-w-sm">
+          <span class="sr-only">Search members</span>
+          <Search size={16} stroke-width={1.75} class="pointer-events-none absolute left-4 text-muted" aria-hidden="true" />
+          <input
+            type="search"
+            placeholder="Search members"
+            autocomplete="off"
+            spellcheck="false"
+            class="h-11 w-full border border-line bg-surface pl-11 pr-12 text-sm text-fg placeholder:text-muted/70 transition-colors focus:border-accent-muted focus:outline-none focus-visible:outline-none"
+            data-roster-search
+          />
+          <kbd class="pointer-events-none absolute right-3 hidden border border-line px-1.5 font-display text-[0.65rem] text-muted sm:block" aria-hidden="true">/</kbd>
+        </label>
+        <div class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] lg:mx-0 lg:px-0 lg:pb-0" role="group" aria-label="Filter by rank">
+          <button type="button" class="roster-chip" data-roster-filter="all" aria-pressed="true">All</button>
+          {groups.map(({ tier }) => (membersByTier(tier).length || tier === 'ranks') && (
+            <button type="button" class="roster-chip" data-roster-filter={tier} aria-pressed="false">{tiers[tier].label}</button>
+          ))}
+        </div>
+        <p class="font-display text-xs uppercase tracking-[0.16em] text-muted lg:ml-auto" aria-live="polite" data-roster-count></p>
+      </div>
+
+      <div class="mt-12 space-y-12 lg:mt-16 lg:space-y-16">
+        {
+          groups.map(({ tier, icon: Icon, variant, grid }) => {
+            const list = membersByTier(tier);
+            if (!list.length && tier !== 'ranks') return null;
+            const defaultOpen = tier !== 'ranks' || list.length <= LIMIT;
+            return (
+              <div class="grid gap-x-8 gap-y-6 lg:grid-cols-12" data-reveal data-group={tier} data-default-open={String(defaultOpen)}>
+                <header class="lg:col-span-3">
+                  <div class="border-t border-line pt-5 lg:sticky lg:top-28">
+                    <h3 class="font-display text-sm font-semibold uppercase tracking-[0.18em]">
+                      <button
+                        type="button"
+                        class="group/toggle flex w-full items-center gap-3 text-left"
+                        aria-expanded="true"
+                        aria-controls={`roster-${tier}`}
+                        data-group-toggle
+                        disabled
+                      >
+                        <Icon size={18} stroke-width={1.5} class="text-accent-soft" aria-hidden="true" />
+                        <span>{tiers[tier].label}</span>
+                        {list.length > 0 && <span class="font-display text-xs font-normal tabular-nums text-muted">{list.length}</span>}
+                        <span class="ml-auto grid size-7 place-items-center border border-line text-muted transition-colors group-hover/toggle:border-accent-muted group-hover/toggle:text-fg group-disabled/toggle:hidden">
+                          <ChevronDown size={14} stroke-width={2} class="transition-transform duration-500 group-aria-expanded/toggle:rotate-180" aria-hidden="true" />
+                        </span>
+                      </button>
+                    </h3>
+                    <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">{tiers[tier].description}</p>
+                  </div>
+                </header>
+                <div id={`roster-${tier}`} class="collapsible lg:col-span-9" data-open="true">
+                  <div class="collapsible-inner">
+                    <ul class:list={['grid gap-3 p-px', grid]}>
+                      {list.map((member, i) => (
+                        <li data-member data-name={[member.name, member.roblox, member.role].filter(Boolean).join(' ').toLowerCase()} data-extra={i >= LIMIT ? '' : undefined}>
+                          <MemberCard member={member} profile={profileFor(member.roblox)} variant={variant} />
+                        </li>
+                      ))}
+                      {list.length === 0 && (
+                        <li class="col-span-full" data-placeholder-card>
+                          <a
+                            href="/#join"
+                            class="group flex items-center gap-5 border border-dashed border-line p-5 transition-colors duration-500 hover:border-accent-muted hover:bg-elevated sm:p-6"
+                          >
+                            <span class="grid size-12 shrink-0 place-items-center border border-line text-accent-soft">
+                              <UserPlus size={20} stroke-width={1.5} aria-hidden="true" />
+                            </span>
+                            <span>
+                              <span class="block font-display text-lg font-semibold">
+                                {unlisted > 0 ? `+${unlisted} Soldiers & Associates` : 'Your name here'}
+                              </span>
+                              <span class="mt-1 block text-sm text-muted">
+                                {unlisted > 0 && 'Full roster coming soon. '}
+                                {openSeats > 0 ? `${openSeats} seats open: join the family and earn yours.` : 'Every Boss started as an Associate.'}
+                              </span>
+                            </span>
+                          </a>
+                        </li>
+                      )}
+                    </ul>
+                    {list.length > LIMIT && (
+                      <button
+                        type="button"
+                        class="mt-4 inline-flex items-center gap-2 border border-line px-4 py-2.5 font-display text-xs font-semibold uppercase tracking-[0.16em] text-muted transition-colors hover:border-accent-muted hover:text-fg"
+                        data-group-more
+                        data-total={list.length}
+                        hidden
+                      >
+                        <span data-more-label>Show all {list.length}</span>
+                        <ChevronDown size={14} stroke-width={2} class="transition-transform duration-500 [[aria-expanded=true]>&]:rotate-180" aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">{tiers[tier].description}</p>
-              </header>
-              <ul class:list={['grid gap-3 lg:col-span-9', grid]}>
-                {list.map((member) => (
-                  <li>
-                    <MemberCard member={member} profile={profileFor(member.roblox)} variant={variant} />
-                  </li>
-                ))}
-                {list.length === 0 && (
-                  <li class="col-span-full">
-                    <a
-                      href="/#join"
-                      class="group flex items-center gap-5 border border-dashed border-line p-5 transition-colors duration-500 hover:border-accent-muted hover:bg-elevated sm:p-6"
-                    >
-                      <span class="grid size-12 shrink-0 place-items-center border border-line text-accent-soft">
-                        <UserPlus size={20} stroke-width={1.5} aria-hidden="true" />
-                      </span>
-                      <span>
-                        <span class="block font-display text-lg font-semibold">
-                          {unlisted > 0 ? `+${unlisted} Soldiers & Associates` : 'Your name here'}
-                        </span>
-                        <span class="mt-1 block text-sm text-muted">
-                          {unlisted > 0 && 'Full roster coming soon. '}
-                          {openSeats > 0 ? `${openSeats} seats open: join the family and earn yours.` : 'Every Boss started as an Associate.'}
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </div>
-          );
-        })
-      }
+              </div>
+            );
+          })
+        }
+      </div>
+
+      <p class="mt-12 border border-dashed border-line p-6 text-center text-muted" data-roster-empty hidden>
+        No members match that search.
+      </p>
     </div>
   </Container>
 </section>
+
+<script>
+  import { initRoster } from '@/scripts/roster';
+  initRoster();
+</script>

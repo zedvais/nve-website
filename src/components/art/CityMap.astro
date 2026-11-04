@@ -27,13 +27,14 @@ const { class: className } = Astro.props;
   <!-- claimed district -->
   <path d="M700 40H1060V260H880V300H700Z" fill="#8b5cf6" fill-opacity="0.07"></path>
   <!-- route -->
-  <path d="M230 200L430 200L610 340L790 490L960 150" stroke="#b9a4fb" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round"></path>
+  <path d="M230 200L430 200L610 340L790 490L960 150" stroke="#b9a4fb" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round" class="route-flow"></path>
   <!-- markers -->
   <g>
     <circle cx="230" cy="200" r="5" fill="#09090b" stroke="#b9a4fb" stroke-width="1.5"></circle>
     <circle cx="610" cy="340" r="5" fill="#09090b" stroke="#b9a4fb" stroke-width="1.5"></circle>
     <circle cx="790" cy="490" r="5" fill="#09090b" stroke="#b9a4fb" stroke-width="1.5"></circle>
     <circle cx="960" cy="150" r="22" fill="#8b5cf6" fill-opacity="0.12"></circle>
+    <circle cx="960" cy="150" r="14" fill="none" stroke="#b9a4fb" stroke-width="1.5" class="ping"></circle>
     <circle cx="960" cy="150" r="6" fill="#8b5cf6"></circle>
   </g>
 </svg>

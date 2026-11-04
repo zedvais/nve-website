@@ -57,7 +57,7 @@ for (let i = 0; i < count + 2; i++) {
         if (rand() < 0.085) {
           const wx = x + 6 + c * ((w - 12) / cols);
           const wy = top + r * 18;
-          if (rand() < 0.25) accent += `<rect x="${wx.toFixed(1)}" y="${wy.toFixed(1)}" width="4" height="7"/>`;
+          if (rand() < 0.25) accent += `<rect x="${wx.toFixed(1)}" y="${wy.toFixed(1)}" width="4" height="7"${rand() < 0.5 ? ` class="flicker" style="--flicker-delay:-${(rand() * 5).toFixed(1)}s"` : ''}/>`;
           else lit += `M${wx.toFixed(1)} ${wy.toFixed(1)}h4v7h-4z`;
         }
       }

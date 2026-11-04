@@ -181,3 +181,233 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* ---------------------------------------------------------------
+   Interactive roster
+   --------------------------------------------------------------- */
+@layer components {
+  .roster-chip {
+    flex-shrink: 0;
+    border: 1px solid var(--color-line);
+    padding: 0.55rem 0.9rem;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-muted);
+    transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+  }
+  .roster-chip:hover {
+    color: var(--color-fg);
+    border-color: var(--color-accent-muted);
+  }
+  .roster-chip[aria-pressed='true'] {
+    color: var(--color-fg);
+    border-color: var(--color-accent);
+    background-color: rgb(139 92 246 / 0.14);
+  }
+
+  .collapsible {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.55s var(--ease-out-expo), opacity 0.4s;
+  }
+  .collapsible[data-open='false'] {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  .collapsible-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .collapsible[data-open='true'] > .collapsible-inner {
+    overflow: visible;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------
+   Animated artwork. Scenes ([data-scene]) only play while on screen.
+   Everything is static for reduced motion.
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .spin,
+  .spin-rev {
+    transform-box: view-box;
+    transform-origin: center;
+    animation: spin var(--spin-duration, 40s) linear infinite;
+  }
+  .spin-rev {
+    animation-direction: reverse;
+  }
+  .twinkle {
+    animation: twinkle 3.2s ease-in-out infinite;
+    animation-delay: var(--twinkle-delay, 0s);
+  }
+  .ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ping 2.6s var(--ease-out-expo) infinite;
+  }
+  .ember {
+    opacity: 0;
+    box-shadow: 0 0 8px 1px rgb(139 92 246 / 0.7);
+    animation: ember var(--ember-duration, 14s) linear infinite;
+    animation-delay: var(--ember-delay, 0s);
+  }
+  .beam {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: beam var(--beam-duration, 12s) ease-in-out infinite alternate;
+  }
+  .shooting-star {
+    stroke-dasharray: 0.25 1;
+    stroke-dashoffset: 1.25;
+    animation: shooting-star 9s ease-in 3s infinite;
+  }
+  .glow-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: glow-pulse 3.6s ease-in-out infinite;
+  }
+  .blink {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink 6s ease-in-out 3s infinite;
+  }
+  .flicker {
+    animation: flicker 5s steps(1) infinite;
+    animation-delay: var(--flicker-delay, 0s);
+  }
+  .route-flow {
+    animation: route-flow 1.6s linear infinite;
+  }
+
+  /* Draw-in and fade-in, triggered when the scene enters the viewport */
+  .js [data-scene] .scene-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .js [data-scene] .scene-fade {
+    opacity: 0;
+  }
+  .js [data-scene].has-played .scene-draw {
+    animation: draw var(--draw-duration, 1.6s) var(--ease-out-expo) forwards;
+    animation-delay: var(--scene-delay, 0ms);
+  }
+  .js [data-scene].has-played .scene-fade {
+    animation: intro-fade 1.2s ease-out forwards;
+    animation-delay: var(--scene-delay, 0ms);
+  }
+  .js [data-scene]:not(.is-playing) *,
+  .js [data-scene]:not(.is-playing) *::before {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+@keyframes ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+@keyframes ember {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(var(--ember-drift, 0px), -105vh);
+    opacity: 0;
+  }
+}
+@keyframes beam {
+  from {
+    transform: rotate(var(--beam-from, -10deg));
+  }
+  to {
+    transform: rotate(var(--beam-to, 10deg));
+  }
+}
+@keyframes shooting-star {
+  0% {
+    stroke-dashoffset: 1.25;
+    opacity: 1;
+  }
+  12%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes glow-pulse {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0%,
+  46%,
+  50%,
+  100% {
+    transform: scaleY(1);
+  }
+  48% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  31% {
+    opacity: 0.25;
+  }
+  33% {
+    opacity: 1;
+  }
+  71% {
+    opacity: 0.4;
+  }
+}
+@keyframes route-flow {
+  to {
+    stroke-dashoffset: -8;
+  }
+}

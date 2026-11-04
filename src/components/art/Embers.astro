@@ -1,0 +1,39 @@
+---
+/**
+ * Drifting purple embers / fireflies. Positions are generated at build time
+ * from a fixed seed, so there is no client JS. Animation is CSS only and is
+ * disabled for reduced motion.
+ */
+interface Props {
+  class?: string;
+  count?: number;
+  seed?: number;
+}
+const { class: className, count = 22, seed = 11 } = Astro.props;
+
+let s = seed;
+const rand = () => {
+  s = (s * 16807) % 2147483647;
+  return (s - 1) / 2147483646;
+};
+
+const embers = Array.from({ length: count }, () => ({
+  left: (rand() * 100).toFixed(2),
+  size: (2 + rand() * 3).toFixed(1),
+  duration: (9 + rand() * 12).toFixed(1),
+  delay: (-rand() * 20).toFixed(1),
+  drift: ((rand() - 0.5) * 120).toFixed(0),
+  bright: rand() < 0.3,
+}));
+---
+
+<div class:list={['pointer-events-none overflow-hidden', className]} aria-hidden="true">
+  {
+    embers.map((e) => (
+      <span
+        class:list={['ember absolute bottom-0 rounded-full', e.bright ? 'bg-accent-soft' : 'bg-accent']}
+        style={`left:${e.left}%;width:${e.size}px;height:${e.size}px;--ember-duration:${e.duration}s;--ember-delay:${e.delay}s;--ember-drift:${e.drift}px`}
+      />
+    ))
+  }
+</div>

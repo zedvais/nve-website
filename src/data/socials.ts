@@ -16,7 +16,7 @@ export interface SocialLink {
 export const discord: SocialLink = {
   name: 'Discord',
   icon: 'discord',
-  url: '',
+  url: 'https://discord.gg/b99p22KwBD',
 };
 
 export const socials: SocialLink[] = [

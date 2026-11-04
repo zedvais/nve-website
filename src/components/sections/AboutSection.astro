@@ -3,6 +3,7 @@ import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import Logo from '@/components/ui/Logo.astro';
 import FoxMotif from '@/components/ui/FoxMotif.astro';
+import OrbitRings from '@/components/art/OrbitRings.astro';
 import { about, site } from '@/data/site';
 ---
 
@@ -22,10 +23,11 @@ import { about, site } from '@/data/site';
       <!-- Branded visual + pillars -->
       <div class="lg:col-span-5 lg:col-start-8" data-reveal style="--reveal-delay:120">
         <div class="relative overflow-hidden border border-line bg-surface">
-          <div class="relative aspect-[4/3] overflow-hidden border-b border-line">
+          <div class="relative aspect-[4/3] overflow-hidden border-b border-line" data-scene>
             <div class="grid-lines absolute inset-0 opacity-70" aria-hidden="true"></div>
             <div class="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,rgb(139_92_246/0.22),transparent_70%)]" aria-hidden="true"></div>
             <FoxMotif class="absolute left-1/2 top-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 text-fg/[0.06]" />
+            <OrbitRings class="absolute left-1/2 top-1/2 h-[88%] w-auto -translate-x-1/2 -translate-y-1/2 aspect-square" />
             <div class="absolute inset-0 grid place-items-center">
               <Logo variant="full" size={230} loading="lazy" decorative class="!h-[62%] !w-auto drop-shadow-[0_20px_40px_rgb(0_0_0/0.6)]" />
             </div>

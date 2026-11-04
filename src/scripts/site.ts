@@ -94,3 +94,19 @@ if ('IntersectionObserver' in window) {
 } else {
   revealables.forEach((el) => el.classList.add('is-visible'));
 }
+
+/* Animated scenes only play while on screen */
+const scenes = document.querySelectorAll<HTMLElement>('[data-scene]');
+if ('IntersectionObserver' in window) {
+  const sceneObserver = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        e.target.classList.toggle('is-playing', e.isIntersecting);
+        if (e.isIntersecting) e.target.classList.add('has-played');
+      }),
+    { rootMargin: '0px 0px -10% 0px', threshold: 0.15 },
+  );
+  scenes.forEach((el) => sceneObserver.observe(el));
+} else {
+  scenes.forEach((el) => el.classList.add('is-playing', 'has-played'));
+}
