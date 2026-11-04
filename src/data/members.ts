@@ -23,8 +23,6 @@ export interface Member {
   bio?: string;
   /** Extra title shown beside the rank, e.g. 'Founder'. */
   title?: string;
-  /** In-game respect. Not shown on the site, only used to order members within a rank. */
-  respect?: number;
   avatar?: ImageMetadata;
   placeholder?: boolean;
 }
@@ -57,61 +55,61 @@ const player = (roblox: string, role: string, tier: MemberTier, extra: Partial<M
 });
 
 export const members: Member[] = [
-  // Respect as of the in-game roster on 2026-11-04. Groups sort by rank, then respect.
-  player('Saetsuna', 'Boss', 'leadership', { respect: 11_014, title: 'Founder' }),
-  player('Zedvais', 'Underboss', 'leadership', { respect: 10_792 }),
-  player('Zellacutiepie', 'Underboss', 'leadership', { respect: 10_963 }),
-  player('Teralament', 'Advisor', 'council', { respect: 13_224 }),
-  player('LittleSharkSquirt', 'Capo', 'council', { respect: 11_755 }),
-  player('L4_n13', 'Capo', 'council', { respect: 8_386 }),
-  player('Sitdogeeee', 'Capo', 'council', { respect: 8_001 }),
-  player('Sophmadman', 'Capo', 'council', { respect: 7_286 }),
+  // Within each group, members are shown by rank, then in the order listed here.
+  player('Saetsuna', 'Boss', 'leadership', { title: 'Founder' }),
+  player('Zedvais', 'Underboss', 'leadership'),
+  player('Zellacutiepie', 'Underboss', 'leadership'),
+  player('Teralament', 'Advisor', 'council'),
+  player('LittleSharkSquirt', 'Capo', 'council'),
+  player('L4_n13', 'Capo', 'council'),
+  player('Sitdogeeee', 'Capo', 'council'),
+  player('Sophmadman', 'Capo', 'council'),
   // Soldiers
-  player('pinty8', 'Soldier', 'ranks', { respect: 10_151 }),
-  player('nafismuaz7', 'Soldier', 'ranks', { respect: 8_299 }),
-  player('Konakorner666', 'Soldier', 'ranks', { respect: 8_248 }),
-  player('Tasty00904', 'Soldier', 'ranks', { respect: 7_739 }),
-  player('Kymisuu', 'Soldier', 'ranks', { respect: 7_620 }),
-  player('ghomchiadel', 'Soldier', 'ranks', { respect: 7_433 }),
-  player('iamesoeur', 'Soldier', 'ranks', { respect: 7_230 }),
-  player('WeWazKings', 'Soldier', 'ranks', { respect: 6_497 }),
-  player('thebossman19624', 'Soldier', 'ranks', { respect: 6_306 }),
-  player('Emanwilqt', 'Soldier', 'ranks', { respect: 5_826 }),
-  player('llIIIIlllIlIlIlIll', 'Soldier', 'ranks', { respect: 5_518 }),
-  player('naraninani', 'Soldier', 'ranks', { respect: 5_493 }),
-  player('naw_kay', 'Soldier', 'ranks', { respect: 5_254 }),
-  player('Wood2Karam', 'Soldier', 'ranks', { respect: 4_341 }),
-  player('girlfrmGirlVille', 'Soldier', 'ranks', { respect: 3_679 }),
-  player('Kaelthren', 'Soldier', 'ranks', { respect: 2_911 }),
-  player('WillieJr0101', 'Soldier', 'ranks', { respect: 2_699 }),
-  player('Coolaaron122499', 'Soldier', 'ranks', { respect: 2_519 }),
+  player('pinty8', 'Soldier', 'ranks'),
+  player('nafismuaz7', 'Soldier', 'ranks'),
+  player('Konakorner666', 'Soldier', 'ranks'),
+  player('Tasty00904', 'Soldier', 'ranks'),
+  player('Kymisuu', 'Soldier', 'ranks'),
+  player('ghomchiadel', 'Soldier', 'ranks'),
+  player('iamesoeur', 'Soldier', 'ranks'),
+  player('WeWazKings', 'Soldier', 'ranks'),
+  player('thebossman19624', 'Soldier', 'ranks'),
+  player('Emanwilqt', 'Soldier', 'ranks'),
+  player('llIIIIlllIlIlIlIll', 'Soldier', 'ranks'),
+  player('naraninani', 'Soldier', 'ranks'),
+  player('naw_kay', 'Soldier', 'ranks'),
+  player('Wood2Karam', 'Soldier', 'ranks'),
+  player('girlfrmGirlVille', 'Soldier', 'ranks'),
+  player('Kaelthren', 'Soldier', 'ranks'),
+  player('WillieJr0101', 'Soldier', 'ranks'),
+  player('Coolaaron122499', 'Soldier', 'ranks'),
   // Associates
-  player('TrusiMoti', 'Associate', 'ranks', { respect: 8_463 }),
-  player('cookiegirlswirl5555', 'Associate', 'ranks', { respect: 7_703 }),
-  player('mateusphcn1', 'Associate', 'ranks', { respect: 7_668 }),
-  player('tigerqueen200', 'Associate', 'ranks', { respect: 7_375 }),
-  player('R0zentinee', 'Associate', 'ranks', { respect: 7_248 }),
-  player('fatbol12435', 'Associate', 'ranks', { respect: 5_870 }),
-  player('Kevinfire_21', 'Associate', 'ranks', { respect: 5_505 }),
-  player('ParrotM0m', 'Associate', 'ranks', { respect: 4_840 }),
-  player('valuen1212345', 'Associate', 'ranks', { respect: 4_785 }),
-  player('XxCrazyGamer2xxx', 'Associate', 'ranks', { respect: 4_608 }),
-  player('bertsky100', 'Associate', 'ranks', { respect: 4_460 }),
-  player('RanchBoiz', 'Associate', 'ranks', { respect: 4_126 }),
-  player('Its_Yana2', 'Associate', 'ranks', { respect: 3_936 }),
-  player('wuffy1756', 'Associate', 'ranks', { respect: 2_484 }),
-  player('Bruhnigol', 'Associate', 'ranks', { respect: 2_426 }),
-  player('hunterX2_20', 'Associate', 'ranks', { respect: 1_762 }),
-  player('KING03', 'Associate', 'ranks', { respect: 1_556 }),
-  player('Naw_Poe', 'Associate', 'ranks', { respect: 1_451 }),
+  player('TrusiMoti', 'Associate', 'ranks'),
+  player('cookiegirlswirl5555', 'Associate', 'ranks'),
+  player('mateusphcn1', 'Associate', 'ranks'),
+  player('tigerqueen200', 'Associate', 'ranks'),
+  player('R0zentinee', 'Associate', 'ranks'),
+  player('fatbol12435', 'Associate', 'ranks'),
+  player('Kevinfire_21', 'Associate', 'ranks'),
+  player('ParrotM0m', 'Associate', 'ranks'),
+  player('valuen1212345', 'Associate', 'ranks'),
+  player('XxCrazyGamer2xxx', 'Associate', 'ranks'),
+  player('bertsky100', 'Associate', 'ranks'),
+  player('RanchBoiz', 'Associate', 'ranks'),
+  player('Its_Yana2', 'Associate', 'ranks'),
+  player('wuffy1756', 'Associate', 'ranks'),
+  player('Bruhnigol', 'Associate', 'ranks'),
+  player('hunterX2_20', 'Associate', 'ranks'),
+  player('KING03', 'Associate', 'ranks'),
+  player('Naw_Poe', 'Associate', 'ranks'),
 ];
 
 export const tierOrder: MemberTier[] = ['leadership', 'council', 'ranks'];
 const rankOrder = ['Boss', 'Underboss', 'Advisor', 'Capo', 'Soldier', 'Associate'];
 const rankIndex = (role: string) => (rankOrder.indexOf(role) + 1 || rankOrder.length + 1);
 
-/** Members of one group, sorted by rank and then by respect (highest first). */
+/** Members of one group, sorted by rank (list order is kept within a rank). */
 export const membersByTier = (tier: MemberTier) =>
   members
     .filter((m) => m.tier === tier)
-    .sort((a, b) => rankIndex(a.role) - rankIndex(b.role) || (b.respect ?? 0) - (a.respect ?? 0));
+    .sort((a, b) => rankIndex(a.role) - rankIndex(b.role));
