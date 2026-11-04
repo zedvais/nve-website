@@ -31,7 +31,8 @@ const grids = {
 };
 /** Cards shown per group before the "Show all" button. */
 const LIMIT = 8;
-const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, grid: tier === 'council' ? 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5' : grids[tiers[tier].variant] }));
+const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, // Advisors mirror Leadership: the Advisor gets the full-row feature card, Capos sit below.
+  grid: tier === 'council' ? 'sm:grid-cols-2 xl:grid-cols-4 [&>li:first-child]:col-span-full' : grids[tiers[tier].variant] }));
 ---
 
 <section id="family" aria-labelledby="family-heading" class="relative py-24 sm:py-32 lg:py-40">
@@ -107,7 +108,7 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                     <ul class:list={['grid gap-3 p-px', grid]}>
                       {list.map((member, i) => (
                         <li data-member data-name={[member.name, member.roblox, member.role].filter(Boolean).join(' ').toLowerCase()} data-extra={i >= LIMIT ? '' : undefined}>
-                          <MemberCard member={member} profile={profileFor(member.roblox)} variant={variant} />
+                          <MemberCard member={member} profile={profileFor(member.roblox)} variant={tier === 'council' && member.role === 'Advisor' ? 'feature' : variant} />
                         </li>
                       ))}
                       {tier === 'ranks' && list.length > 0 && unlisted > 0 && (
