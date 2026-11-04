@@ -95,7 +95,7 @@ export const about = {
   ],
 };
 
-export type ValueIcon = 'unity' | 'dedication' | 'respect' | 'ambition';
+export type ValueIcon = 'loyalty' | 'integrity' | 'supportive' | 'ambition';
 
 export const values = {
   index: '02',
@@ -105,21 +105,21 @@ export const values = {
   items: [
     {
       number: '01',
-      title: 'Unity',
-      icon: 'unity' as ValueIcon,
-      text: 'We grow stronger together, supporting one another both inside and outside the game.',
+      title: 'Loyalty',
+      icon: 'loyalty' as ValueIcon,
+      text: 'We stand by the family and by each other, in every war, every heist and every quiet day in between.',
     },
     {
       number: '02',
-      title: 'Dedication',
-      icon: 'dedication' as ValueIcon,
-      text: 'Every contribution matters. Consistency, effort, and participation shape our progress.',
+      title: 'Integrity',
+      icon: 'integrity' as ValueIcon,
+      text: 'We keep our word, play fair and own our mistakes. Trust is the foundation everything else is built on.',
     },
     {
       number: '03',
-      title: 'Respect',
-      icon: 'respect' as ValueIcon,
-      text: 'A positive community built on mutual respect, fair play, and a drama-free environment.',
+      title: 'Supportive',
+      icon: 'supportive' as ValueIcon,
+      text: 'No one climbs alone. We help newer members find their footing and lift each other up, in game and out of it.',
     },
     {
       number: '04',

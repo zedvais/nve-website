@@ -1,6 +1,6 @@
 ---
-import Handshake from '@lucide/astro/icons/handshake';
-import Flame from '@lucide/astro/icons/flame';
+import HeartHandshake from '@lucide/astro/icons/heart-handshake';
+import HandHelping from '@lucide/astro/icons/hand-helping';
 import ShieldCheck from '@lucide/astro/icons/shield-check';
 import TrendingUp from '@lucide/astro/icons/trending-up';
 import ValueArt from '@/components/art/ValueArt.astro';
@@ -8,10 +8,10 @@ import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { values, type ValueIcon } from '@/data/site';
 
-const icons: Record<ValueIcon, typeof Handshake> = {
-  unity: Handshake,
-  dedication: Flame,
-  respect: ShieldCheck,
+const icons: Record<ValueIcon, typeof HeartHandshake> = {
+  loyalty: HeartHandshake,
+  integrity: ShieldCheck,
+  supportive: HandHelping,
   ambition: TrendingUp,
 };
 ---
