@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { Member } from '@/data/members';
+import FoxEmblem from '@/components/art/FoxEmblem.astro';
 
 interface Props {
   member: Member;
@@ -54,7 +55,11 @@ const avatarPx = { feature: 112, default: 64, compact: 48 }[variant];
       ) : (
         <>
           <div class="grid-lines absolute inset-0 [background-size:12px_12px]" aria-hidden="true" />
-          <span class="relative" aria-hidden="true">{initials || '··'}</span>
+          {member.placeholder ? (
+            <FoxEmblem tone="mono" class="relative w-[70%] text-accent-muted transition-colors duration-500 group-hover:text-accent" />
+          ) : (
+            <span class="relative" aria-hidden="true">{initials || '··'}</span>
+          )}
         </>
       )
     }

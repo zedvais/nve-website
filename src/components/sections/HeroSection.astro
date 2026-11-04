@@ -3,6 +3,8 @@ import ArrowRight from '@lucide/astro/icons/arrow-right';
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import FoxMotif from '@/components/ui/FoxMotif.astro';
+import FoxEmblem from '@/components/art/FoxEmblem.astro';
+import NightSkyline from '@/components/art/NightSkyline.astro';
 import { game, hero, site } from '@/data/site';
 
 const status = [
@@ -23,12 +25,24 @@ const status = [
     <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg"></div>
   </div>
 
-  <!-- Fox-inspired geometric motif -->
-  <FoxMotif
-    animate
-    delay={400}
-    class="absolute right-[-18%] top-1/2 -z-10 w-[min(118vw,62rem)] -translate-y-1/2 text-fg/[0.09] sm:right-[-8%] lg:right-[2%] lg:w-[min(56vw,50rem)]"
-  />
+  <!-- Artwork: faceted fox, line motif, stars and the night city -->
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute right-[-30%] top-[14%] w-[min(130vw,40rem)] opacity-[0.16] sm:right-[-12%] sm:opacity-30 lg:right-[1%] lg:top-[8%] lg:w-[min(36vw,36rem)] lg:opacity-95 xl:right-[3%]">
+      <div class="intro-fade absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgb(139_92_246/0.35),transparent)] blur-3xl" style="--intro-delay:300"></div>
+      <FoxEmblem class="intro-fade relative w-full drop-shadow-[0_30px_60px_rgb(0_0_0/0.6)]" />
+      <FoxMotif animate delay={500} class="absolute inset-[-12%] w-[124%] text-fg/[0.12]" />
+    </div>
+    <svg viewBox="0 0 100 60" class="intro-fade absolute inset-x-0 top-0 h-[60%] w-full" preserveAspectRatio="none" style="--intro-delay:600">
+      <g fill="#f3f1ff">
+        <circle cx="8" cy="12" r="0.12" /><circle cx="22" cy="28" r="0.09" /><circle cx="35" cy="8" r="0.1" />
+        <circle cx="48" cy="22" r="0.08" /><circle cx="57" cy="6" r="0.12" /><circle cx="66" cy="34" r="0.09" />
+        <circle cx="78" cy="10" r="0.1" /><circle cx="91" cy="26" r="0.12" /><circle cx="96" cy="6" r="0.08" />
+        <circle cx="14" cy="44" r="0.08" /><circle cx="42" cy="40" r="0.07" /><circle cx="86" cy="46" r="0.08" />
+      </g>
+    </svg>
+    <NightSkyline class="absolute inset-x-0 bottom-0 h-[30%] w-full text-[#191726]" seed={3} count={34} />
+    <div class="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-b from-bg/0 via-bg/20 to-bg/90"></div>
+  </div>
 
   <Container size="wide" class="flex flex-1 flex-col pb-10 pt-28 sm:pt-32 lg:pt-36">
     <div class="flex items-center justify-between gap-6">

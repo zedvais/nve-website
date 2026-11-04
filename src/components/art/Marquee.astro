@@ -1,0 +1,55 @@
+---
+/**
+ * Slow, looping statement band. Pauses for reduced motion and on hover.
+ */
+interface Props {
+  items: string[];
+  class?: string;
+}
+const { items, class: className } = Astro.props;
+const row = [...items, ...items];
+---
+
+<div class:list={['marquee relative overflow-hidden border-y border-line bg-surface/60 py-5', className]} aria-hidden="true">
+  <div class="marquee-track flex w-max items-center">
+    {
+      [0, 1].map(() => (
+        <div class="flex shrink-0 items-center">
+          {row.map((item, i) => (
+            <>
+              <span
+                class:list={[
+                  'display px-6 text-2xl sm:text-3xl',
+                  i % 2 === 1 ? 'text-transparent [-webkit-text-stroke:1px_rgb(243_241_255/0.45)]' : 'text-fg/85',
+                ]}
+              >
+                {item}
+              </span>
+              <svg viewBox="0 0 20 20" class="size-3.5 shrink-0 text-accent" focusable="false">
+                <path d="M10 0l2.6 7.4L20 10l-7.4 2.6L10 20l-2.6-7.4L0 10l7.4-2.6z" fill="currentColor" />
+              </svg>
+            </>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+  <div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-bg to-transparent"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-bg to-transparent"></div>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee-track {
+      animation: marquee 60s linear infinite;
+    }
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

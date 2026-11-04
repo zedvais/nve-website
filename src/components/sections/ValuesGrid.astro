@@ -3,6 +3,7 @@ import Handshake from '@lucide/astro/icons/handshake';
 import Flame from '@lucide/astro/icons/flame';
 import ShieldCheck from '@lucide/astro/icons/shield-check';
 import TrendingUp from '@lucide/astro/icons/trending-up';
+import ValueArt from '@/components/art/ValueArt.astro';
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import { values, type ValueIcon } from '@/data/site';
@@ -39,7 +40,11 @@ const icons: Record<ValueIcon, typeof Handshake> = {
                 </span>
                 <Icon size={22} stroke-width={1.25} class="mt-2 text-muted transition-colors duration-500 group-hover:text-fg" aria-hidden="true" />
               </div>
-              <div class="mt-auto pt-8 sm:pt-12">
+              <ValueArt
+                name={value.icon}
+                class="mx-auto my-8 w-24 text-fg/25 transition-colors duration-500 group-hover:text-accent-soft/70 sm:my-10 sm:w-28"
+              />
+              <div class="mt-auto">
                 <h3 class="display text-3xl tracking-[-0.02em]">{value.title}</h3>
                 <p class="mt-4 leading-relaxed text-muted">{value.text}</p>
               </div>

@@ -1,4 +1,5 @@
 ---
+import CityMap from '@/components/art/CityMap.astro';
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import HighlightCard from '@/components/ui/HighlightCard.astro';
@@ -6,7 +7,8 @@ import { journey } from '@/data/site';
 import { highlights } from '@/data/highlights';
 ---
 
-<section id="journey" aria-labelledby="journey-heading" class="relative border-t border-line py-24 sm:py-32 lg:py-40">
+<section id="journey" aria-labelledby="journey-heading" class="relative isolate overflow-hidden border-t border-line py-24 sm:py-32 lg:py-40">
+  <CityMap class="absolute inset-x-0 top-0 -z-10 h-[34rem] w-full opacity-80 [mask-image:linear-gradient(to_bottom,black_30%,transparent)]" />
   <Container size="wide">
     <SectionHeading id="journey-heading" index={journey.index} label={journey.label} heading={journey.heading} intro={journey.intro} />
 

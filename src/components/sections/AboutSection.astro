@@ -1,7 +1,7 @@
 ---
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
-import FoxMotif from '@/components/ui/FoxMotif.astro';
+import RooftopScene from '@/components/art/RooftopScene.astro';
 import { about, site } from '@/data/site';
 ---
 
@@ -22,16 +22,10 @@ import { about, site } from '@/data/site';
       <div class="lg:col-span-5 lg:col-start-8" data-reveal style="--reveal-delay:120">
         <div class="relative overflow-hidden border border-line bg-surface">
           <div class="relative aspect-[4/3] overflow-hidden border-b border-line">
-            <div class="grid-lines absolute inset-0 opacity-70" aria-hidden="true"></div>
-            <div
-              class="absolute inset-0 bg-[radial-gradient(70%_60%_at_70%_20%,rgb(139_92_246/0.22),transparent_70%)]"
-              aria-hidden="true"
-            >
-            </div>
-            <FoxMotif class="absolute left-1/2 top-1/2 w-[62%] -translate-x-1/2 -translate-y-1/2 text-fg/40" />
-            <div class="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 sm:p-6">
-              <span class="eyebrow text-fg/70">{site.name}</span>
-              <span class="display text-5xl text-fg/10 sm:text-6xl" aria-hidden="true">{site.monogram}</span>
+            <div class="absolute inset-0"><RooftopScene class="size-full" /></div>
+            <div class="absolute inset-x-0 top-0 flex items-start justify-between p-5 sm:p-6">
+              <span class="eyebrow text-fg/80">{site.name}</span>
+              <span class="eyebrow text-fg/60">After dark</span>
             </div>
           </div>
           <ul class="divide-y divide-line">

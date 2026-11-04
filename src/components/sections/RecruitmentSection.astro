@@ -4,6 +4,7 @@ import Check from '@lucide/astro/icons/check';
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import FoxMotif from '@/components/ui/FoxMotif.astro';
+import FoxCards from '@/components/art/FoxCards.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
 import { recruitment } from '@/data/site';
 import { discord, hasDiscord } from '@/data/socials';
@@ -67,6 +68,7 @@ const anyLink = Boolean(applyHref || discordHref);
         </div>
 
         <div class="lg:col-span-5">
+          <FoxCards class="mx-auto mb-10 w-[min(100%,20rem)]" />
           <h3 class="eyebrow mb-4 border-b border-line pb-4">What we look for</h3>
           <ul class="divide-y divide-line/80">
             {

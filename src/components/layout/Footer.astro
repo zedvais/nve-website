@@ -1,6 +1,8 @@
 ---
 import ArrowUp from '@lucide/astro/icons/arrow-up';
 import Container from '@/components/ui/Container.astro';
+import NightSkyline from '@/components/art/NightSkyline.astro';
+import DecoDivider from '@/components/art/DecoDivider.astro';
 import Logo from '@/components/ui/Logo.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
 import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
@@ -17,6 +19,9 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
     aria-hidden="true"
   >
   </div>
+
+  <NightSkyline class="pointer-events-none absolute inset-x-0 bottom-0 h-56 w-full text-[#100f18] sm:h-72" seed={19} count={40} />
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-bg from-35% via-bg/60 to-transparent" aria-hidden="true"></div>
 
   <Container size="wide" class="relative">
     <div class="grid gap-14 lg:grid-cols-12">
@@ -101,8 +106,10 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
       </div>
     </div>
 
+    <DecoDivider class="mt-20" />
+
     <p
-      class="display mt-24 select-none text-[clamp(2.25rem,8.5vw,8.5rem)] leading-[0.9] text-fg/90"
+      class="display mt-16 select-none text-[clamp(2.25rem,8.5vw,8.5rem)] leading-[0.9] text-fg/90"
     >
       <span class="sr-only">{site.footerLine}</span>
       <span aria-hidden="true">{lineStart}</span>

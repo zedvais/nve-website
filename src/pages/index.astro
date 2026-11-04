@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
+import Marquee from '@/components/art/Marquee.astro';
 import AboutSection from '@/components/sections/AboutSection.astro';
 import ValuesGrid from '@/components/sections/ValuesGrid.astro';
 import FamilySection from '@/components/sections/FamilySection.astro';
@@ -10,6 +11,7 @@ import RecruitmentSection from '@/components/sections/RecruitmentSection.astro';
 
 <BaseLayout>
   <HeroSection />
+  <Marquee items={['Unity', 'Dedication', 'Respect', 'Ambition', 'Noctus Volpe', 'United as one']} />
   <AboutSection />
   <ValuesGrid />
   <FamilySection />

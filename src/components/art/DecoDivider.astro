@@ -1,0 +1,18 @@
+---
+/** Thin art-deco divider with a centred diamond. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={['pointer-events-none flex items-center gap-3', className]} aria-hidden="true">
+  <span class="h-px flex-1 bg-gradient-to-r from-transparent to-line"></span>
+  <span class="h-px w-3 bg-accent-muted"></span>
+  <svg viewBox="0 0 20 20" class="size-4 shrink-0" fill="none" focusable="false">
+    <path d="M10 1l9 9-9 9-9-9z" stroke="#8b5cf6"></path>
+    <path d="M10 6l4 4-4 4-4-4z" fill="#8b5cf6"></path>
+  </svg>
+  <span class="h-px w-3 bg-accent-muted"></span>
+  <span class="h-px flex-1 bg-gradient-to-l from-transparent to-line"></span>
+</div>

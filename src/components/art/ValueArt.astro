@@ -1,0 +1,39 @@
+---
+/**
+ * Geometric art-deco line emblems for the four values. Original artwork.
+ */
+import type { ValueIcon } from '@/data/site';
+
+interface Props {
+  name: ValueIcon;
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+
+const art: Record<ValueIcon, string> = {
+  // three interlocking rhombi
+  unity:
+    '<path d="M60 20 100 60 60 100 20 60Z"/><path d="M100 20 140 60 100 100 60 60Z"/><path d="M80 60 120 100 80 140 40 100Z"/><circle cx="80" cy="80" r="4" fill="currentColor"/>',
+  // flame inside a diamond, with rays
+  dedication:
+    '<path d="M80 6 154 80 80 154 6 80Z"/><path d="M80 120c-20 0-30-14-30-30 0-20 18-26 20-46 12 10 14 22 12 30 6-4 10-10 10-16 10 10 18 20 18 32 0 16-10 30-30 30Z"/><path d="M80 120c-8 0-12-6-12-12 0-8 8-12 10-20 6 6 14 12 14 20s-6 12-12 12Z" fill="currentColor" fill-opacity=".35"/>',
+  // shield with chevrons
+  respect:
+    '<path d="M80 12 136 32V78c0 34-24 58-56 70-32-12-56-36-56-70V32Z"/><path d="M50 70 80 90 110 70"/><path d="M50 92 80 112 110 92"/><path d="M80 12V148" stroke-opacity=".4"/>',
+  // rising steps to a star
+  ambition:
+    '<path d="M14 146H50V114H82V82H114V50H146"/><path d="M14 146V114M50 114V82M82 82V50M114 50V18" stroke-opacity=".35"/><path d="M128 6l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="currentColor"/>',
+};
+---
+
+<svg
+  viewBox="0 0 160 160"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linejoin="round"
+  class:list={['pointer-events-none', className]}
+  aria-hidden="true"
+  focusable="false"
+  set:html={art[name]}
+/>
