@@ -42,6 +42,11 @@ export const site = {
   },
   /** Atmospheric hero photo: the fox on the rooftop above the city. */
   heroBackground,
+  /**
+   * Hero backdrop: 'animated' draws the rooftop scene as animated vector art,
+   * 'photo' shows the rooftop photo above instead.
+   */
+  heroStyle: 'animated' as 'animated' | 'photo',
 };
 
 /**

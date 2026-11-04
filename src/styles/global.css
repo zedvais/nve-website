@@ -411,3 +411,81 @@
     stroke-dashoffset: -8;
   }
 }
+
+/* Animated rooftop hero */
+@media (prefers-reduced-motion: no-preference) {
+  .fog-drift {
+    animation: fog-drift var(--fog-duration, 40s) ease-in-out infinite alternate;
+  }
+  .traffic {
+    stroke-dasharray: 0.004 0.036;
+    animation: traffic var(--traffic-duration, 40s) linear infinite;
+  }
+  .aircraft {
+    animation: aircraft 70s linear infinite;
+  }
+  .blink-light {
+    animation: blink-light 2.4s steps(1) infinite;
+    animation-delay: var(--blink-delay, 0s);
+  }
+  .fox-tail {
+    transform-box: view-box;
+    transform-origin: 150px 198px;
+    animation: fox-tail 5s ease-in-out infinite;
+  }
+  .fox-breathe {
+    transform-box: view-box;
+    transform-origin: 110px 200px;
+    animation: fox-breathe 4.2s ease-in-out infinite;
+  }
+  .fox-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink 5.5s ease-in-out 2s infinite;
+  }
+}
+@keyframes fog-drift {
+  to {
+    transform: translateX(var(--fog-shift, 80px));
+  }
+}
+@keyframes traffic {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+@keyframes aircraft {
+  from {
+    transform: translate(-60px, 120px);
+  }
+  to {
+    transform: translate(1700px, 60px);
+  }
+}
+@keyframes blink-light {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+}
+@keyframes fox-tail {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes fox-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.012);
+  }
+}

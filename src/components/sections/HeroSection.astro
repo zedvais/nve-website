@@ -4,6 +4,7 @@ import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import FoxMotif from '@/components/ui/FoxMotif.astro';
 import Embers from '@/components/art/Embers.astro';
+import RooftopScene from '@/components/art/RooftopScene.astro';
 import { Image } from 'astro:assets';
 import { game, hero, site } from '@/data/site';
 import { foundedShort, openSeats, stats } from '@/data/stats';
@@ -23,15 +24,21 @@ const status = [
 <section id="home" aria-labelledby="hero-heading" class="relative isolate flex min-h-svh flex-col overflow-hidden" data-scene>
   <!-- Atmosphere: rooftop photo, purple light, grain -->
   <div class="absolute inset-0 -z-10" aria-hidden="true">
-    <Image
-      src={site.heroBackground}
-      alt=""
-      widths={[640, 960, 1376]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-      class="intro-fade absolute inset-0 size-full -scale-x-100 object-cover object-[37%_center] opacity-80 lg:object-center"
-    />
+    {
+      site.heroStyle === 'animated' ? (
+        <RooftopScene class="intro-fade absolute inset-y-0 right-0 aspect-[16/9] h-full max-w-none translate-x-[19%] lg:inset-0 lg:aspect-auto lg:size-full lg:translate-x-0" />
+      ) : (
+      <Image
+        src={site.heroBackground}
+        alt=""
+        widths={[640, 960, 1376]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="intro-fade absolute inset-0 size-full -scale-x-100 object-cover object-[37%_center] opacity-80 lg:object-center"
+      />
+      )
+    }
     <div class="absolute inset-0 bg-gradient-to-r from-bg/95 via-bg/60 to-bg/0"></div>
     <div class="absolute inset-0 bg-bg/35 lg:hidden"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-bg/70 via-transparent to-bg"></div>
