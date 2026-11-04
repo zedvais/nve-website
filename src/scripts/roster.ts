@@ -52,10 +52,11 @@ export function initRoster() {
       });
       if (g.placeholder) g.placeholder.hidden = Boolean(query);
       if (g.more) {
-        g.more.hidden = Boolean(query);
+        const row = g.more.closest<HTMLElement>('[data-more-row]') ?? g.more;
+        row.hidden = Boolean(query);
         g.more.setAttribute('aria-expanded', String(g.showAll));
         const label = g.more.querySelector('[data-more-label]');
-        if (label) label.textContent = g.showAll ? 'Show less' : `Show all ${g.more.dataset.total}`;
+        if (label) label.textContent = g.showAll ? 'Show less' : `+${g.more.dataset.hiddenCount} more members`;
       }
     }
     if (empty) empty.hidden = shownGroups > 0;

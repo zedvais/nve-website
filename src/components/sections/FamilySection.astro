@@ -111,13 +111,34 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                           <MemberCard member={member} profile={profileFor(member.roblox)} variant={tier === 'council' && member.role === 'Advisor' ? 'feature' : variant} />
                         </li>
                       ))}
-                      {tier === 'ranks' && list.length > 0 && unlisted > 0 && (
-                        <li class="col-span-full" data-placeholder-card>
-                          <a href="/#join" class="group flex items-center justify-between gap-4 border border-dashed border-line px-5 py-4 text-sm text-muted transition-colors duration-500 hover:border-accent-muted hover:text-fg">
-                            <span>+{unlisted} more members in the family</span>
-                            {openSeats > 0 && <span class="eyebrow !text-[0.65rem]">{openSeats} seats open</span>}
-                          </a>
+                      {list.length > LIMIT ? (
+                        <li class="col-span-full" data-more-row>
+                          <button
+                            type="button"
+                            class="group/more flex w-full items-center justify-between gap-4 border border-dashed border-line px-5 py-4 text-left text-sm text-muted transition-colors duration-500 hover:border-accent-muted hover:text-fg"
+                            aria-expanded="false"
+                            aria-controls={`roster-${tier}`}
+                            data-group-more
+                            data-hidden-count={list.length - LIMIT}
+                          >
+                            <span class="flex items-center gap-3">
+                              <ChevronDown size={16} stroke-width={1.75} class="text-accent-soft transition-transform duration-500 group-aria-expanded/more:rotate-180" aria-hidden="true" />
+                              <span data-more-label>+{list.length - LIMIT} more members</span>
+                            </span>
+                            {tier === 'ranks' && unlisted > 0 && (
+                              <span class="eyebrow hidden !text-[0.65rem] sm:block">{unlisted} not yet listed · {openSeats} seats open</span>
+                            )}
+                          </button>
                         </li>
+                      ) : (
+                        tier === 'ranks' && list.length > 0 && unlisted > 0 && (
+                          <li class="col-span-full" data-placeholder-card>
+                            <a href="/#join" class="flex items-center justify-between gap-4 border border-dashed border-line px-5 py-4 text-sm text-muted transition-colors duration-500 hover:border-accent-muted hover:text-fg">
+                              <span>+{unlisted} more members in the family</span>
+                              {openSeats > 0 && <span class="eyebrow !text-[0.65rem]">{openSeats} seats open</span>}
+                            </a>
+                          </li>
+                        )
                       )}
                       {list.length === 0 && (
                         <li class="col-span-full" data-placeholder-card>
@@ -141,18 +162,6 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                         </li>
                       )}
                     </ul>
-                    {list.length > LIMIT && (
-                      <button
-                        type="button"
-                        class="mt-4 inline-flex items-center gap-2 border border-line px-4 py-2.5 font-display text-xs font-semibold uppercase tracking-[0.16em] text-muted transition-colors hover:border-accent-muted hover:text-fg"
-                        data-group-more
-                        data-total={list.length}
-                        hidden
-                      >
-                        <span data-more-label>Show all {list.length}</span>
-                        <ChevronDown size={14} stroke-width={2} class="transition-transform duration-500 [[aria-expanded=true]>&]:rotate-180" aria-hidden="true" />
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
