@@ -60,9 +60,10 @@ export const highlights: Highlight[] = [
   },
   {
     category: 'Family wars',
-    title: 'Wars fought',
-    description: 'Wars declared, fought and won as a family will be recorded here.',
+    title: 'Undefeated in war',
+    description: 'Eleven family wars fought side by side, eleven won, none lost.',
     icon: 'war',
-    placeholder: true,
+    date: 'Nov 2026',
+    metric: { value: '11–0', label: 'War record' },
   },
 ];

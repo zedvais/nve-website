@@ -23,6 +23,8 @@ export const stats = {
   perkLevels: { current: 242, max: 400 },
   xp: { current: 2_039_828, next: 2_689_174 },
   territories: 15,
+  /** Family war record. */
+  wars: { won: 11, lost: 0 },
   rankings: [
     { label: 'Respect', rank: 71 },
     { label: 'Territories', rank: 33 },

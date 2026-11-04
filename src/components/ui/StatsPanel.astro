@@ -11,6 +11,7 @@ const tiles = [
 const badges = [
   ...stats.rankings.map((r) => `#${r.rank} in ${r.label.toLowerCase()}`),
   `${stats.territories} territories held`,
+  `${stats.wars.won}–${stats.wars.lost} in family wars`,
 ];
 ---
 

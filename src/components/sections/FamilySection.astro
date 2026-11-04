@@ -1,7 +1,6 @@
 ---
 import Crown from '@lucide/astro/icons/crown';
 import Briefcase from '@lucide/astro/icons/briefcase';
-import ShieldCheck from '@lucide/astro/icons/shield-check';
 import Users from '@lucide/astro/icons/users';
 import Container from '@/components/ui/Container.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
@@ -22,7 +21,6 @@ const profileFor = (roblox?: string) => (roblox ? profiles.get(roblox.toLowerCas
 const icons: Record<MemberTier, typeof Crown> = {
   leadership: Crown,
   council: Briefcase,
-  capos: ShieldCheck,
   ranks: Users,
 };
 const grids = {
@@ -33,7 +31,7 @@ const grids = {
 };
 /** Cards shown per group before the "Show all" button. */
 const LIMIT = 8;
-const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, grid: grids[tiers[tier].variant] }));
+const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, grid: tier === 'council' ? 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5' : grids[tiers[tier].variant] }));
 ---
 
 <section id="family" aria-labelledby="family-heading" class="relative py-24 sm:py-32 lg:py-40">
@@ -79,7 +77,7 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
           groups.map(({ tier, icon: Icon, variant, grid }) => {
             const list = membersByTier(tier);
             if (!list.length && tier !== 'ranks') return null;
-            const defaultOpen = tier !== 'ranks' || list.length <= LIMIT;
+            const defaultOpen = true;
             return (
               <div class="grid gap-x-8 gap-y-6 lg:grid-cols-12" data-reveal data-group={tier} data-default-open={String(defaultOpen)}>
                 <header class="lg:col-span-3">
@@ -112,6 +110,14 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                           <MemberCard member={member} profile={profileFor(member.roblox)} variant={variant} />
                         </li>
                       ))}
+                      {tier === 'ranks' && list.length > 0 && unlisted > 0 && (
+                        <li class="col-span-full" data-placeholder-card>
+                          <a href="/#join" class="group flex items-center justify-between gap-4 border border-dashed border-line px-5 py-4 text-sm text-muted transition-colors duration-500 hover:border-accent-muted hover:text-fg">
+                            <span>+{unlisted} more members in the family</span>
+                            {openSeats > 0 && <span class="eyebrow !text-[0.65rem]">{openSeats} seats open</span>}
+                          </a>
+                        </li>
+                      )}
                       {list.length === 0 && (
                         <li class="col-span-full" data-placeholder-card>
                           <a

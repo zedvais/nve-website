@@ -10,7 +10,7 @@ import { game, hero, site } from '@/data/site';
 import { foundedShort, openSeats, stats } from '@/data/stats';
 
 const status = [
-  { label: 'Game', value: `${game.name} · ${game.platform}` },
+  { label: 'War record', value: `${stats.wars.won}–${stats.wars.lost}` },
   { label: 'Family level', value: `Lv. ${stats.level}` },
   { label: 'Founded', value: foundedShort },
   {
