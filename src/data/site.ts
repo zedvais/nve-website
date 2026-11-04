@@ -135,7 +135,7 @@ export const family = {
   label: 'Family',
   heading: 'The people behind the name.',
   intro:
-    'Every seat at the table matters. The Boss sets the direction, Underbosses and Advisors run the operation, Capos lead the crews, and every Soldier and Associate helps write the story.',
+    'Every seat at the table matters. The Boss sets the direction, Underbosses lead alongside, Advisors coordinate and oversee as second in command, Capos recruit and coordinate, and every Soldier and Associate helps write the story.',
 };
 
 export const journey = {

@@ -33,12 +33,12 @@ export const tiers: Record<MemberTier, { label: string; description: string; var
   },
   council: {
     label: 'Advisors',
-    description: 'Help run the Vault, write the family notice and keep the operation on track.',
+    description: 'Second in command. Advisors coordinate the family and oversee day-to-day operations.',
     variant: 'default',
   },
   capos: {
     label: 'Capos',
-    description: 'Lead by example and keep the crews organised and active.',
+    description: 'Our recruiters and coordinators. Capos bring new members in and keep the family organised.',
     variant: 'default',
   },
   ranks: {
