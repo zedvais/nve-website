@@ -1,47 +1,33 @@
 ---
 /**
- * Brand mark. Renders the official logo when `site.logo.src` is set,
- * otherwise a temporary typographic NV placeholder (not a replacement logo).
+ * Official Noctus Volpe mark. `variant="mark"` is the simple white NV used at
+ * small sizes; `variant="full"` is the silver-and-purple fox monogram.
  */
+import { Image } from 'astro:assets';
 import { site } from '@/data/site';
 
 interface Props {
+  /** Rendered height in px. */
   size?: number;
   class?: string;
+  variant?: 'mark' | 'full' | 'lockup';
   /** Set when the logo sits next to the visible wordmark, so it is not announced twice. */
   decorative?: boolean;
+  loading?: 'eager' | 'lazy';
 }
 
-const { size = 40, class: className, decorative = false } = Astro.props;
-
+const { size = 40, class: className, variant = 'mark', decorative = false, loading = 'eager' } = Astro.props;
+const src = site.logo[variant];
+const width = Math.round((size * src.width) / src.height);
 ---
 
-{
-  site.logo.src ? (
-    <img
-      src={site.logo.src}
-      alt={decorative ? '' : site.logo.alt}
-      width={size}
-      height={size}
-      class:list={['block object-contain', className]}
-    />
-  ) : (
-    <span
-      class:list={[
-        'relative inline-grid shrink-0 place-items-center border border-fg/25 bg-bg font-display font-bold leading-none tracking-[-0.06em] text-fg',
-        className,
-      ]}
-      style={`width:${size}px;height:${size}px;font-size:${Math.round(size * 0.42)}px`}
-      role={decorative ? undefined : 'img'}
-      aria-label={decorative ? undefined : `${site.name} (${site.monogram})`}
-      aria-hidden={decorative ? 'true' : undefined}
-    >
-      <span aria-hidden="true">{site.monogram}</span>
-      <span
-        class="absolute right-[-1px] top-[-1px] h-[22%] w-[22%] bg-accent"
-        style="clip-path: polygon(0 0, 100% 0, 100% 100%)"
-        aria-hidden="true"
-      />
-    </span>
-  )
-}
+<Image
+  src={src}
+  alt={decorative ? '' : site.logo.alt}
+  height={size}
+  width={width}
+  densities={[1, 2]}
+  loading={loading}
+  class:list={['block h-auto shrink-0 object-contain', className]}
+  style={`height:${size}px;width:${width}px`}
+/>

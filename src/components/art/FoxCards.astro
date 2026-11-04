@@ -3,7 +3,7 @@
  * A fanned stack of three "family cards": original playing-card style
  * artwork with the faceted fox illustration. Decorative.
  */
-import FoxEmblem from './FoxEmblem.astro';
+import Logo from '@/components/ui/Logo.astro';
 import { site } from '@/data/site';
 
 interface Props {
@@ -43,12 +43,16 @@ const cards = [
                 {site.monogram}
                 <span class="mt-1 block size-[0.5em] rotate-45 bg-accent" />
               </span>
-              <FoxEmblem class="absolute left-1/2 top-1/2 w-[70%] -translate-x-1/2 -translate-y-1/2" />
+              <div class="absolute inset-0 grid place-items-center">
+                <Logo variant="full" size={180} loading="lazy" decorative class="!h-[52%] !w-auto" />
+              </div>
             </>
           ) : (
             <>
               <div class="absolute inset-[6%] rounded-[4%/3%] border border-accent-muted/60 bg-[repeating-linear-gradient(45deg,rgb(139_92_246/0.10)_0_2px,transparent_2px_12px),repeating-linear-gradient(-45deg,rgb(139_92_246/0.10)_0_2px,transparent_2px_12px)]" />
-              <FoxEmblem tone="mono" eyes={false} class="absolute left-1/2 top-1/2 w-[38%] -translate-x-1/2 -translate-y-1/2 text-accent-muted" />
+              <div class="absolute inset-0 grid place-items-center">
+                <Logo variant="mark" size={60} loading="lazy" decorative class="!h-auto !w-[40%] opacity-25" />
+              </div>
             </>
           )}
         </div>

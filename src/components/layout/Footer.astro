@@ -27,8 +27,7 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
     <div class="grid gap-14 lg:grid-cols-12">
       <div class="lg:col-span-5">
         <a href="/#home" class="inline-flex items-center gap-3">
-          <Logo size={44} decorative />
-          <span class="font-display text-base font-bold uppercase tracking-[0.28em]">{site.name}</span>
+          <Logo variant="lockup" size={92} loading="lazy" />
         </a>
         <p class="mt-6 max-w-sm leading-relaxed text-muted">{site.tagline}</p>
         <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted">A family in {game.name} on {game.platform}.</p>

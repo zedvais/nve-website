@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#09090B"/>
-  <rect x="1.5" y="1.5" width="61" height="61" fill="none" stroke="#F3F1FF" stroke-opacity=".3" stroke-width="2"/>
-  <path d="M50 0h14v14z" fill="#8B5CF6"/>
-  <text x="32" y="43" text-anchor="middle" font-family="'Space Grotesk', 'Arial Black', Arial, sans-serif" font-weight="700" font-size="28" letter-spacing="-2" fill="#F3F1FF">NV</text>
-</svg>

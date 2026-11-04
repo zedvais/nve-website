@@ -45,15 +45,22 @@ lazy-loads it automatically. Without an avatar, the card shows initials.
 Each highlight can have an optional `date` and `metric`. Leave them out until there is a real
 record. Set `placeholder: false` (or remove it) once an entry describes something that happened.
 
-### Logo
+### Logo and brand images
 
-The header, footer and favicon use a temporary typographic **NV** placeholder. When the official
-logo is ready:
+Official brand assets live in `src/assets/brand/` and are wired up in `site.logo` in `src/data/site.ts`.
+Astro converts them to optimised WebP at build time.
 
-1. Add it to `public/` (SVG preferred), e.g. `public/logo.svg`.
-2. Set `logo.src: '/logo.svg'` in `src/data/site.ts`.
-3. Replace `public/favicon.svg`, `public/apple-touch-icon.png` (180×180) and
-   `public/og-image.png` (1200×630 social preview).
+| File | Used for |
+| --- | --- |
+| `nv-logo.png` | The silver-and-purple NV fox monogram (About panel, family cards) |
+| `nv-mark.png` | The simple white NV mark (header, mobile menu, avatar placeholders) |
+| `nv-lockup.png` | The simple mark with the NOCTUS VOLPE wordmark (footer) |
+| `rooftop.jpg` | Hero background photo (`site.heroBackground`) |
+
+The logo PNGs have transparent backgrounds, cut out from the original black-background artwork.
+To update one, replace the file and keep its name. `public/favicon.png`, `public/favicon-48.png`,
+`public/apple-touch-icon.png` and `public/og-image.jpg` (the 1200×630 social preview) are made
+from the same artwork.
 
 ### Social links
 
@@ -67,13 +74,16 @@ src/
 │   ├── layout/      Header, MobileNavigation, Footer, SEO
 │   ├── sections/    HeroSection, AboutSection, ValuesGrid, FamilySection,
 │   │                HighlightsSection, RecruitmentSection
-│   └── ui/          Button, Container, SectionHeading, MemberCard, HighlightCard,
-│                    Logo, FoxMotif, SocialIcon
+│   ├── ui/          Button, Container, SectionHeading, MemberCard, HighlightCard,
+│   │                Logo, FoxMotif, SocialIcon
+│   └── art/         Vector artwork: NightSkyline, CityMap, FoxCards, ValueArt,
+│                    Marquee, DecoDivider
 ├── data/            Centralised content (see above)
 ├── layouts/         BaseLayout (shared <head>, header, footer)
 ├── pages/           index.astro, 404.astro, robots.txt.ts
 ├── scripts/         site.ts — the only client JS (header, active nav, menu, reveals)
 └── styles/          global.css — Tailwind import, design tokens (@theme), motion
+src/assets/brand/    Official logo files and hero photo
 public/              favicon, apple-touch-icon, og-image
 ```
 

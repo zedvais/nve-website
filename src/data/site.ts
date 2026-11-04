@@ -1,3 +1,8 @@
+import logoFull from '@/assets/brand/nv-logo.png';
+import logoMark from '@/assets/brand/nv-mark.png';
+import logoLockup from '@/assets/brand/nv-lockup.png';
+import heroBackground from '@/assets/brand/rooftop.jpg';
+
 /**
  * Central site configuration.
  * Everything that describes the community (copy, navigation, recruitment)
@@ -21,17 +26,23 @@ export const site = {
   description:
     'Noctus Volpe (NVE) is a family in Idle Mafia on Roblox, built on teamwork, dedication and the pursuit of something greater. More than a name. More than a family.',
   locale: 'en',
-  /** Social preview image in /public. Replace with a branded 1200×630 image when available. */
-  ogImage: '/og-image.png',
+  /** Social preview image in /public (1200×630). */
+  ogImage: '/og-image.jpg',
   /**
-   * Official logo. Leave `src` empty to use the typographic NV placeholder.
-   * When the real asset is ready, drop it in /public (SVG preferred) and set e.g. '/logo.svg'.
+   * Official brand assets (src/assets/brand). Astro optimises them at build time.
+   * - full:   the silver-and-purple NV fox monogram (hero, feature artwork)
+   * - mark:   the simple white NV mark (header, small sizes)
+   * - lockup: the simple mark with the NOCTUS VOLPE wordmark (footer)
    */
   logo: {
-    src: '',
+    full: logoFull,
+    mark: logoMark,
+    lockup: logoLockup,
     alt: 'Noctus Volpe logo',
   },
-} as const;
+  /** Atmospheric hero photo: the fox on the rooftop above the city. */
+  heroBackground,
+};
 
 /**
  * The game the family plays. Shown in the hero, footer and SEO copy.
