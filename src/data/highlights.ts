@@ -2,7 +2,17 @@
  * Community highlights shown in "Our Journey".
  * Never invent results: leave `date` and `metric` out until there is a real
  * record. Entries marked `placeholder: true` render as "To be recorded".
+ *
+ * Figures come from `stats.ts`, so a stats update refreshes these cards too.
  */
+import { formatNumber, stats } from '@/data/stats';
+
+const rank = (label: string) => stats.rankings.find((r) => r.label === label)?.rank;
+const respectRank = rank('Respect');
+const territoryRank = rank('Territories');
+const weeksSinceFounding = Math.round(
+  (Date.parse(stats.asOf) - Date.parse(stats.founded)) / (7 * 24 * 60 * 60 * 1000),
+);
 
 export type HighlightIcon = 'founded' | 'progression' | 'vault' | 'territory' | 'respect' | 'war';
 
@@ -28,42 +38,42 @@ export const highlights: Highlight[] = [
   },
   {
     category: 'Family progression',
-    title: 'Level 53 reached',
-    description: 'From founding to family level 53 in about five weeks.',
+    title: `Level ${stats.level} reached`,
+    description: `From founding to family level ${stats.level} in about ${weeksSinceFounding} weeks.`,
     icon: 'progression',
     date: 'Nov 2026',
-    metric: { value: 'Lv. 53', label: 'Family level' },
+    metric: { value: `Lv. ${stats.level}`, label: 'Family level' },
   },
   {
     category: 'Family Vault & perks',
-    title: '242 perk levels',
+    title: `${stats.perkLevels.current} perk levels`,
     description: 'Sixteen family perks active across economy, core and elite, funded by member donations.',
     icon: 'vault',
     date: 'Nov 2026',
-    metric: { value: '242 / 400', label: 'Perk levels' },
+    metric: { value: `${stats.perkLevels.current} / ${stats.perkLevels.max}`, label: 'Perk levels' },
   },
   {
     category: 'Territory expansion',
-    title: '15 territories held',
-    description: 'Ranked #33 in territories.',
+    title: `${stats.territories} territories held`,
+    description: `Ranked #${territoryRank} in territories.`,
     icon: 'territory',
     date: 'Nov 2026',
-    metric: { value: '#33', label: 'In territories' },
+    metric: { value: `#${territoryRank}`, label: 'In territories' },
   },
   {
     category: 'Notable achievements',
     title: 'Top 100 in respect',
-    description: 'Ranked #71 in respect with 1,970 respect earned.',
+    description: `Ranked #${respectRank} in respect with ${formatNumber(stats.respect)} respect earned.`,
     icon: 'respect',
     date: 'Nov 2026',
-    metric: { value: '#71', label: 'In respect' },
+    metric: { value: `#${respectRank}`, label: 'In respect' },
   },
   {
     category: 'Family wars',
     title: 'Undefeated in war',
-    description: 'Eleven family wars fought side by side, eleven won, none lost.',
+    description: `${stats.wars.won + stats.wars.lost} family wars fought side by side, ${stats.wars.won} won, ${stats.wars.lost === 0 ? 'none' : stats.wars.lost} lost.`,
     icon: 'war',
     date: 'Nov 2026',
-    metric: { value: '11–0', label: 'War record' },
+    metric: { value: `${stats.wars.won}–${stats.wars.lost}`, label: 'War record' },
   },
 ];

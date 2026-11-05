@@ -1,7 +1,7 @@
 /**
  * Family stats snapshot from Idle Mafia.
  * Update these numbers from the in-game Family overview and bump `asOf`.
- * Everything derived from them (open seats, XP progress, "about five weeks")
+ * Everything derived from them (open seats, XP progress, the Journey highlights)
  * is calculated, so only the raw values need editing.
  */
 import { formatDate, formatNumber, percentOf, seatsLeft } from '@/lib/format';
@@ -16,13 +16,13 @@ export interface Perk {
 
 export const stats = {
   /** Date of this snapshot (ISO), shown as "Stats as of …". */
-  asOf: '2026-11-04',
+  asOf: '2026-11-05',
   founded: '2026-09-29',
-  level: 53,
-  members: { current: 44, max: 50 },
-  respect: 1970,
-  perkLevels: { current: 242, max: 400 },
-  xp: { current: 2_039_828, next: 2_689_174 },
+  level: 56,
+  members: { current: 46, max: 50 },
+  respect: 2045,
+  perkLevels: { current: 246, max: 400 },
+  xp: { current: 299_561, next: 2_912_671 },
   territories: 15,
   /** Family war record. */
   wars: { won: 11, lost: 0 },
@@ -45,15 +45,15 @@ export const perks: Perk[] = [
   { name: 'Enforcers', effect: '+18% attack power', tier: 'core' },
   { name: 'Guardians', effect: '+17% defense power', tier: 'core' },
   { name: 'Hustlers', effect: '+12% job experience', tier: 'core' },
-  { name: 'Medics', effect: '+13% health regen', tier: 'core' },
+  { name: 'Medics', effect: '+14% health regen', tier: 'core' },
   { name: 'Runners', effect: '+7% stamina regen', tier: 'core' },
-  { name: 'Bagmen', effect: '+13% cash stolen', tier: 'core' },
+  { name: 'Bagmen', effect: '+14% cash stolen', tier: 'core' },
   { name: 'Insurance', effect: '+12% less cash lost', tier: 'core' },
   { name: 'Veterans', effect: '+12% fight experience', tier: 'core' },
   { name: 'Demolition', effect: '+15% siege damage', tier: 'core' },
-  { name: 'Boss Hunters', effect: '+11% boss damage', tier: 'core' },
-  { name: 'Bodyguards', effect: '+18% defense power', tier: 'elite' },
+  { name: 'Boss Hunters', effect: '+12% boss damage', tier: 'core' },
   { name: 'Hitters', effect: '+20% attack power', tier: 'elite' },
+  { name: 'Bodyguards', effect: '+19% defense power', tier: 'elite' },
   { name: 'Fences', effect: '+15% job drop chance', tier: 'elite' },
 ];
 
