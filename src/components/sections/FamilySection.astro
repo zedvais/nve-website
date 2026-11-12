@@ -106,6 +106,19 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                 <div id={`roster-${tier}`} class="collapsible lg:col-span-9" data-open="true">
                   <div class="collapsible-inner">
                     <ul class:list={['grid gap-3 p-px', grid]}>
+                      {tier === 'council' && !list.some((m) => m.role === 'Advisor') && (
+                        <li class="col-span-full" data-placeholder-card>
+                          <div class="flex items-center gap-5 border border-dashed border-line p-5 sm:p-6">
+                            <span class="grid size-12 shrink-0 place-items-center border border-line text-accent-soft">
+                              <UserPlus size={20} stroke-width={1.5} aria-hidden="true" />
+                            </span>
+                            <span>
+                              <span class="eyebrow block !text-[0.65rem]">Advisor</span>
+                              <span class="mt-1 block text-sm text-muted">Seat open, to be appointed.</span>
+                            </span>
+                          </div>
+                        </li>
+                      )}
                       {list.map((member, i) => (
                         <li data-member data-name={[member.name, member.roblox, member.role].filter(Boolean).join(' ').toLowerCase()} data-extra={i >= LIMIT ? '' : undefined}>
                           <MemberCard member={member} profile={profileFor(member.roblox)} variant={tier === 'council' && member.role === 'Advisor' ? 'feature' : variant} />

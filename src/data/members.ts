@@ -34,8 +34,8 @@ export const tiers: Record<MemberTier, { label: string; description: string; var
     variant: 'feature',
   },
   council: {
-    label: 'Capos',
-    description: 'Capos are our recruiters and coordinators, keeping the family organised day to day.',
+    label: 'Advisors',
+    description: 'Advisors are second in command, coordinating and overseeing the family. Capos are our recruiters and coordinators.',
     variant: 'default',
   },
   ranks: {
