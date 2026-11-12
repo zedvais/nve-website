@@ -34,8 +34,8 @@ export const tiers: Record<MemberTier, { label: string; description: string; var
     variant: 'feature',
   },
   council: {
-    label: 'Advisors',
-    description: 'Advisors are second in command, coordinating and overseeing the family. Capos are our recruiters and coordinators.',
+    label: 'Capos',
+    description: 'Capos are our recruiters and coordinators, keeping the family organised day to day.',
     variant: 'default',
   },
   ranks: {
@@ -59,10 +59,10 @@ export const members: Member[] = [
   player('Saetsuna', 'Boss', 'leadership', { title: 'Founder' }),
   player('Zedvais', 'Underboss', 'leadership'),
   player('Zellacutipie', 'Underboss', 'leadership'),
-  player('LittleSharkSquirt', 'Capo', 'council'),
   player('Sitdogeeee', 'Capo', 'council'),
   player('Sophmadman', 'Capo', 'council'),
   // Soldiers (highest respect first, as in-game)
+  player('LittleSharkSquirt', 'Soldier', 'ranks'),
   player('pinty8', 'Soldier', 'ranks'),
   player('iamesoeur', 'Soldier', 'ranks'),
   player('Konakorner666', 'Soldier', 'ranks'),
