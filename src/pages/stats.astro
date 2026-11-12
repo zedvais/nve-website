@@ -1,0 +1,80 @@
+---
+/**
+ * /stats: a shareable snapshot of the family's numbers.
+ * Everything here reads from src/data/stats.ts, so updating that one file
+ * updates this page, the homepage Journey section and the link preview image.
+ */
+import { Image } from 'astro:assets';
+import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/ui/Container.astro';
+import Button from '@/components/ui/Button.astro';
+import SocialIcon from '@/components/ui/SocialIcon.astro';
+import StatsPanel from '@/components/ui/StatsPanel.astro';
+import PerkList from '@/components/ui/PerkList.astro';
+import { game, site } from '@/data/site';
+import { asOfLabel, foundedLabel, openSeats, stats, statsSummary } from '@/data/stats';
+import { discord, hasDiscord } from '@/data/socials';
+
+const recruitingLabel = !game.recruiting
+  ? 'Recruitment closed'
+  : openSeats > 0
+    ? `Recruiting · ${openSeats} ${openSeats === 1 ? 'slot' : 'slots'} open`
+    : 'Roster full';
+---
+
+<BaseLayout
+  title="Family stats"
+  description={`${site.name} family stats as of ${asOfLabel}: ${statsSummary}.`}
+  image="/stats/og.png"
+>
+  <section aria-labelledby="stats-heading" class="relative isolate overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40">
+    <div class="absolute inset-x-0 top-0 -z-10 h-[34rem] sm:h-[40rem]" aria-hidden="true">
+      <Image
+        src={site.heroBackground}
+        alt=""
+        widths={[800, 1600, 2400]}
+        sizes="100vw"
+        loading="eager"
+        class="size-full -scale-x-100 object-cover object-[37%_center] opacity-45 lg:object-center"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-bg/40 via-bg/70 to-bg"></div>
+    </div>
+
+    <Container size="wide">
+      <p class="eyebrow flex items-center gap-3 text-accent-soft">
+        <span class="h-px w-8 bg-accent/60" aria-hidden="true"></span>Family stats · {asOfLabel}
+      </p>
+      <h1 id="stats-heading" class="mt-6 font-display text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[0.95] tracking-[-0.03em]">
+        {site.name} <span class="text-[0.45em] font-semibold tracking-normal text-accent">[{site.shortName}]</span>
+      </h1>
+      <p class="mt-4 text-muted">Founded {foundedLabel} · A family in {game.name} on {game.platform}</p>
+
+      <div class="mt-12 space-y-3 sm:mt-16">
+        <StatsPanel />
+        <PerkList />
+      </div>
+
+      <div class="mt-3 flex flex-col gap-6 border border-line bg-surface/80 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <p class="font-display text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+          {site.name} · {site.shortName} · {stats.territories} territories held
+          <span class="mt-2 block text-accent-soft sm:ml-4 sm:mt-0 sm:inline">{recruitingLabel}</span>
+        </p>
+        <div class="flex flex-wrap gap-3">
+          {
+            hasDiscord && game.recruiting && openSeats > 0 && (
+              <Button href={discord.url} external size="sm">
+                <SocialIcon icon="discord" size={16} />
+                Join on Discord
+              </Button>
+            )
+          }
+          <Button href="/" variant="secondary" size="sm">
+            <ArrowLeft size={16} stroke-width={1.75} aria-hidden="true" />
+            Back to site
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

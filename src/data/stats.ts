@@ -66,3 +66,12 @@ export const asOfLabel = formatDate(stats.asOf, { month: 'long', day: 'numeric',
 export const foundedLabel = formatDate(stats.founded, { month: 'long', day: 'numeric', year: 'numeric' });
 export const foundedShort = formatDate(stats.founded, { month: 'short', year: 'numeric' });
 export { formatNumber };
+
+/** "Lv. 66 · 49/51 members · 2,309 respect · #69 in respect · …", used for link previews. */
+export const statsSummary = [
+  `Lv. ${stats.level}`,
+  `${stats.members.current}/${stats.members.max} members`,
+  `${formatNumber(stats.respect)} respect`,
+  ...stats.rankings.map((r) => `#${r.rank} in ${r.label.toLowerCase()}`),
+  `${stats.territories} territories held`,
+].join(' · ');

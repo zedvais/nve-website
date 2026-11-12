@@ -78,6 +78,9 @@ open-seats count are all calculated from it.
 
 The war record (`stats.wars`) feeds the hero strip, the stats tags and the Family wars milestone.
 
+The same file powers the shareable `/stats` page and its link-preview image (`/stats/og.png`, rendered at
+build time with Satori and sharp), so posting `https://<site>/stats` in Discord always shows the current numbers.
+
 ### Highlights
 
 Each highlight in `src/data/highlights.ts` can have an optional `date` and `metric`. Leave them out
