@@ -4,9 +4,9 @@
  * Everything here reads from src/data/stats.ts, so updating that one file
  * updates this page, the homepage Journey section and the link preview image.
  */
-import { Image } from 'astro:assets';
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import CityMap from '@/components/art/CityMap.astro';
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
@@ -27,18 +27,14 @@ const recruitingLabel = !game.recruiting
   title="Family stats"
   description={`${site.name} family stats as of ${asOfLabel}: ${statsSummary}.`}
   image="/stats/og.png"
+  imageWidth={1200}
+  imageHeight={1080}
 >
   <section aria-labelledby="stats-heading" class="relative isolate overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40">
-    <div class="absolute inset-x-0 top-0 -z-10 h-[34rem] sm:h-[40rem]" aria-hidden="true">
-      <Image
-        src={site.heroBackground}
-        alt=""
-        widths={[800, 1600, 2400]}
-        sizes="100vw"
-        loading="eager"
-        class="size-full -scale-x-100 object-cover object-[37%_center] opacity-45 lg:object-center"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-bg/40 via-bg/70 to-bg"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 h-[40rem]" aria-hidden="true">
+      <div class="absolute inset-0 bg-[radial-gradient(60%_70%_at_100%_0%,rgb(139_92_246/0.16),transparent_65%)]"></div>
+      <div class="grid-lines absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
+      <CityMap class="absolute inset-0 size-full opacity-60 [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
     </div>
 
     <Container size="wide">
