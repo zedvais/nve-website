@@ -16,20 +16,20 @@ export interface Perk {
 
 export const stats = {
   /** Date of this snapshot (ISO), shown as "Stats as of …". */
-  asOf: '2026-11-12',
+  asOf: '2026-11-27',
   founded: '2026-09-29',
-  level: 66,
-  members: { current: 49, max: 51 },
-  respect: 2309,
-  perkLevels: { current: 258, max: 400 },
-  xp: { current: 2_287_651, next: 3_696_218 },
+  level: 91,
+  members: { current: 44, max: 52 },
+  respect: 2873,
+  perkLevels: { current: 280, max: 400 },
+  xp: { current: 962_490, next: 5_888_829 },
   territories: 15,
   /** Family war record. */
   wars: { won: 11, lost: 0 },
   rankings: [
-    { label: 'Respect', rank: 69 },
-    { label: 'Territories', rank: 31 },
-    { label: 'Family level', rank: 90 },
+    { label: 'Respect', rank: 58 },
+    { label: 'Territories', rank: 3 },
+    { label: 'Family level', rank: 71 },
   ],
 };
 
@@ -40,21 +40,21 @@ export const perkTiers: Record<PerkTier, { label: string; color: string }> = {
 };
 
 export const perks: Perk[] = [
-  { name: 'Job Cut', effect: '+17% job cash', tier: 'economy' },
-  { name: 'Landlord', effect: '+19% property income', tier: 'economy' },
-  { name: 'Smugglers', effect: '+17% operation payout', tier: 'economy' },
-  { name: 'Enforcers', effect: '+18% attack power', tier: 'core' },
-  { name: 'Guardians', effect: '+17% defense power', tier: 'core' },
+  { name: 'Job Cut', effect: '+20% job cash', tier: 'economy' },
+  { name: 'Landlord', effect: '+20% property income', tier: 'economy' },
+  { name: 'Smugglers', effect: '+19% operation payout', tier: 'economy' },
+  { name: 'Enforcers', effect: '+20% attack power', tier: 'core' },
+  { name: 'Guardians', effect: '+19% defense power', tier: 'core' },
   { name: 'Hustlers', effect: '+14% job experience', tier: 'core' },
-  { name: 'Medics', effect: '+14% health regen', tier: 'core' },
-  { name: 'Runners', effect: '+7.5% stamina regen', tier: 'core' },
-  { name: 'Bagmen', effect: '+15% cash stolen', tier: 'core' },
-  { name: 'Insurance', effect: '+15% less cash lost', tier: 'core' },
-  { name: 'Veterans', effect: '+13% fight experience', tier: 'core' },
-  { name: 'Demolition', effect: '+15% siege damage', tier: 'core' },
-  { name: 'Boss Hunters', effect: '+15% boss damage', tier: 'core' },
+  { name: 'Medics', effect: '+16% health regen', tier: 'core' },
+  { name: 'Runners', effect: '+8% stamina regen', tier: 'core' },
+  { name: 'Bagmen', effect: '+16% cash stolen', tier: 'core' },
+  { name: 'Insurance', effect: '+17% less cash lost', tier: 'core' },
+  { name: 'Veterans', effect: '+16% fight experience', tier: 'core' },
+  { name: 'Demolition', effect: '+16% siege damage', tier: 'core' },
+  { name: 'Boss Hunters', effect: '+16% boss damage', tier: 'core' },
   { name: 'Hitters', effect: '+20% attack power', tier: 'elite' },
-  { name: 'Bodyguards', effect: '+19% defense power', tier: 'elite' },
+  { name: 'Bodyguards', effect: '+20% defense power', tier: 'elite' },
   { name: 'Fences', effect: '+15% job drop chance', tier: 'elite' },
 ];
 
@@ -67,7 +67,7 @@ export const foundedLabel = formatDate(stats.founded, { month: 'long', day: 'num
 export const foundedShort = formatDate(stats.founded, { month: 'short', year: 'numeric' });
 export { formatNumber };
 
-/** "Lv. 66 · 49/51 members · 2,309 respect · #69 in respect · …", used for link previews. */
+/** "Lv. 91 · 44/52 members · 2,873 respect · #58 in respect · …", used for link previews. */
 export const statsSummary = [
   `Lv. ${stats.level}`,
   `${stats.members.current}/${stats.members.max} members`,
