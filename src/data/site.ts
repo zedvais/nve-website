@@ -54,8 +54,8 @@ export const game = {
 export const navigation: NavLink[] = [
   { label: 'Home', href: '/#home', section: 'home' },
   { label: 'About', href: '/#about', section: 'about' },
-  { label: 'Family', href: '/#family', section: 'family' },
   { label: 'Values', href: '/#values', section: 'values' },
+  { label: 'Family', href: '/#family', section: 'family' },
   { label: 'Join Us', href: '/#join', section: 'join' },
 ];
 
