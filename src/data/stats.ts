@@ -25,7 +25,7 @@ export const stats = {
   xp: { current: 962_490, next: 5_888_829 },
   territories: 15,
   /** Family war record. */
-  wars: { won: 11, lost: 0 },
+  wars: { won: 12, lost: 0 },
   rankings: [
     { label: 'Respect', rank: 58 },
     { label: 'Territories', rank: 3 },
