@@ -473,12 +473,19 @@
   }
   .js [data-scene] .crest-letter,
   .js [data-scene] .crest-rays,
-  .js [data-scene] .crest-pips {
+  .js [data-scene] .crest-pips,
+  .js [data-scene] .crest-ticks {
     opacity: 0;
+  }
+  .js [data-scene] .crest-bars {
+    opacity: 0;
+    transform-box: view-box;
+    transform-origin: 60px 60px;
+    transform: scaleX(0.55);
   }
   .js [data-scene] .crest-rays {
     transform-box: view-box;
-    transform-origin: 60px 102px;
+    transform-origin: 60px 112px;
     transform: scale(0.6);
   }
   .js [data-scene].has-played .crest-draw {
@@ -495,6 +502,14 @@
   .js [data-scene].has-played .crest-rays {
     animation: rays-fan 1.8s var(--ease-out-expo) forwards;
     animation-delay: calc(var(--crest-delay, 0ms) + 600ms);
+  }
+  .js [data-scene].has-played .crest-ticks {
+    animation: intro-fade 1.2s ease-out forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 700ms);
+  }
+  .js [data-scene].has-played .crest-bars {
+    animation: rays-fan 1.4s var(--ease-out-expo) forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 1300ms);
   }
   .js [data-scene].has-played .crest-letter {
     animation: letter-strike 1.4s var(--ease-out-expo) forwards;

@@ -57,8 +57,8 @@ const player = (roblox: string, role: string, tier: MemberTier, extra: Partial<M
 export const members: Member[] = [
   // Within each group, members are shown by rank, then in the order listed here.
   player('Saetsuna', 'Boss', 'leadership', { title: 'Founder' }),
-  player('Zellacutipie', 'Underboss', 'leadership'),
   player('Zedvais', 'Underboss', 'leadership'),
+  player('Zellacutipie', 'Underboss', 'leadership'),
   player('Sophmadman', 'Capo', 'council'),
   // Soldiers (highest respect first, as in-game)
   player('LALERCK', 'Soldier', 'ranks'),
