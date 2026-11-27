@@ -1,6 +1,6 @@
 ---
 /**
- * Navierre wordmark: the NV mark beside the name as live text, with the tag and
+ * Navierre wordmark: the crest shield beside the name as live text, with the tag and
  * pronunciation underneath. Replaces the old baked-in PNG lockup so a rename only
  * touches src/data/site.ts.
  */
@@ -17,11 +17,11 @@ const lg = size === 'lg';
 ---
 
 <span class:list={['inline-flex items-center', lg ? 'gap-4' : 'gap-3', className]}>
-  <Logo size={lg ? 52 : 32} decorative loading="lazy" />
+  <Logo size={lg ? 64 : 36} decorative />
   <span class="flex flex-col">
-    <span class:list={['font-display font-bold uppercase text-fg', lg ? 'text-2xl tracking-[0.32em]' : 'text-base tracking-[0.28em]']}>{site.name}</span>
+    <span class:list={['font-display font-semibold uppercase text-fg', lg ? 'text-2xl tracking-[0.32em]' : 'text-base tracking-[0.28em]']}>{site.name}</span>
     <span class="mt-1.5 flex items-center gap-2.5">
-      <span class="font-display text-[0.7rem] font-bold tracking-[0.3em] text-accent-soft">{site.shortName}</span>
+      <span class="font-display text-[0.7rem] font-semibold tracking-[0.3em] text-accent-soft">{site.shortName}</span>
       <span class="h-px w-5 bg-line" aria-hidden="true"></span>
       <span class="eyebrow !text-[0.65rem]">{site.pronunciation}</span>
     </span>

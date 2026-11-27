@@ -1,0 +1,36 @@
+---
+/**
+ * Interlude between Values and Family: the monogram beneath a stepped deco
+ * arch. The line work draws itself in when it scrolls into view; static for
+ * reduced motion.
+ */
+import Container from '@/components/ui/Container.astro';
+import Crest from '@/components/ui/Crest.astro';
+import DecoArch from '@/components/art/DecoArch.astro';
+import { interlude } from '@/data/site';
+---
+
+<section aria-labelledby="interlude-heading" class="relative isolate overflow-hidden border-y border-line bg-bg" data-scene>
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_45%,rgb(201_164_92/0.1),transparent_70%)]"></div>
+    <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-bg to-transparent"></div>
+    <div class="grain absolute inset-0"></div>
+  </div>
+
+  <Container size="wide" class="relative pb-24 pt-20 sm:pb-32 sm:pt-24">
+    <div class="relative mx-auto aspect-[8/9] w-[min(92vw,34rem)]">
+      <DecoArch class="absolute inset-0 size-full" />
+      <Crest animated delay={500} class="absolute left-1/2 top-[58%] w-[42%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_30px_rgb(201_164_92/0.18)]" />
+    </div>
+
+    <div class="mx-auto mt-8 grid max-w-3xl items-center gap-4 text-center sm:grid-cols-[1fr_auto_1fr] sm:gap-8">
+      <p class="eyebrow sm:text-right" data-reveal>{interlude.eyebrow}</p>
+      <span class="mx-auto hidden size-1.5 rotate-45 bg-accent sm:block" aria-hidden="true"></span>
+      <p class="eyebrow sm:text-left" data-reveal style="--reveal-delay:120">{interlude.aside}</p>
+    </div>
+    <h2 id="interlude-heading" class="display mt-8 text-center text-[clamp(2.6rem,7vw,5.5rem)]" data-reveal>
+      {interlude.heading[0]} <em class="gilt pr-[0.08em]">{interlude.heading[1]}</em>
+    </h2>
+    <p class="mx-auto mt-5 max-w-xl text-center leading-relaxed text-muted sm:text-lg" data-reveal style="--reveal-delay:120">{interlude.text}</p>
+  </Container>
+</section>

@@ -1,0 +1,49 @@
+---
+/**
+ * Stepped art-deco arch: nested frames with stepped shoulders and a fan of rays
+ * in the crown. The frames draw themselves in when the scene comes on screen.
+ * Original artwork; static for reduced motion.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+// Nested arches, outermost first: [half width, shoulder height, step]
+const frames = [
+  { w: 380, top: 40, step: 26 },
+  { w: 340, top: 82, step: 20 },
+  { w: 300, top: 120, step: 14 },
+];
+const arch = ({ w, top, step }: (typeof frames)[number]) => {
+  const l = 400 - w;
+  const r = 400 + w;
+  const sh = top + w * 0.62; // where the curve meets the stepped shoulder
+  const rr = w - 2 * step;
+  return [
+    `M${l} 900V${sh + 2 * step}`,
+    `H${l + step}V${sh + step}H${l + 2 * step}V${sh}`,
+    `A${rr} ${rr * 0.86} 0 0 1 ${r - 2 * step} ${sh}`,
+    `V${sh + step}H${r - step}V${sh + 2 * step}H${r}V900`,
+  ].join('');
+};
+const fan = Array.from({ length: 15 }, (_, i) => {
+  const a = Math.PI + (Math.PI * (i + 1)) / 16;
+  return `M400 470L${(400 + Math.cos(a) * 250).toFixed(1)} ${(470 + Math.sin(a) * 215).toFixed(1)}`;
+});
+---
+
+<svg viewBox="0 0 800 900" preserveAspectRatio="xMidYMax meet" class:list={['pointer-events-none', className]} aria-hidden="true" focusable="false" fill="none">
+  <g stroke="#c9a45c">
+    {
+      frames.map((f, i) => (
+        <path d={arch(f)} pathLength="1" stroke-opacity={0.5 - i * 0.12} stroke-width={i === 0 ? 1.4 : 1} class="scene-draw" style={`--scene-delay:${i * 220}ms;--draw-duration:2.6s`} />
+      ))
+    }
+  </g>
+  <g stroke="#c9a45c" stroke-opacity="0.22">
+    {fan.map((d, i) => <path d={d} pathLength="1" class="scene-draw" style={`--scene-delay:${700 + Math.abs(7 - i) * 70}ms;--draw-duration:1.6s`} />)}
+  </g>
+  <!-- keystone -->
+  <path d="M400 30l12 12-12 12-12-12z" fill="#c9a45c" class="scene-fade" style="--scene-delay:1400ms"></path>
+</svg>

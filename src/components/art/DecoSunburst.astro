@@ -1,0 +1,60 @@
+---
+/**
+ * Art-deco sunburst: fine gold rays fanning up from a point below the frame,
+ * stepped arches and a ring of studs. Original artwork. The rays draw in on load
+ * and breathe slowly; static for reduced motion, paused off screen.
+ */
+interface Props {
+  class?: string;
+  /** Number of rays across the half circle. */
+  rays?: number;
+}
+const { class: className, rays = 36 } = Astro.props;
+
+const cx = 800;
+const cy = 1000;
+const rayPaths = Array.from({ length: rays + 1 }, (_, i) => {
+  const a = Math.PI + (Math.PI * i) / rays;
+  const inner = 330;
+  const outer = 1300;
+  const r = (n: number) => Math.round(n * 10) / 10;
+  return {
+    d: `M${r(cx + Math.cos(a) * inner)} ${r(cy + Math.sin(a) * inner)}L${r(cx + Math.cos(a) * outer)} ${r(cy + Math.sin(a) * outer)}`,
+    strong: i % 4 === 0,
+    delay: ((i % 9) * 0.9).toFixed(1),
+  };
+});
+const arches = [300, 360, 420, 640, 660];
+const studs = Array.from({ length: 25 }, (_, i) => {
+  const a = Math.PI + (Math.PI * (i + 0.5)) / 25;
+  return { x: (cx + Math.cos(a) * 540).toFixed(1), y: (cy + Math.sin(a) * 540).toFixed(1) };
+});
+---
+
+<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" class:list={['pointer-events-none', className]} aria-hidden="true" focusable="false" fill="none">
+  <defs>
+    <radialGradient id="sunburst-fade" cx="800" cy="1000" r="1100" gradientUnits="userSpaceOnUse">
+      <stop offset="0.25" stop-color="#c9a45c" stop-opacity="0.55"></stop>
+      <stop offset="1" stop-color="#c9a45c" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <g stroke="url(#sunburst-fade)">
+    {
+      rayPaths.map((ray) => (
+        <path
+          d={ray.d}
+          pathLength="1"
+          stroke-width={ray.strong ? 1.4 : 0.7}
+          class:list={['scene-draw', ray.strong && 'ray-breathe']}
+          style={`--scene-delay:${Number(ray.delay) * 120}ms;--draw-duration:2.4s;--ray-delay:${ray.delay}s`}
+        />
+      ))
+    }
+  </g>
+  <g stroke="#c9a45c">
+    {arches.map((r, i) => <circle cx={cx} cy={cy} r={r} stroke-opacity={i < 3 ? 0.16 - i * 0.03 : 0.1} class="scene-fade" style={`--scene-delay:${600 + i * 120}ms`} />)}
+  </g>
+  <g fill="#c9a45c" fill-opacity="0.45" class="scene-fade" style="--scene-delay:1200ms">
+    {studs.map((s) => <path d={`M${s.x} ${Number(s.y) - 4}l4 4-4 4-4-4z`} />)}
+  </g>
+</svg>

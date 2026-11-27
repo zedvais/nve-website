@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatNumber, percentOf, seatsLeft } from '@/lib/format';
+import { formatDate, formatNumber, percentOf, roman, seatsLeft } from '@/lib/format';
 
 describe('formatDate', () => {
   it('formats ISO dates in en-US without time-zone drift', () => {
@@ -34,5 +34,19 @@ describe('seatsLeft', () => {
     expect(seatsLeft(44, 50)).toBe(6);
     expect(seatsLeft(50, 50)).toBe(0);
     expect(seatsLeft(52, 50)).toBe(0);
+  });
+});
+
+describe('roman', () => {
+  it('writes years and small numbers in Roman numerals', () => {
+    expect(roman(2026)).toBe('MMXXVI');
+    expect(roman(1999)).toBe('MCMXCIX');
+    expect(roman(4)).toBe('IV');
+    expect(roman(44)).toBe('XLIV');
+  });
+  it('rejects numbers it cannot write', () => {
+    expect(() => roman(0)).toThrow(RangeError);
+    expect(() => roman(4000)).toThrow(RangeError);
+    expect(() => roman(2.5)).toThrow(RangeError);
   });
 });

@@ -24,6 +24,9 @@ const art: Record<ValueIcon, string> = {
   ambition:
     '<path d="M14 146H50V114H82V82H114V50H146"/><path d="M14 146V114M50 114V82M82 82V50M114 50V18" stroke-opacity=".35"/><path d="M128 6l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="currentColor"/>',
 };
+// Every stroke draws itself in when the card's [data-scene] comes on screen.
+let n = 0;
+const html = art[name].replace(/<path /g, () => `<path pathLength="1" class="scene-draw" style="--scene-delay:${250 + n++ * 180}ms;--draw-duration:1.8s" `);
 ---
 
 <svg
@@ -35,5 +38,5 @@ const art: Record<ValueIcon, string> = {
   class:list={['pointer-events-none', className]}
   aria-hidden="true"
   focusable="false"
-  set:html={art[name]}
+  set:html={html}
 />

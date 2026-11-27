@@ -1,0 +1,29 @@
+---
+/**
+ * The Navierre monogram (see src/lib/crest.ts). Pure SVG, so it stays crisp at any
+ * size and needs no image pipeline.
+ */
+import { crestSvg } from '@/lib/crest';
+
+interface Props {
+  class?: string;
+  variant?: 'full' | 'mark';
+  /** Accessible name; leave out when the crest sits beside the visible name. */
+  title?: string;
+  /** Solid colour instead of the gold gradient, e.g. 'currentColor'. */
+  color?: string;
+  /** Draw the crest in when its [data-scene] first comes on screen. */
+  animated?: boolean;
+  /** Delay before the draw-in starts, in ms. */
+  delay?: number;
+}
+
+const { class: className = '', variant = 'full', title, color, animated = false, delay = 0 } = Astro.props;
+// Unique gradient ids per instance (several monograms share a page).
+const id = `crest-${Math.random().toString(36).slice(2, 8)}`;
+const classes = ['block', className].filter(Boolean).join(' ');
+let svg = crestSvg({ id, variant, title, color, animated, className: classes });
+if (delay) svg = svg.replace('<svg ', `<svg style="--crest-delay:${delay}ms" `);
+---
+
+<Fragment set:html={svg} />

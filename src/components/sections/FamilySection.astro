@@ -27,8 +27,13 @@ const grids = {
   // The first leadership card (the Boss) spans the full row.
   feature: 'lg:grid-cols-2 lg:[&>li:first-child]:col-span-2',
   default: 'sm:grid-cols-2 xl:grid-cols-4',
-  compact: 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+  // Soldiers and Associates read as ruled ledger lines.
+  compact: 'sm:grid-cols-2 xl:grid-cols-3 !gap-x-10 !gap-y-0',
 };
+/** Ledger numbers run on through the groups: No. 01 is the Boss. */
+const entryOffset = Object.fromEntries(
+  tierOrder.map((tier, i) => [tier, tierOrder.slice(0, i).reduce((n, t) => n + membersByTier(t).length, 0)]),
+) as Record<MemberTier, number>;
 /** Cards shown per group before the "Show all" button. */
 const LIMIT = 8;
 const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tiers[tier].variant, // Advisors mirror Leadership: the Advisor gets the full-row feature card, Capos sit below.
@@ -82,8 +87,8 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
             return (
               <div class="grid gap-x-8 gap-y-6 lg:grid-cols-12" data-reveal data-group={tier} data-default-open={String(defaultOpen)}>
                 <header class="lg:col-span-3">
-                  <div class="border-t border-line pt-5 lg:sticky lg:top-28">
-                    <h3 class="font-display text-sm font-semibold uppercase tracking-[0.18em]">
+                  <div class="border-t border-accent-muted pt-5 lg:sticky lg:top-28">
+                    <h3 class="font-display text-sm font-semibold uppercase tracking-[0.22em]">
                       <button
                         type="button"
                         class="group/toggle flex w-full items-center gap-3 text-left"
@@ -92,7 +97,7 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                         data-group-toggle
                         disabled
                       >
-                        <Icon size={18} stroke-width={1.5} class="text-accent-soft" aria-hidden="true" />
+                        <Icon size={18} stroke-width={1.25} class="text-accent" aria-hidden="true" />
                         <span>{tiers[tier].label}</span>
                         {list.length > 0 && <span class="font-display text-xs font-normal tabular-nums text-muted">{list.length}</span>}
                         <span class="ml-auto grid size-7 place-items-center border border-line text-muted transition-colors group-hover/toggle:border-accent-muted group-hover/toggle:text-fg group-disabled/toggle:hidden">
@@ -100,7 +105,7 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                         </span>
                       </button>
                     </h3>
-                    <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">{tiers[tier].description}</p>
+                    <p class="mt-3 max-w-xs font-serif text-base italic leading-relaxed text-muted">{tiers[tier].description}</p>
                   </div>
                 </header>
                 <div id={`roster-${tier}`} class="collapsible lg:col-span-9" data-open="true">
@@ -121,7 +126,7 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                       )}
                       {list.map((member, i) => (
                         <li data-member data-name={[member.name, member.roblox, member.role].filter(Boolean).join(' ').toLowerCase()} data-extra={i >= LIMIT ? '' : undefined}>
-                          <MemberCard member={member} profile={profileFor(member.roblox)} variant={tier === 'council' && member.role === 'Advisor' ? 'feature' : variant} />
+                          <MemberCard member={member} profile={profileFor(member.roblox)} entry={entryOffset[tier] + i + 1} variant={tier === 'council' && member.role === 'Advisor' ? 'feature' : variant} />
                         </li>
                       ))}
                       {list.length > LIMIT ? (
@@ -163,7 +168,7 @@ const groups = tierOrder.map((tier) => ({ tier, icon: icons[tier], variant: tier
                               <UserPlus size={20} stroke-width={1.5} aria-hidden="true" />
                             </span>
                             <span>
-                              <span class="block font-display text-lg font-semibold">
+                              <span class="block font-serif text-xl font-medium">
                                 {unlisted > 0 ? `+${unlisted} Soldiers & Associates` : 'Your name here'}
                               </span>
                               <span class="mt-1 block text-sm text-muted">
