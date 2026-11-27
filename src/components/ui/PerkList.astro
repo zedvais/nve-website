@@ -23,8 +23,8 @@ const sorted = [...perks].sort((a, b) => order.indexOf(a.tier) - order.indexOf(b
 
   <ul class="mt-6 grid gap-x-10 md:grid-cols-2">
     {
-      sorted.map((perk) => (
-        <li class="flex items-center gap-3 border-b border-line py-3.5">
+      sorted.map((perk, i) => (
+        <li style={`--i:${i}`} class="stagger flex items-center gap-3 border-b border-line py-3.5">
           <span class="size-2 shrink-0 rotate-45" style={`background:${perkTiers[perk.tier].color}`} aria-hidden="true" />
           <span class="font-medium text-fg">{perk.name}</span>
           <span class="sr-only">({perkTiers[perk.tier].label} perk):</span>

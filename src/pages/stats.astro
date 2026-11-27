@@ -7,6 +7,8 @@
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DecoSunburst from '@/components/art/DecoSunburst.astro';
+import GoldDust from '@/components/art/GoldDust.astro';
+import Crest from '@/components/ui/Crest.astro';
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
@@ -30,21 +32,25 @@ const recruitingLabel = !game.recruiting
   imageWidth={1200}
   imageHeight={1080}
 >
-  <section aria-labelledby="stats-heading" class="relative isolate overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40">
+  <section aria-labelledby="stats-heading" class="relative isolate overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40" data-scene data-pointer-light>
     <div class="absolute inset-x-0 top-0 -z-10 h-[40rem]" aria-hidden="true">
       <div class="absolute inset-0 bg-[radial-gradient(60%_70%_at_100%_0%,rgb(201_164_92/0.16),transparent_65%)]"></div>
       <DecoSunburst class="absolute inset-0 size-full opacity-30 [mask-image:linear-gradient(to_bottom,black_30%,transparent)]" />
+      <!-- the same rays, brighter, under a soft light that follows the pointer (drifts on its own on touch) -->
+      <DecoSunburst class="hero-lit absolute inset-0 size-full [mask-image:linear-gradient(to_bottom,black_30%,transparent)]" strength={1} />
+      <GoldDust class="absolute inset-0" count={14} seed={23} />
     </div>
 
-    <Container size="wide">
-      <p class="eyebrow flex items-center gap-3 text-accent-soft">
+    <Container size="wide" class="relative">
+      <Crest animated delay={200} class="crest-glow absolute right-4 top-0 hidden w-36 sm:block lg:right-8 lg:w-44" />
+      <p class="eyebrow intro flex items-center gap-3 text-accent-soft">
         <span class="h-px w-8 bg-accent/60" aria-hidden="true"></span>Family stats · {asOfLabel}
       </p>
-      <h1 id="stats-heading" class="mt-6 font-serif text-[clamp(2.75rem,8vw,6rem)] font-medium leading-[0.95]">
+      <h1 id="stats-heading" style="--intro-delay:120" class="intro mt-6 font-serif text-[clamp(2.75rem,8vw,6rem)] font-medium leading-[0.95]">
         <span class="block text-[0.32em] italic text-muted">{site.house}</span>
         {site.name} <span class="font-display text-[0.32em] font-semibold tracking-[0.3em] text-accent">{site.shortName}</span>
       </h1>
-      <p class="mt-4 text-muted">Founded {foundedLabel} · A family in {game.name} on {game.platform}</p>
+      <p class="intro mt-4 text-muted" style="--intro-delay:240">Founded {foundedLabel} · A family in {game.name} on {game.platform}</p>
 
       <div class="mt-12 space-y-3 sm:mt-16">
         <StatsPanel />

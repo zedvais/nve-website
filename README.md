@@ -98,7 +98,7 @@ for the stats page) rasterise the same SVG at build time, and the favicons in `p
 The name is never baked into an image: the wordmark is live text from `src/data/site.ts`.
 
 Type: Cinzel (engraved capitals for the name, labels and buttons), Cormorant Garamond (headings
-and figures) and Inter (body), all self-hosted. Colours are tokens in `src/styles/global.css`.
+and figures) and Libre Baskerville (body), all self-hosted. Colours are tokens in `src/styles/global.css`.
 
 ### Social links
 
