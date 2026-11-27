@@ -18,11 +18,11 @@ export const stats = {
   /** Date of this snapshot (ISO), shown as "Stats as of …". */
   asOf: '2026-11-27',
   founded: '2026-09-29',
-  level: 66,
-  members: { current: 49, max: 51 },
-  respect: 2309,
-  perkLevels: { current: 258, max: 400 },
-  xp: { current: 2_287_651, next: 3_696_218 },
+  level: 91,
+  members: { current: 44, max: 52 },
+  respect: 2873,
+  perkLevels: { current: 280, max: 400 },
+  xp: { current: 962_490, next: 5_888_829 },
   territories: 15,
   /** Family war record. */
   wars: { won: 11, lost: 0 },
@@ -67,7 +67,7 @@ export const foundedLabel = formatDate(stats.founded, { month: 'long', day: 'num
 export const foundedShort = formatDate(stats.founded, { month: 'short', year: 'numeric' });
 export { formatNumber };
 
-/** "Lv. 66 · 49/51 members · 2,309 respect · #58 in respect · …", used for link previews. */
+/** "Lv. 91 · 44/52 members · 2,873 respect · #58 in respect · …", used for link previews. */
 export const statsSummary = [
   `Lv. ${stats.level}`,
   `${stats.members.current}/${stats.members.max} members`,
