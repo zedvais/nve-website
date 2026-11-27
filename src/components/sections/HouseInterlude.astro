@@ -1,11 +1,11 @@
 ---
 /**
- * Interlude between Values and Family: the monogram beneath a stepped deco
- * arch. The line work draws itself in when it scrolls into view; static for
- * reduced motion.
+ * Interlude between Values and Family: the House jewel, a gold gem the visitor
+ * can spin, beneath a stepped deco arch. The arch draws itself in when it scrolls
+ * into view; static for reduced motion.
  */
 import Container from '@/components/ui/Container.astro';
-import Crest from '@/components/ui/Crest.astro';
+import HouseJewel from '@/components/art/HouseJewel.astro';
 import DecoArch from '@/components/art/DecoArch.astro';
 import { interlude } from '@/data/site';
 ---
@@ -20,7 +20,7 @@ import { interlude } from '@/data/site';
   <Container size="wide" class="relative pb-24 pt-20 sm:pb-32 sm:pt-24">
     <div class="relative mx-auto aspect-[8/9] w-[min(92vw,34rem)]">
       <DecoArch class="absolute inset-0 size-full" />
-      <Crest animated delay={500} class="absolute left-1/2 top-[58%] w-[42%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_30px_rgb(201_164_92/0.18)]" />
+      <HouseJewel class="absolute left-1/2 top-[57%] aspect-square w-[58%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_30px_rgb(201_164_92/0.22)]" />
     </div>
 
     <div class="mx-auto mt-8 grid max-w-3xl items-center gap-4 text-center sm:grid-cols-[1fr_auto_1fr] sm:gap-8">
