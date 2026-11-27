@@ -1,8 +1,9 @@
 /**
- * The Navierre monogram: a geometric art-deco N inside a fine double ring,
- * with a faint sunburst behind the letter. Original artwork, drawn entirely
- * from paths (no fonts), so the same SVG renders on the site, in favicons and
- * in the build-time link-preview images. Bold enough to read at icon size.
+ * The Navierre monogram: a sharp, chiselled N inside a fine double ring with a
+ * watch-bezel of ticks, deco wings and a low sunrise of rays behind the letter.
+ * Original artwork, drawn entirely from paths (no fonts), so the same SVG
+ * renders on the site, in favicons and in the build-time link-preview images.
+ * Bold enough to read at icon size.
  */
 
 export interface CrestOptions {
@@ -25,39 +26,71 @@ export interface CrestOptions {
 
 const r2 = (n: number) => Math.round(n * 100) / 100;
 
+type Pt = [number, number];
+
 /**
- * Geometric N: two slim stems and a heavy diagonal, squared off like 1920s
- * signage. The diagonal carries a hairline inline, cut in the background colour.
+ * A sharp, chiselled N after the family's original mark: the left stem and the
+ * diagonal are one blade meeting in a point at the top, the right stem stands
+ * apart behind a hairline gap, and two small blades echo the diagonal. Each
+ * blade is split along its ridge into a lit face and a shaded face, so the gold
+ * reads as cut metal. Drawn on an 80 × 100 grid.
  */
-const N_STEMS = 'M40 32H44.5V88H40ZM75.5 32H80V88H75.5Z';
-const N_DIAGONAL = 'M40 32H50L80 88H70Z';
-const N_INLINE = 'M46.6 36.5 73.4 83.5';
-/** Hairline inlines down the stems, so the whole letter reads as engraved. */
-const N_STEM_INLINES = 'M42.25 35.5V84.5M77.75 35.5V84.5';
+const N_FACES: { lit: Pt[]; shade: Pt[] }[] = [
+  // left stem + diagonal
+  {
+    lit: [[0, 0], [16, 0], [65, 61.5], [65, 73.5], [6.5, 10], [6.5, 93], [0, 100]],
+    shade: [[6.5, 10], [65, 73.5], [65, 85.5], [13, 20], [13, 86], [6.5, 93]],
+  },
+  // right stem, cut to a point at the top
+  {
+    lit: [[69, 11], [74.5, 5.5], [74.5, 100], [69, 100]],
+    shade: [[74.5, 5.5], [80, 0], [80, 100], [74.5, 100]],
+  },
+  // blade under the diagonal
+  {
+    lit: [[18, 33], [30, 48], [30, 57], [18, 42]],
+    shade: [[18, 42], [30, 57], [30, 66], [18, 51]],
+  },
+  // blade over the diagonal
+  {
+    lit: [[50, 18], [62, 33], [62, 42], [50, 27]],
+    shade: [[50, 27], [62, 42], [62, 51], [50, 36]],
+  },
+];
+
+const poly = (pts: Pt[], scale: number, dx: number, dy: number) =>
+  'M' + pts.map(([x, y]) => `${r2(dx + x * scale)} ${r2(dy + y * scale)}`).join('L') + 'Z';
 
 export function crestSvg(opts: CrestOptions = {}): string {
   const { id = 'crest', variant = 'full', color, className = '', title, animated = false } = opts;
   const paint = color ?? `url(#${id}-gold)`;
   const cls = (name: string) => (animated ? ` class="${name}"` : '');
   const draw = animated ? ' pathLength="1"' : '';
+  const lit = color ?? `url(#${id}-lit)`;
+  const shade = color ?? `url(#${id}-shade)`;
   const defs = color
     ? ''
     : `<defs><linearGradient id="${id}-gold" gradientUnits="userSpaceOnUse" x1="20" y1="8" x2="100" y2="112">` +
       '<stop offset="0" stop-color="#f3e1a8"/><stop offset=".45" stop-color="#c9a45c"/>' +
-      '<stop offset=".72" stop-color="#e6cd8c"/><stop offset="1" stop-color="#9c7a3c"/></linearGradient></defs>';
+      '<stop offset=".72" stop-color="#e6cd8c"/><stop offset="1" stop-color="#9c7a3c"/></linearGradient>' +
+      `<linearGradient id="${id}-lit" gradientUnits="userSpaceOnUse" x1="30" y1="25" x2="90" y2="95">` +
+      '<stop offset="0" stop-color="#fbeec4"/><stop offset=".55" stop-color="#e2c27a"/><stop offset="1" stop-color="#c9a45c"/></linearGradient>' +
+      `<linearGradient id="${id}-shade" gradientUnits="userSpaceOnUse" x1="30" y1="25" x2="90" y2="95">` +
+      '<stop offset="0" stop-color="#b8924c"/><stop offset=".6" stop-color="#8e6d33"/><stop offset="1" stop-color="#6e5226"/></linearGradient>' +
+      '</defs>';
 
-  const letter =
+  /** The N at a given scale and offset (its grid is 80 × 100). */
+  const letterAt = (scale: number, dx: number, dy: number) =>
     `<g${cls('crest-letter')}>` +
-    `<path d="${N_STEMS}" fill="${paint}"/><path d="${N_DIAGONAL}" fill="${paint}"/>` +
-    `<path d="${N_INLINE}" stroke="var(--crest-bg,#0b0a08)" stroke-width="1.1" stroke-linecap="round"/>` +
-    (variant === 'full' ? `<path d="${N_STEM_INLINES}" stroke="var(--crest-bg,#0b0a08)" stroke-width=".7" stroke-linecap="round"/>` : '') +
+    `<path d="${N_FACES.map((f) => poly(f.lit, scale, dx, dy)).join('')}" fill="${lit}"/>` +
+    `<path d="${N_FACES.map((f) => poly(f.shade, scale, dx, dy)).join('')}" fill="${shade}"${color ? ' fill-opacity=".62"' : ''}/>` +
     `</g>`;
 
   let body: string;
   let viewBox: string;
   if (variant === 'mark') {
-    viewBox = '36 28 48 64';
-    body = letter;
+    viewBox = '-4 -4 88 108';
+    body = letterAt(1, 0, 0);
   } else {
     viewBox = '0 0 120 120';
     // A low sunrise of fine rays beneath the letter, clipped to the inner ring.
@@ -89,7 +122,8 @@ export function crestSvg(opts: CrestOptions = {}): string {
       '<path d="M60 0.5 63.5 4 60 7.5 56.5 4Z"/><path d="M60 112.5 63.5 116 60 119.5 56.5 116Z"/>' +
       '<path d="M0.5 60 4 56.5 7.5 60 4 63.5Z"/><path d="M112.5 60 116 56.5 119.5 60 116 63.5Z"/>' +
       '</g>' +
-      letter;
+      // 0.56 scale: 45 × 56, centred in the ring
+      letterAt(0.56, 37.6, 32);
   }
 
   const a11y = title ? `role="img" aria-label="${title}"><title>${title}</title` : 'aria-hidden="true" focusable="false"';

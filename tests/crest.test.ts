@@ -19,7 +19,7 @@ describe('crestSvg', () => {
   it('draws just the N for tight spaces', () => {
     const svg = crestSvg({ variant: 'mark' });
     expect(svg).not.toContain('<circle');
-    expect(svg).toContain('viewBox="36 28 48 64"');
+    expect(svg).toContain('viewBox="-4 -4 88 108"');
   });
 
   it('adds animation hooks only when asked', () => {
@@ -35,6 +35,7 @@ describe('crestSvg', () => {
     expect(svg).toContain('<title>The Navierre crest</title>');
     expect(svg).not.toContain('linearGradient');
     expect(svg).toContain('fill="currentColor"');
+    expect(svg).toContain('fill-opacity=".62"'); // the shaded faces still read in one colour
   });
 
   it('uses no text, so it renders the same without web fonts', () => {
