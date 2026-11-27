@@ -1,7 +1,7 @@
 ---
 /**
  * Full-width animated interlude: the fox constellation rising over the city
- * at night, with sweeping searchlights, stars and embers. Original artwork,
+ * skyline, with stars and embers. Original artwork,
  * CSS-animated, paused while off screen and static for reduced motion.
  */
 import { seededRandom } from '@/lib/random';
@@ -32,14 +32,6 @@ const stars = Array.from({ length: 70 }, () => ({
         <stop offset="0" stop-color="#b9a4fb" stop-opacity="0.32"></stop>
         <stop offset="1" stop-color="#b9a4fb" stop-opacity="0"></stop>
       </linearGradient>
-      <radialGradient id="moon-glow">
-        <stop offset="0.35" stop-color="#b9a4fb" stop-opacity="0.25"></stop>
-        <stop offset="1" stop-color="#b9a4fb" stop-opacity="0"></stop>
-      </radialGradient>
-      <mask id="moon-cut">
-        <rect width="1600" height="700" fill="white"></rect>
-        <circle cx="1126" cy="112" r="24" fill="black"></circle>
-      </mask>
     </defs>
     <g fill="#f3f1ff">
       {
@@ -48,11 +40,6 @@ const stars = Array.from({ length: 70 }, () => ({
         ))
       }
     </g>
-    <!-- shooting star -->
-    <path d="M300 90l-140 60" stroke="#f3f1ff" stroke-width="1.5" stroke-linecap="round" pathLength="1" class="shooting-star"></path>
-    <!-- moon -->
-    <circle cx="1110" cy="120" r="70" fill="url(#moon-glow)"></circle>
-    <circle cx="1110" cy="120" r="26" fill="#f3f1ff" fill-opacity="0.75" mask="url(#moon-cut)"></circle>
   </svg>
 
   <Container size="wide" class="relative pb-56 pt-24 sm:pb-72 sm:pt-32">

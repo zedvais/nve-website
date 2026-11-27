@@ -32,7 +32,7 @@ export const highlights: Highlight[] = [
   {
     category: 'Community milestones',
     title: 'The family is founded',
-    description: 'Noctus Volpe opens its doors in Idle Mafia.',
+    description: 'Navierre opens its doors in Idle Mafia.',
     icon: 'founded',
     date: 'Sep 29, 2026',
   },

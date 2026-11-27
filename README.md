@@ -1,6 +1,6 @@
-# Noctus Volpe (NVE) — Official Website
+# Navierre (NVE) — Official Website
 
-The official home of the Noctus Volpe gaming family. A fast, fully static site built with
+The official home of the Navierre gaming family. A fast, fully static site built with
 **Astro**, **Tailwind CSS v4**, **TypeScript** and **Lucide** icons, ready to deploy on **Vercel**.
 
 ## Quick start
@@ -26,7 +26,7 @@ never need to touch markup to update the site.
 
 | File | What it controls |
 | --- | --- |
-| `src/data/site.ts` | Name, tagline, SEO description, navigation, hero (and `heroStyle`), About, Values, the night-scene interlude, Family and Journey intros, recruitment copy, optional application form URL, logo |
+| `src/data/site.ts` | Name, tagline, SEO description, navigation, hero (and `heroStyle`), About, Values, the city interlude, Family and Journey intros, recruitment copy, optional application form URL, logo |
 | `src/data/members.ts` | Family roster (Roblox usernames and ranks) and the three roster groups |
 | `src/data/stats.ts` | Family stats snapshot (level, members, respect, perk levels, XP, rankings, territories, war record) and the family perks list |
 | `src/data/highlights.ts` | "Our Journey" milestones and achievements |
@@ -94,15 +94,15 @@ Astro converts them to optimised WebP at build time.
 
 | File | Used for |
 | --- | --- |
-| `nv-logo.png` | The silver-and-purple NV fox monogram (About panel, family cards) |
-| `nv-mark.png` | The simple white NV mark (header, mobile menu, avatar placeholders) |
-| `nv-lockup.png` | The simple mark with the NOCTUS VOLPE wordmark (footer) |
+| `nv-logo.png` | The silver-and-purple NV monogram (About panel, family cards) |
+| `nv-mark.png` | The simple white NV mark (header, footer wordmark, mobile menu, avatar placeholders) |
 | `rooftop.jpg` | Hero background photo, used when `site.heroStyle` is `'photo'` |
 
 The logo PNGs have transparent backgrounds, cut out from the original black-background artwork.
 To update one, replace the file and keep its name. `public/favicon.png`, `public/favicon-48.png`,
-`public/apple-touch-icon.png` and `public/og-image.jpg` (the 1200×630 social preview) are made
-from the same artwork.
+and `public/apple-touch-icon.png` are made from the same artwork. The name is never baked into an
+image: the footer wordmark (`ui/Wordmark.astro`) is live text, and the link previews (`/og.png` for
+the site, `/stats/og.png` for the stats page) are rendered at build time from `src/data/site.ts`.
 
 ### Social links
 
@@ -146,7 +146,7 @@ src/
 └── styles/          global.css — Tailwind import, design tokens (@theme), motion
 tests/               Vitest unit tests
 src/assets/brand/    Official logo files and hero photo
-public/              favicon, apple-touch-icon, og-image
+public/              favicon, apple-touch-icon
 ```
 
 ## Tests and CI
@@ -206,7 +206,7 @@ New pages go in `src/pages/` and wrap their content in `BaseLayout`. Navigation 
 
 The canonical URL (sitemap, Open Graph) comes from Vercel's production URL automatically.
 When you add a custom domain, set the environment variable `PUBLIC_SITE_URL`
-(e.g. `https://noctusvolpe.com`) under **Settings → Environment Variables** and redeploy.
+(e.g. `https://navierre.com`) under **Settings → Environment Variables** and redeploy.
 
 CLI alternative:
 
