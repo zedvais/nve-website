@@ -1,7 +1,7 @@
 ---
 /**
- * Official Noctus Volpe mark. `variant="mark"` is the simple white NV used at
- * small sizes; `variant="full"` is the silver-and-purple fox monogram.
+ * Official Navierre mark. `variant="mark"` is the simple white NV used at
+ * small sizes; `variant="full"` is the silver-and-purple NV monogram.
  */
 import { Image } from 'astro:assets';
 import { site } from '@/data/site';
@@ -10,7 +10,7 @@ interface Props {
   /** Rendered height in px. */
   size?: number;
   class?: string;
-  variant?: 'mark' | 'full' | 'lockup';
+  variant?: 'mark' | 'full';
   /** Set when the logo sits next to the visible wordmark, so it is not announced twice. */
   decorative?: boolean;
   loading?: 'eager' | 'lazy';

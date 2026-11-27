@@ -265,11 +265,6 @@
     transform-origin: 50% 100%;
     animation: beam var(--beam-duration, 12s) ease-in-out infinite alternate;
   }
-  .shooting-star {
-    stroke-dasharray: 0.25 1;
-    stroke-dashoffset: 1.25;
-    animation: shooting-star 9s ease-in 3s infinite;
-  }
   .glow-pulse {
     transform-box: fill-box;
     transform-origin: center;
@@ -356,17 +351,6 @@
   }
   to {
     transform: rotate(var(--beam-to, 10deg));
-  }
-}
-@keyframes shooting-star {
-  0% {
-    stroke-dashoffset: 1.25;
-    opacity: 1;
-  }
-  12%,
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0;
   }
 }
 @keyframes glow-pulse {

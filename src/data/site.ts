@@ -1,6 +1,5 @@
 import logoFull from '@/assets/brand/nv-logo.png';
 import logoMark from '@/assets/brand/nv-mark.png';
-import logoLockup from '@/assets/brand/nv-lockup.png';
 import heroBackground from '@/assets/brand/rooftop.jpg';
 
 /**
@@ -18,29 +17,30 @@ export interface NavLink {
 }
 
 export const site = {
-  name: 'Noctus Volpe',
+  name: 'Navierre',
+  /** How to say it; shown under the hero word. */
+  pronunciation: 'nah · vee · AIR',
   shortName: 'NVE',
   monogram: 'NV',
   tagline: 'United by Passion. Driven by Ambition.',
-  footerLine: 'Noctus Volpe — United as One.',
+  footerLine: 'Navierre — United as One.',
   description:
-    'Noctus Volpe (NVE) is a family in Idle Mafia on Roblox, built on teamwork, dedication and the pursuit of something greater. More than a name. More than a family.',
+    'Navierre (NVE) is a family in Idle Mafia on Roblox, built on teamwork, dedication and the pursuit of something greater. More than a name. More than a family.',
   locale: 'en',
-  /** Social preview image in /public (1200×630). */
-  ogImage: '/og-image.jpg',
+  /** Social preview image (1200×630), rendered at build time by src/pages/og.png.ts. */
+  ogImage: '/og.png',
   /**
    * Official brand assets (src/assets/brand). Astro optimises them at build time.
-   * - full:   the silver-and-purple NV fox monogram (hero, feature artwork)
-   * - mark:   the simple white NV mark (header, small sizes)
-   * - lockup: the simple mark with the NOCTUS VOLPE wordmark (footer)
+   * - full: the silver-and-purple NV monogram (feature artwork)
+   * - mark: the simple white NV mark (header, footer, small sizes)
+   * The wordmark is live text (see Wordmark.astro), so the name lives only here.
    */
   logo: {
     full: logoFull,
     mark: logoMark,
-    lockup: logoLockup,
-    alt: 'Noctus Volpe logo',
+    alt: 'Navierre logo',
   },
-  /** Atmospheric hero photo: the fox on the rooftop above the city. */
+  /** Atmospheric hero photo: the rooftop above the city. */
   heroBackground,
   /**
    * Hero backdrop: 'animated' draws the rooftop scene as animated vector art,
@@ -60,7 +60,7 @@ export const game = {
   /** Shown in the hero status strip. Set to false to show "Closed". */
   recruiting: true,
   disclaimer:
-    'Noctus Volpe is a player-run family. Not affiliated with or endorsed by Roblox Corporation or the developers of Idle Mafia.',
+    'Navierre is a player-run family. Not affiliated with or endorsed by Roblox Corporation or the developers of Idle Mafia.',
 };
 
 export const navigation: NavLink[] = [
@@ -73,7 +73,8 @@ export const navigation: NavLink[] = [
 
 export const hero = {
   eyebrow: 'An Idle Mafia family on Roblox',
-  heading: ['Noctus', 'Volpe'],
+  /** Rendered letter by letter; the letters of the tag (N, V, E) are picked out in the accent colour. */
+  heading: 'Navierre',
   tagline: 'United by Passion. Driven by Ambition.',
   description:
     'A community built on teamwork, dedication, and the pursuit of something greater. More than a name. More than a family.',
@@ -86,7 +87,7 @@ export const about = {
   label: 'About',
   heading: 'More than a community.',
   lead:
-    'Noctus Volpe is a family in Idle Mafia. We run the city the way a real family should: together.',
+    'Navierre is a family in Idle Mafia. We run the city the way a real family should: together.',
   body: [
     'On paper, Idle Mafia is about properties, heists and Cash. In practice, the game gets better with people you trust. NVE brings together players who value cooperation, steady progression and real connections, whether you log in every evening or a few times a week.',
     'What one of us earns, all of us feel. Donations to the Family Vault unlock perks for everyone, wars are fought side by side, and every district we hold is held as a family. We help newer members get their operation running, and we plan for the long game rather than a quick climb.',
@@ -135,12 +136,12 @@ export const values = {
   ],
 };
 
-/** Animated night-city interlude between Values and Family. */
+/** Animated city interlude between Values and Family. */
 export const interlude = {
-  eyebrow: 'Noctus Volpe · After dark',
+  eyebrow: 'House Navierre · NVE',
   aside: 'Idle Mafia · Est. 2026',
   heading: ['United', 'as one.'],
-  text: 'When the city goes quiet, the fox keeps watch. Every member, every district, every war, one family.',
+  text: 'One name, one table. Every member, every district, every war, one family.',
 };
 
 export const family = {
@@ -178,9 +179,9 @@ export const recruitment = {
   steps: [
     { title: 'Reach out', text: 'Join our Discord and introduce yourself to leadership.' },
     { title: 'Get the nod', text: 'A member of leadership will get in touch about your place in the family.' },
-    { title: 'Join in game', text: 'Join Noctus Volpe in Idle Mafia and start contributing.' },
+    { title: 'Join in game', text: 'Join Navierre in Idle Mafia and start contributing.' },
   ],
-  primaryCta: { label: 'Join Noctus Volpe' },
+  primaryCta: { label: 'Join Navierre' },
   secondaryCta: { label: 'Connect on Discord' },
   /**
    * Optional application form (e.g. a Google Form). When empty,

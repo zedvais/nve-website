@@ -3,7 +3,7 @@ import ArrowUp from '@lucide/astro/icons/arrow-up';
 import Container from '@/components/ui/Container.astro';
 import NightSkyline from '@/components/art/NightSkyline.astro';
 import DecoDivider from '@/components/art/DecoDivider.astro';
-import Logo from '@/components/ui/Logo.astro';
+import Wordmark from '@/components/ui/Wordmark.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
 import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
 import { game, navigation, site } from '@/data/site';
@@ -27,7 +27,7 @@ const [lineStart, lineEnd] = site.footerLine.split(' — ');
     <div class="grid gap-14 lg:grid-cols-12">
       <div class="lg:col-span-5">
         <a href="/#home" class="inline-flex items-center gap-3">
-          <Logo variant="lockup" size={92} loading="lazy" />
+          <Wordmark size="lg" />
         </a>
         <p class="mt-6 max-w-sm leading-relaxed text-muted">{site.tagline}</p>
         <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted">A family in {game.name} on {game.platform}.</p>

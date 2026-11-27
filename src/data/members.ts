@@ -40,7 +40,7 @@ export const tiers: Record<MemberTier, { label: string; description: string; var
   },
   ranks: {
     label: 'Members',
-    description: 'Soldiers and Associates, the heart of Noctus Volpe.',
+    description: 'Soldiers and Associates, the heart of Navierre.',
     variant: 'compact',
   },
 };
