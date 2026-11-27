@@ -82,7 +82,7 @@ export const GET: APIRoute = async () => {
     : openSeats > 0
       ? `Recruiting · ${openSeats} ${openSeats === 1 ? 'slot' : 'slots'} open`
       : 'Roster full';
-  const badges = [...stats.rankings.map((r) => `#${r.rank} in ${r.label}`), `${stats.territories} territories held`];
+  const badges = [...stats.rankings.map((r) => `#${r.rank} in ${r.label}`), `${stats.territories} territories held`, `${stats.wars.won}–${stats.wars.lost} war record`];
   const markH = 36;
   const markW = Math.round((mark.info.width / mark.info.height) * markH);
 
