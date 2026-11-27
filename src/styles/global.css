@@ -1,7 +1,7 @@
 @import '@fontsource-variable/cinzel';
 @import '@fontsource-variable/cormorant-garamond';
 @import '@fontsource-variable/cormorant-garamond/wght-italic.css';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/manrope';
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------
@@ -23,7 +23,7 @@
      Cormorant Garamond: the house serif for headings and figures. */
   --font-display: 'Cinzel Variable', 'Cinzel', 'Trajan Pro', Georgia, serif;
   --font-serif: 'Cormorant Garamond Variable', 'Cormorant Garamond', Garamond, Georgia, serif;
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
