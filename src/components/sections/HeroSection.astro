@@ -4,6 +4,7 @@ import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import Crest from '@/components/ui/Crest.astro';
 import DecoSunburst from '@/components/art/DecoSunburst.astro';
+import GoldDust from '@/components/art/GoldDust.astro';
 import { game, hero, site } from '@/data/site';
 import { tagLetters } from '@/lib/tag';
 import { foundedShort, openSeats, stats } from '@/data/stats';
@@ -22,11 +23,14 @@ const status = [
 ];
 ---
 
-<section id="home" aria-labelledby="hero-heading" class="relative isolate flex min-h-svh flex-col overflow-hidden" data-scene>
+<section id="home" aria-labelledby="hero-heading" class="relative isolate flex min-h-svh flex-col overflow-hidden" data-scene data-pointer-light>
   <!-- Atmosphere: deco sunburst, warm lamplight, grain -->
   <div class="absolute inset-0 -z-10" aria-hidden="true">
     <div class="absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(60%_70%_at_50%_100%,rgb(201_164_92/0.13),transparent_70%)]"></div>
     <DecoSunburst class="absolute inset-0 size-full opacity-70" />
+    <!-- the same rays, brighter, seen only through a soft light that follows the pointer (drifts on its own on touch) -->
+    <DecoSunburst class="hero-lit absolute inset-0 size-full" strength={1} />
+    <GoldDust class="absolute inset-0" count={18} seed={7} />
     <div class="absolute inset-0 bg-[radial-gradient(45%_40%_at_50%_42%,var(--color-bg)_20%,transparent_100%)] opacity-80"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-bg/80 via-transparent to-bg"></div>
     <div class="grain absolute inset-0"></div>

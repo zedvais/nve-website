@@ -518,3 +518,184 @@
     filter: none;
   }
 }
+
+/* ---------------------------------------------------------------
+   Interactive vector art (src/scripts/interactive.ts)
+   --------------------------------------------------------------- */
+@property --mx {
+  syntax: '<length-percentage>';
+  inherits: true;
+  initial-value: 50%;
+}
+@property --my {
+  syntax: '<length-percentage>';
+  inherits: true;
+  initial-value: 60%;
+}
+
+/* Hero: brighter rays seen through a soft light. It follows the pointer on
+   desktop and drifts slowly by itself on touch screens. */
+.hero-lit {
+  opacity: 1;
+  filter: brightness(1.6) drop-shadow(0 0 2px rgb(230 205 140 / 0.6));
+  background: radial-gradient(220px 220px at var(--mx) var(--my), rgb(201 164 92 / 0.09), transparent 75%);
+  -webkit-mask-image: radial-gradient(240px 240px at var(--mx) var(--my), black, transparent 72%);
+  mask-image: radial-gradient(240px 240px at var(--mx) var(--my), black, transparent 72%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-lit {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-pointer-light]:not([data-lit]) .hero-lit {
+    animation: light-drift 16s ease-in-out infinite alternate;
+  }
+  [data-pointer-light][data-lit] .hero-lit {
+    transition: --mx 0.25s ease-out, --my 0.25s ease-out;
+  }
+}
+@keyframes light-drift {
+  0% {
+    --mx: 22%;
+    --my: 72%;
+  }
+  50% {
+    --mx: 64%;
+    --my: 48%;
+  }
+  100% {
+    --mx: 84%;
+    --my: 78%;
+  }
+}
+
+/* Gold dust */
+.gold-dust > span {
+  position: absolute;
+  bottom: -12px;
+  background: linear-gradient(135deg, #f3e1a8, #c9a45c 60%, #9c7a3c);
+  transform: rotate(45deg);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gold-dust > span {
+    animation: dust-rise var(--dust-duration, 24s) linear infinite;
+    animation-delay: var(--dust-delay, 0s);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gold-dust {
+    display: none;
+  }
+}
+@keyframes dust-rise {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--dust-opacity, 0.6);
+  }
+  50% {
+    transform: translate(calc(var(--dust-drift, 0px) * 0.6), -50vh) rotate(225deg);
+    opacity: calc(var(--dust-opacity, 0.6) * 0.4);
+  }
+  62% {
+    opacity: var(--dust-opacity, 0.6);
+  }
+  100% {
+    transform: translate(var(--dust-drift, 0px), -105vh) rotate(405deg);
+    opacity: 0;
+  }
+}
+
+/* The playable seal */
+.seal {
+  --px: 0;
+  --py: 0;
+}
+.seal-button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.seal-button:focus-visible {
+  outline-offset: 10px;
+  border-radius: 9999px;
+}
+.seal-light {
+  background: radial-gradient(
+    38% 34% at calc(50% + var(--px) * 18%) calc(58% + var(--py) * 14%),
+    rgb(201 164 92 / 0.16),
+    transparent 70%
+  );
+}
+@media (prefers-reduced-motion: no-preference) {
+  .seal-back,
+  .seal-front,
+  .seal-light {
+    transition: transform 0.9s var(--ease-out-expo), background-position 0.9s var(--ease-out-expo);
+  }
+  .seal-back {
+    transform: translate3d(calc(var(--px) * -10px), calc(var(--py) * -8px), 0);
+  }
+  .seal-front {
+    transform: perspective(700px) rotateY(calc(var(--px) * 14deg)) rotateX(calc(var(--py) * -14deg))
+      translate3d(calc(var(--px) * 8px), calc(var(--py) * 6px), 0);
+  }
+  .seal-button:active .seal-front {
+    transform: perspective(700px) rotateY(calc(var(--px) * 14deg)) rotateX(calc(var(--py) * -14deg)) scale(0.96);
+    transition-duration: 0.15s;
+  }
+  /* A tap redraws at once, without the first-load delay */
+  .seal.is-replay svg {
+    --crest-delay: 0ms !important;
+  }
+  .seal.is-replay .scene-draw {
+    --scene-delay: 0ms !important;
+  }
+  .seal-ripple {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 1px solid rgb(230 205 140 / 0.9);
+    border-radius: 9999px;
+    box-shadow: 0 0 18px rgb(201 164 92 / 0.45), inset 0 0 12px rgb(201 164 92 / 0.25);
+    animation: seal-ripple 1.6s var(--ease-out-expo) forwards;
+  }
+  .seal-ripple::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgb(201 164 92 / 0.6);
+    border-radius: 9999px;
+  }
+  .seal-hint {
+    animation: hint-breathe 3.6s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seal-hint {
+    display: none;
+  }
+}
+@keyframes seal-ripple {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: scale(16);
+    opacity: 0;
+  }
+}
+@keyframes hint-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}

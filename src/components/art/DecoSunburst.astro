@@ -8,8 +8,11 @@ interface Props {
   class?: string;
   /** Number of rays across the half circle. */
   rays?: number;
+  /** Peak opacity of the rays (the brighter copy under the hero light uses 1). */
+  strength?: number;
 }
-const { class: className, rays = 36 } = Astro.props;
+const { class: className, rays = 36, strength = 0.55 } = Astro.props;
+const gid = `sunburst-${Math.random().toString(36).slice(2, 8)}`;
 
 const cx = 800;
 const cy = 1000;
@@ -33,12 +36,12 @@ const studs = Array.from({ length: 25 }, (_, i) => {
 
 <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice" class:list={['pointer-events-none', className]} aria-hidden="true" focusable="false" fill="none">
   <defs>
-    <radialGradient id="sunburst-fade" cx="800" cy="1000" r="1100" gradientUnits="userSpaceOnUse">
-      <stop offset="0.25" stop-color="#c9a45c" stop-opacity="0.55"></stop>
+    <radialGradient id={gid} cx="800" cy="1000" r="1100" gradientUnits="userSpaceOnUse">
+      <stop offset="0.25" stop-color="#c9a45c" stop-opacity={strength}></stop>
       <stop offset="1" stop-color="#c9a45c" stop-opacity="0"></stop>
     </radialGradient>
   </defs>
-  <g stroke="url(#sunburst-fade)">
+  <g stroke={`url(#${gid})`}>
     {
       rayPaths.map((ray) => (
         <path
