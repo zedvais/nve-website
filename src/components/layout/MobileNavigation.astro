@@ -25,8 +25,8 @@ const { discordHref, discordExternal } = Astro.props;
 >
   <div class="flex h-18 items-center justify-between px-5 sm:px-8">
     <span class="flex items-center gap-3">
-      <Logo size={28} decorative />
-      <span class="font-display text-sm font-bold uppercase tracking-[0.28em]">{site.name}</span>
+      <Logo size={30} decorative />
+      <span class="font-display text-sm font-semibold uppercase tracking-[0.3em]">{site.name}</span>
     </span>
     <button
       type="button"
@@ -49,10 +49,10 @@ const { discordHref, discordExternal } = Astro.props;
               data-section={link.section}
               class="group flex items-baseline gap-5 py-5 text-muted transition-colors hover:text-fg aria-[current=true]:text-fg"
             >
-              <span class="font-display text-xs tracking-[0.2em] text-accent-soft">
-                {String(i + 1).padStart(2, '0')}
+              <span class="w-8 font-display text-xs tracking-[0.2em] text-accent-soft">
+                {['I', 'II', 'III', 'IV', 'V', 'VI'][i]}
               </span>
-              <span class="display text-4xl sm:text-5xl">{link.label}</span>
+              <span class="display text-4xl italic sm:text-5xl">{link.label}</span>
               <ArrowUpRight
                 size={20}
                 stroke-width={1.5}

@@ -1,7 +1,8 @@
 /**
- * The only client-side JavaScript on the site (~1 KB):
- * header state, active-section indicator, mobile menu and scroll reveals.
+ * Site-wide client JavaScript: header state, active-section indicator, mobile
+ * menu, scroll reveals, scene playback and the interactive vector art.
  */
+import { initInteractive } from '@/scripts/interactive';
 
 const header = document.querySelector<HTMLElement>('[data-header]');
 
@@ -110,3 +111,6 @@ if ('IntersectionObserver' in window) {
 } else {
   scenes.forEach((el) => el.classList.add('is-playing', 'has-played'));
 }
+
+/* Interactive vector art: the playable seal, emblems that redraw, the hero light */
+initInteractive();

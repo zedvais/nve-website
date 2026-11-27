@@ -87,22 +87,18 @@ Each highlight in `src/data/highlights.ts` can have an optional `date` and `metr
 until there is a real record. Mark an entry `placeholder: true` while it describes something that
 has not happened yet.
 
-### Logo and brand images
+### Logo (the monogram)
 
-Official brand assets live in `src/assets/brand/` and are wired up in `site.logo` in `src/data/site.ts`.
-Astro converts them to optimised WebP at build time.
+The Navierre monogram, a geometric art-deco N in a fine double ring, is drawn in code in
+`src/lib/crest.ts`, so there are no logo files to keep in sync. `ui/Crest.astro` renders it on the
+page (`variant="mark"` is the N alone; `animated` makes it draw itself in), and `ui/Logo.astro`
+sizes it for the header and wordmark. The link previews (`/og.png` for the site, `/stats/og.png`
+for the stats page) rasterise the same SVG at build time, and the favicons in `public/`
+(`favicon.svg`, `favicon.png`, `favicon-48.png`, `apple-touch-icon.png`) were generated from it.
+The name is never baked into an image: the wordmark is live text from `src/data/site.ts`.
 
-| File | Used for |
-| --- | --- |
-| `nv-logo.png` | The silver-and-purple NV monogram (About panel, family cards) |
-| `nv-mark.png` | The simple white NV mark (header, footer wordmark, mobile menu, avatar placeholders) |
-| `rooftop.jpg` | Hero background photo, used when `site.heroStyle` is `'photo'` |
-
-The logo PNGs have transparent backgrounds, cut out from the original black-background artwork.
-To update one, replace the file and keep its name. `public/favicon.png`, `public/favicon-48.png`,
-and `public/apple-touch-icon.png` are made from the same artwork. The name is never baked into an
-image: the footer wordmark (`ui/Wordmark.astro`) is live text, and the link previews (`/og.png` for
-the site, `/stats/og.png` for the stats page) are rendered at build time from `src/data/site.ts`.
+Type: Cinzel (engraved capitals for the name, labels and buttons), Cormorant Garamond (headings
+and figures) and Inter (body), all self-hosted. Colours are tokens in `src/styles/global.css`.
 
 ### Social links
 
@@ -115,16 +111,16 @@ canvas or animation libraries.
 
 | Component | Where |
 | --- | --- |
-| `art/RooftopScene` | Hero backdrop: the fox on the rooftop, fog, city lights, traffic. Set `site.heroStyle = 'photo'` to use `rooftop.jpg` instead |
+| `art/DecoSunburst` | Gold rays and arches fanning up behind the hero, the footer and /stats |
+| `ui/Crest` (`animated`) | The monogram drawing itself in: rings, rays, then the N |
+| `art/DecoArch` | Stepped deco arch over the monogram in the "United as one" interlude |
 | `art/ValueLine` | Hairline divider with the four values under the hero |
-| `sections/NightScene` + `art/FoxConstellation`, `art/OrbitRings` | "United as one" interlude |
-| `art/Embers`, `art/NightSkyline`, `art/CityMap`, `art/ValueArt`, `art/DecoDivider` | Accents across the page |
+| `art/ValueArt`, `art/DecoDivider` | Value emblems (drawn in on scroll) and the footer divider |
 
-Procedural pieces (skylines, stars, embers, city lights) are generated at build time from a fixed
-seed (`src/lib/random.ts`), so every build draws the same picture. Wrap any animated block in an
+Wrap any animated block in an
 element with `data-scene`: its animations only run while it is on screen, and `.scene-draw` /
 `.scene-fade` children draw in the first time it appears. Everything is static when the visitor
-prefers reduced motion. Keep new art in the same spirit: hairlines, muted colours, slow motion.
+prefers reduced motion. Keep new art in the same spirit: fine gold hairlines on black, restraint, slow motion.
 
 ## Project structure
 
@@ -132,21 +128,20 @@ prefers reduced motion. Keep new art in the same spirit: hairlines, muted colour
 src/
 ├── components/
 │   ├── layout/      Header, MobileNavigation, Footer, SEO
-│   ├── sections/    HeroSection, AboutSection, ValuesGrid, NightScene, FamilySection,
+│   ├── sections/    HeroSection, AboutSection, ValuesGrid, HouseInterlude, FamilySection,
 │   │                HighlightsSection, RecruitmentSection
 │   ├── ui/          Button, Container, SectionHeading, MemberCard, HighlightCard,
-│   │                StatsPanel, PerkList, Logo, FoxMotif, SocialIcon
+│   │                StatsPanel, PerkList, Crest, Logo, Wordmark, SocialIcon
 │   └── art/         Vector artwork (see "Animated artwork")
 ├── data/            Centralised content (see above)
 ├── layouts/         BaseLayout (shared <head>, header, footer)
-├── lib/             roblox.ts (build-time avatars), random.ts (seeded art), format.ts (helpers)
+├── lib/             crest.ts (the monogram), roblox.ts (build-time avatars), format.ts (helpers)
 ├── pages/           index.astro, 404.astro, robots.txt.ts
 ├── scripts/         Client JS: site.ts (header, nav, menu, reveals, scene playback),
 │                    roster.ts (member search, filters, expand/collapse)
 └── styles/          global.css — Tailwind import, design tokens (@theme), motion
 tests/               Vitest unit tests
-src/assets/brand/    Official logo files and hero photo
-public/              favicon, apple-touch-icon
+public/              favicons, apple-touch-icon
 ```
 
 ## Tests and CI

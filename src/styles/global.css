@@ -1,4 +1,6 @@
-@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/cinzel';
+@import '@fontsource-variable/cormorant-garamond';
+@import '@fontsource-variable/cormorant-garamond/wght-italic.css';
 @import '@fontsource-variable/inter';
 @import 'tailwindcss';
 
@@ -6,17 +8,21 @@
    Design tokens (Tailwind v4 reads its theme from CSS)
    --------------------------------------------------------------- */
 @theme {
-  --color-bg: #09090b;
-  --color-surface: #121218;
-  --color-elevated: #1b1a25;
-  --color-fg: #f3f1ff;
-  --color-muted: #a5a3b8;
-  --color-accent: #8b5cf6;
-  --color-accent-soft: #b9a4fb;
-  --color-accent-muted: #4a3e8c;
-  --color-line: #292735;
+  /* Old-money palette: lacquer black, ivory, antique gold */
+  --color-bg: #0b0a08;
+  --color-surface: #13110d;
+  --color-elevated: #1c1913;
+  --color-fg: #f3ead6;
+  --color-muted: #a69c87;
+  --color-accent: #c9a45c;
+  --color-accent-soft: #e6cd8c;
+  --color-accent-muted: #6b5530;
+  --color-line: #2b261d;
 
-  --font-display: 'Space Grotesk Variable', 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  /* Cinzel: engraved Roman capitals for labels, buttons and the name.
+     Cormorant Garamond: the house serif for headings and figures. */
+  --font-display: 'Cinzel Variable', 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-serif: 'Cormorant Garamond Variable', 'Cormorant Garamond', Garamond, Georgia, serif;
   --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -49,7 +55,7 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
     text-wrap: balance;
   }
 
@@ -73,20 +79,49 @@
   /* Small uppercase editorial label */
   .eyebrow {
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 500;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--color-muted);
   }
 
-  /* Oversized display heading */
+  /* Large serif heading, set like a title page */
   .display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 0.98;
+  }
+
+  /* Engraved capitals (the family name, monumental figures) */
+  .engraved {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: -0.035em;
-    line-height: 0.92;
+    letter-spacing: 0.16em;
+    line-height: 1;
+  }
+
+  /* Antique-gold foil text */
+  .gilt {
+    background-image: linear-gradient(170deg, #f3e1a8 0%, #c9a45c 42%, #e6cd8c 68%, #9c7a3c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Double hairline frame with deco corner notches */
+  .deco-frame {
+    position: relative;
+    border: 1px solid var(--color-line);
+  }
+  .deco-frame::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid rgb(201 164 92 / 0.18);
+    pointer-events: none;
   }
 
   /* Subtle film grain, applied to atmospheric layers */
@@ -99,8 +134,8 @@
   /* Faint architectural grid used behind hero / panels */
   .grid-lines {
     background-image:
-      linear-gradient(to right, rgb(243 241 255 / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(243 241 255 / 0.04) 1px, transparent 1px);
+      linear-gradient(to right, rgb(243 234 214 / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(243 234 214 / 0.03) 1px, transparent 1px);
     background-size: 96px 96px;
   }
 }
@@ -206,7 +241,7 @@
   .roster-chip[aria-pressed='true'] {
     color: var(--color-fg);
     border-color: var(--color-accent);
-    background-color: rgb(139 92 246 / 0.14);
+    background-color: rgb(201 164 92 / 0.14);
   }
 
   .collapsible {
@@ -256,7 +291,7 @@
   }
   .ember {
     opacity: 0;
-    box-shadow: 0 0 8px 1px rgb(139 92 246 / 0.7);
+    box-shadow: 0 0 8px 1px rgb(201 164 92 / 0.7);
     animation: ember var(--ember-duration, 14s) linear infinite;
     animation-delay: var(--ember-delay, 0s);
   }
@@ -396,80 +431,286 @@
   }
 }
 
-/* Animated rooftop hero */
+/* Art-deco ornament motion */
 @media (prefers-reduced-motion: no-preference) {
-  .fog-drift {
-    animation: fog-drift var(--fog-duration, 40s) ease-in-out infinite alternate;
+  .sheen {
+    animation: sheen 7s ease-in-out 1.2s infinite;
   }
-  .traffic {
-    stroke-dasharray: 0.004 0.036;
-    animation: traffic var(--traffic-duration, 40s) linear infinite;
-  }
-  .aircraft {
-    animation: aircraft 70s linear infinite;
-  }
-  .blink-light {
-    animation: blink-light 2.4s steps(1) infinite;
-    animation-delay: var(--blink-delay, 0s);
-  }
-  .fox-tail {
-    transform-box: view-box;
-    transform-origin: 150px 198px;
-    animation: fox-tail 5s ease-in-out infinite;
-  }
-  .fox-breathe {
-    transform-box: view-box;
-    transform-origin: 110px 200px;
-    animation: fox-breathe 4.2s ease-in-out infinite;
-  }
-  .fox-eye {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: blink 5.5s ease-in-out 2s infinite;
+  .ray-breathe {
+    animation: ray-breathe 9s ease-in-out infinite;
+    animation-delay: var(--ray-delay, 0s);
   }
 }
-@keyframes fog-drift {
-  to {
-    transform: translateX(var(--fog-shift, 80px));
+@keyframes sheen {
+  0%,
+  55% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  85%,
+  100% {
+    transform: translateX(220%) skewX(-18deg);
   }
 }
-@keyframes traffic {
-  to {
-    stroke-dashoffset: -1;
-  }
-}
-@keyframes aircraft {
-  from {
-    transform: translate(-60px, 120px);
-  }
-  to {
-    transform: translate(1700px, 60px);
-  }
-}
-@keyframes blink-light {
+@keyframes ray-breathe {
   0%,
   100% {
+    opacity: 0.35;
+  }
+  50% {
     opacity: 1;
   }
-  50% {
-    opacity: 0.1;
+}
+
+/* ---------------------------------------------------------------
+   Monogram draw-in (crestSvg({ animated: true })). Runs once when its
+   [data-scene] first comes on screen: the rings draw, the rays fan out,
+   then the N is struck. Fully drawn for reduced motion / no JS.
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-scene] .crest-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .js [data-scene] .crest-letter,
+  .js [data-scene] .crest-rays,
+  .js [data-scene] .crest-pips,
+  .js [data-scene] .crest-ticks {
+    opacity: 0;
+  }
+  .js [data-scene] .crest-bars {
+    opacity: 0;
+    transform-box: view-box;
+    transform-origin: 60px 60px;
+    transform: scaleX(0.55);
+  }
+  .js [data-scene] .crest-rays {
+    transform-box: view-box;
+    transform-origin: 60px 112px;
+    transform: scale(0.6);
+  }
+  .js [data-scene].has-played .crest-draw {
+    animation: draw 2s var(--ease-out-expo) forwards;
+    animation-delay: var(--crest-delay, 0ms);
+  }
+  .js [data-scene].has-played .crest-draw-late {
+    animation-delay: calc(var(--crest-delay, 0ms) + 250ms);
+  }
+  .js [data-scene].has-played .crest-pips {
+    animation: intro-fade 0.8s ease-out forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 900ms);
+  }
+  .js [data-scene].has-played .crest-rays {
+    animation: rays-fan 1.8s var(--ease-out-expo) forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 600ms);
+  }
+  .js [data-scene].has-played .crest-ticks {
+    animation: intro-fade 1.2s ease-out forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 700ms);
+  }
+  .js [data-scene].has-played .crest-bars {
+    animation: rays-fan 1.4s var(--ease-out-expo) forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 1300ms);
+  }
+  .js [data-scene].has-played .crest-letter {
+    animation: letter-strike 1.4s var(--ease-out-expo) forwards;
+    animation-delay: calc(var(--crest-delay, 0ms) + 1000ms);
   }
 }
-@keyframes fox-tail {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(-5deg);
+
+@keyframes rays-fan {
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
-@keyframes fox-breathe {
-  0%,
+@keyframes letter-strike {
+  0% {
+    opacity: 0;
+    filter: brightness(2.2);
+  }
   100% {
-    transform: scaleY(1);
+    opacity: 1;
+    filter: none;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Interactive vector art (src/scripts/interactive.ts)
+   --------------------------------------------------------------- */
+@property --mx {
+  syntax: '<length-percentage>';
+  inherits: true;
+  initial-value: 50%;
+}
+@property --my {
+  syntax: '<length-percentage>';
+  inherits: true;
+  initial-value: 60%;
+}
+
+/* Hero: brighter rays seen through a soft light. It follows the pointer on
+   desktop and drifts slowly by itself on touch screens. */
+.hero-lit {
+  opacity: 1;
+  filter: brightness(1.6) drop-shadow(0 0 2px rgb(230 205 140 / 0.6));
+  background: radial-gradient(220px 220px at var(--mx) var(--my), rgb(201 164 92 / 0.09), transparent 75%);
+  -webkit-mask-image: radial-gradient(240px 240px at var(--mx) var(--my), black, transparent 72%);
+  mask-image: radial-gradient(240px 240px at var(--mx) var(--my), black, transparent 72%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-lit {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-pointer-light]:not([data-lit]) .hero-lit {
+    animation: light-drift 16s ease-in-out infinite alternate;
+  }
+  [data-pointer-light][data-lit] .hero-lit {
+    transition: --mx 0.25s ease-out, --my 0.25s ease-out;
+  }
+}
+@keyframes light-drift {
+  0% {
+    --mx: 22%;
+    --my: 72%;
   }
   50% {
-    transform: scaleY(1.012);
+    --mx: 64%;
+    --my: 48%;
+  }
+  100% {
+    --mx: 84%;
+    --my: 78%;
+  }
+}
+
+/* Gold dust */
+.gold-dust > span {
+  position: absolute;
+  bottom: -12px;
+  background: linear-gradient(135deg, #f3e1a8, #c9a45c 60%, #9c7a3c);
+  transform: rotate(45deg);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gold-dust > span {
+    animation: dust-rise var(--dust-duration, 24s) linear infinite;
+    animation-delay: var(--dust-delay, 0s);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gold-dust {
+    display: none;
+  }
+}
+@keyframes dust-rise {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--dust-opacity, 0.6);
+  }
+  50% {
+    transform: translate(calc(var(--dust-drift, 0px) * 0.6), -50vh) rotate(225deg);
+    opacity: calc(var(--dust-opacity, 0.6) * 0.4);
+  }
+  62% {
+    opacity: var(--dust-opacity, 0.6);
+  }
+  100% {
+    transform: translate(var(--dust-drift, 0px), -105vh) rotate(405deg);
+    opacity: 0;
+  }
+}
+
+/* The playable seal */
+.seal {
+  --px: 0;
+  --py: 0;
+}
+.seal-button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.seal-button:focus-visible {
+  outline-offset: 10px;
+  border-radius: 9999px;
+}
+.seal-light {
+  background: radial-gradient(
+    38% 34% at calc(50% + var(--px) * 18%) calc(58% + var(--py) * 14%),
+    rgb(201 164 92 / 0.16),
+    transparent 70%
+  );
+}
+@media (prefers-reduced-motion: no-preference) {
+  .seal-back,
+  .seal-front,
+  .seal-light {
+    transition: transform 0.9s var(--ease-out-expo), background-position 0.9s var(--ease-out-expo);
+  }
+  .seal-back {
+    transform: translate3d(calc(var(--px) * -10px), calc(var(--py) * -8px), 0);
+  }
+  .seal-front {
+    transform: perspective(700px) rotateY(calc(var(--px) * 14deg)) rotateX(calc(var(--py) * -14deg))
+      translate3d(calc(var(--px) * 8px), calc(var(--py) * 6px), 0);
+  }
+  .seal-button:active .seal-front {
+    transform: perspective(700px) rotateY(calc(var(--px) * 14deg)) rotateX(calc(var(--py) * -14deg)) scale(0.96);
+    transition-duration: 0.15s;
+  }
+  /* A tap redraws at once, without the first-load delay */
+  .seal.is-replay svg {
+    --crest-delay: 0ms !important;
+  }
+  .seal.is-replay .scene-draw {
+    --scene-delay: 0ms !important;
+  }
+  .seal-ripple {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 1px solid rgb(230 205 140 / 0.9);
+    border-radius: 9999px;
+    box-shadow: 0 0 18px rgb(201 164 92 / 0.45), inset 0 0 12px rgb(201 164 92 / 0.25);
+    animation: seal-ripple 1.6s var(--ease-out-expo) forwards;
+  }
+  .seal-ripple::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgb(201 164 92 / 0.6);
+    border-radius: 9999px;
+  }
+  .seal-hint {
+    animation: hint-breathe 3.6s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seal-hint {
+    display: none;
+  }
+}
+@keyframes seal-ripple {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: scale(16);
+    opacity: 0;
+  }
+}
+@keyframes hint-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
   }
 }

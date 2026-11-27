@@ -1,33 +1,24 @@
 ---
 /**
- * Official Navierre mark. `variant="mark"` is the simple white NV used at
- * small sizes; `variant="full"` is the silver-and-purple NV monogram.
+ * The Navierre monogram at a fixed height: the ringed N, or the N alone.
  */
-import { Image } from 'astro:assets';
+import Crest from '@/components/ui/Crest.astro';
 import { site } from '@/data/site';
 
 interface Props {
   /** Rendered height in px. */
   size?: number;
   class?: string;
-  variant?: 'mark' | 'full';
-  /** Set when the logo sits next to the visible wordmark, so it is not announced twice. */
+  /** 'full' = the N in its double ring; 'mark' = the N alone. */
+  variant?: 'full' | 'mark';
+  /** Set when the logo sits next to the visible name, so it is not announced twice. */
   decorative?: boolean;
-  loading?: 'eager' | 'lazy';
 }
 
-const { size = 40, class: className, variant = 'mark', decorative = false, loading = 'eager' } = Astro.props;
-const src = site.logo[variant];
-const width = Math.round((size * src.width) / src.height);
+const { size = 40, class: className, variant = 'full', decorative = false } = Astro.props;
+const ratio = variant === 'mark' ? 48 / 64 : 1;
 ---
 
-<Image
-  src={src}
-  alt={decorative ? '' : site.logo.alt}
-  height={size}
-  width={width}
-  densities={[1, 2]}
-  loading={loading}
-  class:list={['block h-auto shrink-0 object-contain', className]}
-  style={`height:${size}px;width:${width}px`}
-/>
+<span class:list={['inline-block shrink-0', className]} style={`height:${size}px;width:${Math.round(size * ratio)}px`}>
+  <Crest variant={variant} title={decorative ? undefined : site.logo.alt} class="size-full" />
+</span>

@@ -6,7 +6,7 @@
  */
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import CityMap from '@/components/art/CityMap.astro';
+import DecoSunburst from '@/components/art/DecoSunburst.astro';
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
 import SocialIcon from '@/components/ui/SocialIcon.astro';
@@ -32,17 +32,17 @@ const recruitingLabel = !game.recruiting
 >
   <section aria-labelledby="stats-heading" class="relative isolate overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40">
     <div class="absolute inset-x-0 top-0 -z-10 h-[40rem]" aria-hidden="true">
-      <div class="absolute inset-0 bg-[radial-gradient(60%_70%_at_100%_0%,rgb(139_92_246/0.16),transparent_65%)]"></div>
-      <div class="grid-lines absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
-      <CityMap class="absolute inset-0 size-full opacity-60 [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
+      <div class="absolute inset-0 bg-[radial-gradient(60%_70%_at_100%_0%,rgb(201_164_92/0.16),transparent_65%)]"></div>
+      <DecoSunburst class="absolute inset-0 size-full opacity-30 [mask-image:linear-gradient(to_bottom,black_30%,transparent)]" />
     </div>
 
     <Container size="wide">
       <p class="eyebrow flex items-center gap-3 text-accent-soft">
         <span class="h-px w-8 bg-accent/60" aria-hidden="true"></span>Family stats · {asOfLabel}
       </p>
-      <h1 id="stats-heading" class="mt-6 font-display text-[clamp(2.5rem,8vw,5.5rem)] font-bold leading-[0.95] tracking-[-0.03em]">
-        {site.name} <span class="text-[0.45em] font-semibold tracking-normal text-accent">[{site.shortName}]</span>
+      <h1 id="stats-heading" class="mt-6 font-serif text-[clamp(2.75rem,8vw,6rem)] font-medium leading-[0.95]">
+        <span class="block text-[0.32em] italic text-muted">{site.house}</span>
+        {site.name} <span class="font-display text-[0.32em] font-semibold tracking-[0.3em] text-accent">{site.shortName}</span>
       </h1>
       <p class="mt-4 text-muted">Founded {foundedLabel} · A family in {game.name} on {game.platform}</p>
 

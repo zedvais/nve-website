@@ -19,7 +19,7 @@ const {
 } = Astro.props;
 
 const base =
-  'group/btn relative inline-flex items-center justify-center gap-2.5 font-display font-semibold uppercase tracking-[0.14em] whitespace-nowrap transition-[background-color,color,border-color,box-shadow] duration-300 ease-out';
+  'group/btn relative inline-flex items-center justify-center gap-2.5 font-display font-semibold uppercase tracking-[0.18em] whitespace-nowrap transition-[background-color,color,border-color,box-shadow] duration-300 ease-out';
 
 const sizes = {
   sm: 'h-10 px-5 text-[0.7rem]',
@@ -29,9 +29,9 @@ const sizes = {
 
 const variants = {
   primary:
-    'bg-fg text-bg hover:bg-white hover:shadow-[0_0_0_4px_rgb(139_92_246/0.25)]',
+    'bg-[linear-gradient(170deg,#ecd69a,#c9a45c_55%,#a8843f)] text-bg shadow-[inset_0_1px_0_rgb(255_255_255/0.35)] hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.35),0_0_0_4px_rgb(201_164_92/0.2)]',
   secondary:
-    'border border-line bg-white/[0.02] text-fg backdrop-blur-sm hover:border-accent/70 hover:bg-accent/10',
+    'border border-accent-muted bg-bg/40 text-fg backdrop-blur-sm hover:border-accent hover:bg-accent/10',
   ghost: 'text-fg hover:text-accent-soft',
 };
 

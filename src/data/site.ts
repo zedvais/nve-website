@@ -1,6 +1,5 @@
-import logoFull from '@/assets/brand/nv-logo.png';
-import logoMark from '@/assets/brand/nv-mark.png';
-import heroBackground from '@/assets/brand/rooftop.jpg';
+import { stats } from '@/data/stats';
+import { roman } from '@/lib/format';
 
 /**
  * Central site configuration.
@@ -21,32 +20,21 @@ export const site = {
   /** How to say it; shown under the hero word. */
   pronunciation: 'nah · vee · AIR',
   shortName: 'NVE',
-  monogram: 'NV',
+  /** Shown above the name in the hero and on the link preview. */
+  house: 'The House of',
+  /** Year founded in Roman numerals, from stats.founded (e.g. MMXXVI). */
+  established: roman(Number(stats.founded.slice(0, 4))),
   tagline: 'United by Passion. Driven by Ambition.',
-  footerLine: 'Navierre — United as One.',
+  footerLine: 'Navierre — United as one.',
   description:
     'Navierre (NVE) is a family in Idle Mafia on Roblox, built on teamwork, dedication and the pursuit of something greater. More than a name. More than a family.',
   locale: 'en',
   /** Social preview image (1200×630), rendered at build time by src/pages/og.png.ts. */
   ogImage: '/og.png',
-  /**
-   * Official brand assets (src/assets/brand). Astro optimises them at build time.
-   * - full: the silver-and-purple NV monogram (feature artwork)
-   * - mark: the simple white NV mark (header, footer, small sizes)
-   * The wordmark is live text (see Wordmark.astro), so the name lives only here.
-   */
+  /** The crest is drawn in code (src/lib/crest.ts), so there are no logo files to keep in sync. */
   logo: {
-    full: logoFull,
-    mark: logoMark,
-    alt: 'Navierre logo',
+    alt: 'The Navierre crest',
   },
-  /** Atmospheric hero photo: the rooftop above the city. */
-  heroBackground,
-  /**
-   * Hero backdrop: 'animated' draws the rooftop scene as animated vector art,
-   * 'photo' shows the rooftop photo above instead.
-   */
-  heroStyle: 'animated' as 'animated' | 'photo',
 };
 
 /**
@@ -66,24 +54,24 @@ export const game = {
 export const navigation: NavLink[] = [
   { label: 'Home', href: '/#home', section: 'home' },
   { label: 'About', href: '/#about', section: 'about' },
-  { label: 'Family', href: '/#family', section: 'family' },
   { label: 'Values', href: '/#values', section: 'values' },
+  { label: 'Family', href: '/#family', section: 'family' },
   { label: 'Join Us', href: '/#join', section: 'join' },
 ];
 
 export const hero = {
   eyebrow: 'An Idle Mafia family on Roblox',
-  /** Rendered letter by letter; the letters of the tag (N, V, E) are picked out in the accent colour. */
+  /** Rendered letter by letter; the letters of the tag (N, V, E) are picked out in gold. */
   heading: 'Navierre',
   tagline: 'United by Passion. Driven by Ambition.',
   description:
     'A community built on teamwork, dedication, and the pursuit of something greater. More than a name. More than a family.',
-  primaryCta: { label: 'Explore Our Community', href: '/#about' },
+  primaryCta: { label: 'Enter the House', href: '/#about' },
   secondaryCta: { label: 'Join the Family', href: '/#join' },
 };
 
 export const about = {
-  index: '01',
+  index: 'I',
   label: 'About',
   heading: 'More than a community.',
   lead:
@@ -104,31 +92,31 @@ export const about = {
 export type ValueIcon = 'loyalty' | 'integrity' | 'supportive' | 'ambition';
 
 export const values = {
-  index: '02',
+  index: 'II',
   label: 'Values',
   heading: 'What defines us.',
   intro: 'Every family has a code. These four principles shape how we play, how we treat each other, and where we are headed.',
   items: [
     {
-      number: '01',
+      number: 'I',
       title: 'Loyalty',
       icon: 'loyalty' as ValueIcon,
       text: 'We stand by the family and by each other, in every war, every heist and every quiet day in between.',
     },
     {
-      number: '02',
+      number: 'II',
       title: 'Integrity',
       icon: 'integrity' as ValueIcon,
       text: 'We keep our word, play fair and own our mistakes. Trust is the foundation everything else is built on.',
     },
     {
-      number: '03',
+      number: 'III',
       title: 'Supportive',
       icon: 'supportive' as ValueIcon,
       text: 'No one climbs alone. We help newer members find their footing and lift each other up, in game and out of it.',
     },
     {
-      number: '04',
+      number: 'IV',
       title: 'Ambition',
       icon: 'ambition' as ValueIcon,
       text: 'Always moving forward, expanding our reach, improving our skills, and setting new goals.',
@@ -136,24 +124,24 @@ export const values = {
   ],
 };
 
-/** Animated city interlude between Values and Family. */
+/** The crest interlude between Values and Family. */
 export const interlude = {
-  eyebrow: 'House Navierre · NVE',
-  aside: 'Idle Mafia · Est. 2026',
+  eyebrow: 'The House of Navierre · NVE',
+  aside: `Idle Mafia · Est. ${site.established}`,
   heading: ['United', 'as one.'],
   text: 'One name, one table. Every member, every district, every war, one family.',
 };
 
 export const family = {
-  index: '03',
+  index: 'III',
   label: 'Family',
-  heading: 'The people behind the name.',
+  heading: 'The house ledger.',
   intro:
-    'Every seat at the table matters. The Boss sets the direction, Underbosses lead alongside, Advisors coordinate and oversee as second in command, Capos recruit and coordinate, and every Soldier and Associate helps write the story.',
+    'Every name in the house is written here, and every seat at the table matters. The Boss sets the direction, Underbosses lead alongside, Advisors coordinate and oversee as second in command, Capos recruit and coordinate, and every Soldier and Associate helps write the story.',
 };
 
 export const journey = {
-  index: '04',
+  index: 'IV',
   label: 'Journey',
   heading: 'Our journey.',
   intro:
@@ -163,7 +151,7 @@ export const journey = {
 };
 
 export const recruitment = {
-  index: '05',
+  index: 'V',
   label: 'Join Us',
   heading: 'Your place is with us.',
   statement:
