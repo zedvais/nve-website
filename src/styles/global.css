@@ -159,6 +159,20 @@
     transform: none;
   }
 
+  /* Children of a reveal that rise in one after another (stat tiles, perk rows) */
+  .js [data-reveal] .stagger {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.9s ease-out,
+      transform 0.9s var(--ease-out-expo);
+    transition-delay: calc(0.25s + var(--i, 0) * 70ms);
+  }
+  .js [data-reveal].is-visible .stagger {
+    opacity: 1;
+    transform: none;
+  }
+
   .intro {
     animation: intro-rise 1.1s var(--ease-out-expo) both;
     animation-delay: calc(var(--intro-delay, 0) * 1ms);
